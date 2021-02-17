@@ -1,0 +1,946 @@
+<Project>
+  <Name>TImeTanic</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>C#</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="1589" top="3001" />
+        <Size width="162" height="332" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float rotateSpeed</Member>
+        <Member type="Field">Vector3 dashVelocity</Member>
+        <Member type="Field">float interactDelay</Member>
+        <Member type="Field">bool canInteract</Member>
+        <Member type="Field">Interactable currentUsingInteractable</Member>
+        <Member type="Field">Enum Role</Member>
+        <Member type="Method">public void Movement()</Member>
+        <Member type="Method">public void CheckDash()</Member>
+        <Member type="Method">public void PerformDash()</Member>
+        <Member type="Method">public void Interact()</Member>
+        <Member type="Method">public void FinishedInteract()</Member>
+        <Member type="Method">public IEnumerator InteractDelay()</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public bool CheckInteract()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Interactable</Name>
+        <Access>Public</Access>
+        <Location left="346" top="1522" />
+        <Size width="162" height="247" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float interactDuration</Member>
+        <Member type="Field">public bool canInteract = true</Member>
+        <Member type="Field">float interactDelay</Member>
+        <Member type="Field">Player currentInteractingPlayer</Member>
+        <Member type="Method">public Void CanInteract()</Member>
+        <Member type="Method">public virtual void CompleteInteract(Player target)</Member>
+        <Member type="Method">public IEnumerator StartInteractDelay()</Member>
+        <Member type="Method">public virtual void CancelInteract()</Member>
+        <Member type="Method">public virtual void Interact()</Member>
+        <Member type="Method">public virtual void OnResultCanInteract(bool result)</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MobilePassenger</Name>
+        <Access>Public</Access>
+        <Location left="1347" top="3369" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private bool followOnTrigger</Member>
+        <Member type="Method">public void OnTriggerEnter(Collider collider)</Member>
+        <Member type="Method">public IEnumerator FollowTarget(Transform targetToFollow)</Member>
+        <Member type="Method">public IEnumerator PassengerAI()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainMenu</Name>
+        <Access>Public</Access>
+        <Location left="320" top="555" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void StartGame()</Member>
+        <Member type="Method">public void ExitGame()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Options</Name>
+        <Access>Public</Access>
+        <Location left="222" top="846" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void SetQualityLevel()</Member>
+        <Member type="Method">public void SetMasterVolume(Slider slider)</Member>
+        <Member type="Method">public void SetSFXVolume(Slider slider)</Member>
+        <Member type="Method">public void SetBackgroundVolume(Slider slider)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SceneManager</Name>
+        <Access>Public</Access>
+        <Location left="257" top="1223" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">GameObject transitionScreen</Member>
+        <Member type="Field">bool untransitionOnStart</Member>
+        <Member type="Field">string sceneToGoTo</Member>
+        <Member type="Method">public void ChangeScene(string sceneName)</Member>
+        <Member type="Method">private IEnumerator TransitionIn()</Member>
+        <Member type="Method">private IEnumerator TransitionOut()</Member>
+        <Member type="Method">private void ChangeSceneInstant(string sceneName)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LobbyFinder</Name>
+        <Access>Public</Access>
+        <Location left="127" top="555" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Start()</Member>
+        <Member type="Method">public void FindLobby()</Member>
+        <Member type="Method">public void OnLobbyFindFailed()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Lobby</Name>
+        <Access>Public</Access>
+        <Location left="502" top="555" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void StartGame()</Member>
+        <Member type="Method">public void Start()</Member>
+        <Member type="Method">public void PlayerConnectionAdded()</Member>
+        <Member type="Method">public void PlayerConnectionRemoved()</Member>
+        <Member type="Method">public void LoadConnectedPlayers()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>InputManager</Name>
+        <Access>Public</Access>
+        <Location left="864" top="1223" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Enum[] connectedControllers</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Event">public event EventHandler OnPlayerConnected</Member>
+        <Member type="Event">public event EventHandler OnPlayerDisconnected</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SoundManager</Name>
+        <Access>Public</Access>
+        <Location left="417" top="846" />
+        <Size width="162" height="298" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">audioClip[] defaultBackgroundMusicClips</Member>
+        <Member type="Field">audioClip[] backgroundMusicClips</Member>
+        <Member type="Field">AudioSource backgroundMusic</Member>
+        <Member type="Field">GameObject SFXObject</Member>
+        <Member type="Field">List&lt;AudioClip&gt; currentPlaylist</Member>
+        <Member type="Method">public void Start()</Member>
+        <Member type="Method">public void ShufflePlaylist()</Member>
+        <Member type="Method">public void ForceNewPlaylist(audioClip[] clips)</Member>
+        <Member type="Method">public void ResetPlaylist()</Member>
+        <Member type="Method">public void PlayMusic()</Member>
+        <Member type="Method">public void PauseMusic()</Member>
+        <Member type="Method">public void NextMusic()</Member>
+        <Member type="Method">public void SpawnSFX(AudioClip clip, float volume = 1, float pitch = 0.5)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CameraHandler</Name>
+        <Access>Public</Access>
+        <Location left="1589" top="3369" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Player[] allPlayers</Member>
+        <Member type="Field">Transform globalCamera</Member>
+        <Member type="Field">private bool handleCameras = true</Member>
+        <Member type="Method">public void HandleCameras(bool value)</Member>
+        <Member type="Method">public void Update()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CutsceneManager</Name>
+        <Access>Public</Access>
+        <Location left="56" top="1223" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">AnimationClip[] cutscenes</Member>
+        <Member type="Method">public void StartCutscene(int cutsceneIndex)</Member>
+        <Member type="Method">public IEnumerator CutsceneRoutine(int index)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MinigameManager</Name>
+        <Access>Public</Access>
+        <Location left="1314" top="1044" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">PlayerCounter[] requiredPlayers</Member>
+        <Member type="Method">public virtual void StartMinigame()</Member>
+        <Member type="Method">public virtual void FinishMinigame()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MovingObject</Name>
+        <Access>Public</Access>
+        <Location left="1991" top="70" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Vector3 moveDirection</Member>
+        <Member type="Field">float moveSpeed</Member>
+        <Member type="Field">float bouncyness</Member>
+        <Member type="Field">Rigidbody rigid</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public void Destruct()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>KnockbackHandler</Name>
+        <Access>Public</Access>
+        <Location left="1314" top="636" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Knockback(vector3 velocity, float power, Entity target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Grabbable</Name>
+        <Access>Public</Access>
+        <Location left="128" top="1845" />
+        <Size width="162" height="230" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string itemName</Member>
+        <Member type="Field">private readonly Vector3 itemLocalPosition</Member>
+        <Member type="Field">private readonly Vector3 itemLocalEulers</Member>
+        <Member type="Field">Transform leftHandHandle</Member>
+        <Member type="Field">Transform rightHandHandle</Member>
+        <Member type="Method">public override void CompleteInteract()</Member>
+        <Member type="Method">public virtual void Attach()</Member>
+        <Member type="Method">public virtual void Detach()</Member>
+        <Member type="Method">public virtual void Break()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Weapon</Name>
+        <Access>Public</Access>
+        <Location left="346" top="2714" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int damage = 1</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Axe</Name>
+        <Access>Public</Access>
+        <Location left="465" top="2985" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Gun</Name>
+        <Access>Public</Access>
+        <Location left="233" top="2985" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private ParticleSystem fireParticle</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Damagable</Name>
+        <Access>Public</Access>
+        <Location left="1331" top="1965" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int health</Member>
+        <Member type="Method">public virtual void TakeDamage(int damage, string damagedBy)</Member>
+        <Member type="Method">public virtual void OnDeath()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Destructible</Name>
+        <Access>Public</Access>
+        <Location left="1204" top="2288" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string[] allowedDamageItems</Member>
+        <Member type="Method">public override void TakeDamage(int damage, string damagedBy)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Bear</Name>
+        <Access>Public</Access>
+        <Location left="1160" top="3001" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>UsableGrabbable</Name>
+        <Access>Public</Access>
+        <Location left="346" top="2432" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private bool canUse = true</Member>
+        <Member type="Field">private float useDelay</Member>
+        <Member type="Method">private void Update()</Member>
+        <Member type="Method">public virtual void CheckUse()</Member>
+        <Member type="Method">public virtual void Use()</Member>
+        <Member type="Method">private IEnumerator StartUseDelay()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FireExtuingisher</Name>
+        <Access>Public</Access>
+        <Location left="562" top="2714" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private float extuingishAmountPerSecond</Member>
+        <Member type="Method">private IEnumerator Extuinguish()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Extuingishable</Name>
+        <Access>Public</Access>
+        <Location left="895" top="70" />
+        <Size width="163" height="211" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float health</Member>
+        <Member type="Method">public void Extuingish(float amount)</Member>
+        <Member type="Event">public event EventHandler onExtuingished</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Shock</Name>
+        <Access>Public</Access>
+        <Location left="1522" top="637" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Shock(float duration, Entity target)</Member>
+        <Member type="Method">public void ShockRoutine(float duration, Entity target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CraftingStation</Name>
+        <Access>Public</Access>
+        <Location left="346" top="1845" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">CraftingRecipe[] recipes</Member>
+        <Member type="Field">Transform craftingSpot</Member>
+        <Member type="Method">public void CheckAction()</Member>
+        <Member type="Method">public void PlaceItem()</Member>
+        <Member type="Method">public IEnumerator CraftItem()</Member>
+        <Member type="Method">public void CheckCraft()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Wheelchair</Name>
+        <Access>Public</Access>
+        <Location left="562" top="2432" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Transform fallRotation</Member>
+        <Member type="Method">public void OnTriggerEnter(Collider collider)</Member>
+        <Member type="Method">public IEnumerator Drop()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Rope</Name>
+        <Access>Public</Access>
+        <Location left="1016" top="2589" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public override void OnDeath()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FragmentedDestructable</Name>
+        <Access>Public</Access>
+        <Location left="1204" top="2589" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public override void OnDeath()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BeefFishingrod</Name>
+        <Access>Public</Access>
+        <Location left="128" top="2432" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void OnTriggerEnter(Collider collider)</Member>
+        <Member type="Method">public void OnTriggerExit(Collider collider)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Toggle</Name>
+        <Access>Public</Access>
+        <Location left="562" top="1845" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">bool toggled</Member>
+        <Member type="Field">bool untoggleAfterCancel</Member>
+        <Member type="Field">bool stayToggledAfterToggle</Member>
+        <Member type="Event">public event EventHandler onStartToggle</Member>
+        <Member type="Event">public event EventHandler onEndToggle</Member>
+        <Member type="Method">public IEnumerator Toggle()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ToggleCheck</Name>
+        <Access>Public</Access>
+        <Location left="783" top="1843" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Toggle[] togglesToCheck</Member>
+        <Member type="Event">public event EventHandler onCompletedToggle</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Flattened</Name>
+        <Access>Public</Access>
+        <Location left="1704" top="637" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float percentageSpeedDeduction</Member>
+        <Member type="Field">float speedAmountRemoved</Member>
+        <Member type="Method">public void Flatten(float duration, Player target)</Member>
+        <Member type="Method">public IEnumerator FlattenRoutine(float duration, Player target)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>WaterBucket</Name>
+        <Access>Public</Access>
+        <Location left="126" top="2714" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float extuingishAmount</Member>
+        <Member type="Field">float fillCapacity</Member>
+        <Member type="Method">public IEnumerator FillBucket()</Member>
+        <Member type="Method">public IEnumerator UnfillBucket()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>RemovableWater</Name>
+        <Access>Public</Access>
+        <Location left="1078" top="345" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float waterAmount</Member>
+        <Member type="Method">public void ChangeWaterAmount(float amountToChange)</Member>
+        <Member type="Event">public event EventHandler onWaterRemoved</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Water</Name>
+        <Access>Public</Access>
+        <Location left="1078" top="70" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">GameObject WaterPuddleParticle</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public void OnTriggerExit()</Member>
+        <Member type="Method">public IEnumerator SpawnPuddles()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ElectricSource</Name>
+        <Access>Public</Access>
+        <Location left="1442" top="70" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">List&lt;ElectricPart&gt; connectedElectricParts</Member>
+        <Member type="Field">GameObject electricParticle</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public void OnTriggerExit()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Lock</Name>
+        <Access>Public</Access>
+        <Location left="1626" top="70" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string requiredItemName</Member>
+        <Member type="Method">public void Unlock(Grabbable unlockedWithItem)</Member>
+        <Member type="Method">public void CheckUnlock(Grabbable item)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Cage</Name>
+        <Access>Public</Access>
+        <Location left="1808" top="68" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void Open()</Member>
+        <Member type="Method">public IEnumerator OpenEffect()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayerCounter</Name>
+        <Access>Public</Access>
+        <Location left="1820" top="1044" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int playerCount</Member>
+        <Member type="Field">int requiredPlayerAmount</Member>
+        <Member type="Method">public void OnTriggerEnter(Collider collider)</Member>
+        <Member type="Method">public void OnTriggerExit(Collider collider)</Member>
+        <Member type="Method">public void RequirementCompleted()</Member>
+        <Member type="Method">public void RequirementNotCompleted()</Member>
+        <Member type="Event">public event EventHandler onRequirementCompleted</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CraftingSuppliesMinigame</Name>
+        <Access>Public</Access>
+        <Location left="1314" top="1368" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">ItemSpawner[] itemSpawners</Member>
+        <Member type="Method">public void CloseDoors()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>WaterBucketMinigame</Name>
+        <Access>Public</Access>
+        <Location left="1482" top="1368" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void CloseEntrance()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ExtuingishMinigame</Name>
+        <Access>Public</Access>
+        <Location left="1651" top="1368" />
+        <Size width="162" height="218" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Extuingishable[] extuingishables</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BearFightMinigame</Name>
+        <Access>Public</Access>
+        <Location left="1820" top="1370" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void CloseEntrance()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameManager</Name>
+        <Access>Public</Access>
+        <Location left="459" top="1223" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void StartGame()</Member>
+        <Member type="Method">public void FinishGame()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SpawnManager</Name>
+        <Access>Public</Access>
+        <Location left="660" top="1223" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Spawn[] spawns</Member>
+        <Member type="Method">public void SpawnPlayers()</Member>
+        <Member type="Method">public void ConnectControlsToPlayer()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CraftingRecipe</Name>
+        <Access>Public</Access>
+        <Location left="346" top="2166" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string[] requiredItems</Member>
+        <Member type="Field">GameObject result</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Controller</Name>
+        <Access>Public</Access>
+        <Location left="864" top="1509" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int controllerIndex</Member>
+        <Member type="Field">ControllerTypes controllerType</Member>
+        <Member type="Field">Enum ControllerTypes</Member>
+        <Member type="Method">public bool IsConnected()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Material</Name>
+        <Access>Public</Access>
+        <Location left="1258" top="71" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Enum Material</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ElectricPart</Name>
+        <Access>Public</Access>
+        <Location left="1442" top="345" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">GameObject electricParticles</Member>
+        <Member type="Field">ElectricSource electricSource</Member>
+        <Member type="Field">GameObject currentParticles</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public void OnTriggerExit()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Entity</Name>
+        <Access>Public</Access>
+        <Location left="1447" top="2288" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Rigidbody thisRigid</Member>
+        <Member type="Field">bool canMove</Member>
+        <Member type="Method">public void ToggleMovement(bool canMove)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ItemSpawner</Name>
+        <Access>Public</Access>
+        <Location left="1576" top="1650" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Transform spawnLocation</Member>
+        <Member type="Field">Coroutine currentSpawnRoutine</Member>
+        <Member type="Field">int maxAliveInstances = 1</Member>
+        <Member type="Field">List&lt;GameObject&gt; currentAliveInstances</Member>
+        <Member type="Field">GameObject[] itemPool</Member>
+        <Member type="Method">public void StartSpawning()</Member>
+        <Member type="Method">public IEnumerator SpawnRoutine()</Member>
+        <Member type="Method">public void StopSpawning()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>FatPassenger</Name>
+        <Access>Public</Access>
+        <Location left="1347" top="3685" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Passenger</Name>
+        <Access>Public</Access>
+        <Location left="1347" top="2999" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">Player ownerPlayer</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>OldPassenger</Name>
+        <Access>Public</Access>
+        <Location left="1149" top="3369" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MovingEntity</Name>
+        <Access>Public</Access>
+        <Location left="1459" top="2747" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public float movementSpeed</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Menu</Name>
+        <Access>Public</Access>
+        <Location left="320" top="214" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public virtual void OnOpenMenu()</Member>
+        <Member type="Method">public virtual void OnCloseMenu()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Generalization" first="26" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>432</X>
+          <Y>1795</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="31" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>645</X>
+          <Y>1819</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>432</X>
+          <Y>1795</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="15" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>432</X>
+          <Y>1794</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="22" second="15">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>425</X>
+          <Y>2407</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>208</X>
+          <Y>2424</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="27" second="15">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>207</X>
+          <Y>2410</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="30" second="15">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>207</X>
+          <Y>2260</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="23" second="22">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="16" second="22">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="34" second="22">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="17" second="16">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="18" second="16">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="20" second="19">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1285</X>
+          <Y>2263</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1416</X>
+          <Y>2201</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="29" second="20">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="28" second="20">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="35" second="36">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="41" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="42" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1564</X>
+          <Y>1334</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1395</X>
+          <Y>1294</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="43" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1733</X>
+          <Y>1343</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="44" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1901</X>
+          <Y>1344</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="12" second="40">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="6" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="7" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="6" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="7" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1670</X>
+          <Y>3344</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="32" second="31">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="46" second="45">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>635</X>
+          <Y>1342</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="26" second="47">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>423</X>
+          <Y>2141</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="48">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="50" second="37">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="51" second="19">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1527</X>
+          <Y>2254</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1417</X>
+          <Y>2211</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="41" second="52">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="53" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="2" second="54">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="55" second="54">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="0" second="56">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="54" second="56">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="56" second="51">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="57">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="57">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="57">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
