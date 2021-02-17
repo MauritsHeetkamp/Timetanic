@@ -7,16 +7,7 @@ using UnityEngine.UI;
 public class FadePanel : MonoBehaviour
 {
     public UnityAction onFadedIn, onFadedOut;
-    public Image fadePanel;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UnityAction<GameObject> onFadedInSpecificPlayer, onFadedOutSpecificPlayer;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Image fadePanel;
 }

@@ -57,6 +57,16 @@ public class Teleporter : MonoBehaviour
             {
                 PerformTeleport(targetToTeleport);
             }
+            else
+            {
+                FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
+
+                if(fadeManager != null)
+                {
+                    FadePanel fader = fadeManager.FadeInOut(fadeDuration, player);
+                    fader.onFadedInSpecificPlayer += PerformTeleport;
+                }
+            }
         }
     }
 

@@ -22,7 +22,7 @@ public class CameraHandler : MonoBehaviour
     bool isSplit = true;
     [SerializeField] float splitFadeDuration = 1;
 
-    [SerializeField] bool handleTheCameras = true;
+    public bool handleTheCameras = true;
     FadeManager globalFader;
     // Start is called before the first frame update
     void Start()
@@ -33,42 +33,41 @@ public class CameraHandler : MonoBehaviour
 
     public void ResetCamera()
     {
-        CameraMovement(true, false);
+        CameraMovement(true);
     }
 
-    public void CheckSplit()
+    public void CheckSplit(bool instant = false)
     {
         if (GetGreatestDistance() < maxPlayerDistance)
         {
             if (isSplit)
             {
-                ResetCamera();
-                SetSplit(false);
+                SetSplit(false, instant);
             }
         }
         else
         {
             if (!isSplit)
             {
-                SetSplit(true);
+                SetSplit(true, instant);
             }
         }
     }
 
-    public void CheckSplit(float distance)
+    public void CheckSplit(float distance, bool instant = false)
     {
         if (distance < maxCameraDistance)
         {
             if (isSplit)
             {
-                SetSplit(false);
+                SetSplit(false, instant);
             }
         }
         else
         {
             if (!isSplit)
             {
-                SetSplit(true);
+                SetSplit(true, instant);
             }
         }
     }
@@ -126,7 +125,7 @@ public class CameraHandler : MonoBehaviour
         CameraMovement();
     }
 
-    void CameraMovement(bool instantMove = false, bool checkSplit = true)
+    void CameraMovement(bool instantMove = false)
     {
         if (globalCamera != null && playerHandler.localPlayers.Count > 0 && handleTheCameras)
         {
@@ -163,9 +162,13 @@ public class CameraHandler : MonoBehaviour
 
             globalCamera.position = instantMove ? targetLocation : Vector3.Lerp(globalCamera.position, targetLocation, zoomSmooth);
 
-            if (checkSplit)
+            if (instantMove)
             {
-                CheckSplit();
+                CheckSplit(true);
+            }
+            else
+            {
+                CheckSplit(false);
             }
 
         }
@@ -190,48 +193,42 @@ public class CameraHandler : MonoBehaviour
         return biggestDistance;
     }
 
-    public void SetSplit(bool split)
+    public void SetSplit(bool split, bool instant)
     {
         isSplit = split;
-        if (split)
+        if (!instant)
         {
-            /*try
+            FadePanel fader = globalFader.FadeInOut(splitFadeDuration);
+            if (split)
             {
-                globalFader.onFadedIn -= Unsplit;
+                fader.onFadedIn += Split;
             }
-            catch
+            else
             {
-
+                fader.onFadedIn += Unsplit;
             }
-            globalFader.onFadedIn += Split;*/
-            Split();
         }
         else
         {
-            /*try
+            if (split)
             {
-                globalFader.onFadedIn -= Split;
+                Split();
             }
-            catch
+            else
             {
-
+                Unsplit();
             }
-            globalFader.onFadedIn += Unsplit;*/
-            Unsplit();
         }
-        globalFader.FadeInOut(splitFadeDuration);
     }
 
     void Split()
     {
-        //globalFader.onFadedIn -= Split;
         splitscreenImageHolder.gameObject.SetActive(true);
         globalCamera.GetComponent<Camera>().enabled = false;
     }
 
     void Unsplit()
     {
-        //globalFader.onFadedIn -= Unsplit;
         splitscreenImageHolder.gameObject.SetActive(false);
         globalCamera.GetComponent<Camera>().enabled = true;
     }

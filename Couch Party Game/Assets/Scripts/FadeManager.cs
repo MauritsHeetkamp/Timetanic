@@ -9,12 +9,15 @@ public class FadeManager : MonoBehaviour
     [SerializeField] float defaultFadeDuration = 1;
 
     [SerializeField] bool unfadeOnStart;
+
+    [SerializeField] RectTransform globalPanelHolder;
+    [SerializeField] GameObject fadePanel;
     // Start is called before the first frame update
     void Start()
     {
         if (unfadeOnStart)
         {
-            //FadeOut();
+            FadeOut();
         }
     }
 
@@ -24,47 +27,59 @@ public class FadeManager : MonoBehaviour
         
     }
 
-    public void FadeInOut()
+
+    public FadePanel FadeInOut(float duration = 0, Player specificPlayer = null)
     {
-        //StartCoroutine(FadeInOutRoutine(defaultFadeDuration));
+        duration = duration > 0 ? duration : defaultFadeDuration;
+
+        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder;
+
+        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>();
+
+        StartCoroutine(FadeInOutRoutine(newPanel, duration, true, specificPlayer));
+
+        return newPanel;
     }
 
-    public void FadeInOut(float duration)
+    public FadePanel FadeIn(float duration = 0, Player specificPlayer = null)
     {
-        //StartCoroutine(FadeInOutRoutine(duration));
+        duration = duration > 0 ? duration : defaultFadeDuration;
+
+        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder;
+
+        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>();
+
+        StartCoroutine(FadeInRoutine(newPanel, duration, true, specificPlayer));
+
+        return newPanel;
     }
 
-    public void FadeIn()
+    public FadePanel FadeOut(float duration = 0, Player specificPlayer = null)
     {
-        //StartCoroutine(FadeInRoutine(defaultFadeDuration));
+        duration = duration > 0 ? duration : defaultFadeDuration;
+
+        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder;
+
+        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>();
+
+        StartCoroutine(FadeOutRoutine(newPanel, duration, true, specificPlayer));
+
+        return newPanel;
     }
 
-    public void FadeIn(float duration)
+    IEnumerator FadeInOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
     {
-        //StartCoroutine(FadeInRoutine(duration));
-    }
-
-    public void FadeOut()
-    {
-        //StartCoroutine(FadeOutRoutine(defaultFadeDuration));
-    }
-
-    public void FadeOut(float duration)
-    {
-        //StartCoroutine(FadeOutRoutine(duration));
-    }
-
-    IEnumerator FadeInOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true)
-    {
-        Debug.Log("ZZZ");
         target.fadePanel.raycastTarget = true;
         Color newColor = target.fadePanel.color;
+        newColor.a = 0;
+        target.fadePanel.color = newColor;
 
         float modifyAmount = 1;
         modifyAmount /= duration;
         modifyAmount /= 2;
 
-        while(target.fadePanel.color.a < 1)
+        yield return null;
+        while (target.fadePanel.color.a < 1)
         {
             newColor.a += modifyAmount * Time.deltaTime;
             target.fadePanel.color = newColor;
@@ -74,6 +89,10 @@ public class FadeManager : MonoBehaviour
         if(target.onFadedIn != null)
         {
             target.onFadedIn.Invoke();
+        }
+        if(target.onFadedInSpecificPlayer != null && specificPlayer != null)
+        {
+            target.onFadedInSpecificPlayer.Invoke(specificPlayer.gameObject);
         }
 
         target.fadePanel.raycastTarget = false;
@@ -93,21 +112,63 @@ public class FadeManager : MonoBehaviour
         {
             target.onFadedOut.Invoke();
         }
+        if (target.onFadedOutSpecificPlayer != null && specificPlayer != null)
+        {
+            target.onFadedOutSpecificPlayer.Invoke(specificPlayer.gameObject);
+        }
         if (destroyOnComplete)
         {
             Destroy(target.gameObject);
         }
     }
 
-    IEnumerator FadeOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true)
+    IEnumerator FadeOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
     {
         target.fadePanel.raycastTarget = false;
         Color newColor = target.fadePanel.color;
+        newColor.a = 1;
+        target.fadePanel.color = newColor;
         float modifyAmount = -1;
         modifyAmount /= duration;
         modifyAmount /= 2;
 
+        yield return null;
         while (target.fadePanel.color.a > 0)
+        {
+            newColor.a += modifyAmount * Time.deltaTime;
+            target.fadePanel.color = newColor;
+            yield return null;
+        }
+
+        if (target.onFadedOut != null)
+        {
+            target.onFadedOut.Invoke();
+        }
+        if (target.onFadedOutSpecificPlayer != null && specificPlayer != null)
+        {
+            target.onFadedOutSpecificPlayer.Invoke(specificPlayer.gameObject);
+        }
+
+
+        if (destroyOnComplete)
+        {
+            Destroy(target.gameObject);
+        }
+    }
+
+    IEnumerator FadeInRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
+    {
+        target.fadePanel.raycastTarget = true;
+        Color newColor = target.fadePanel.color;
+        newColor.a = 0;
+        target.fadePanel.color = newColor;
+
+        float modifyAmount = 1;
+        modifyAmount /= duration;
+        modifyAmount /= 2;
+
+        yield return null;
+        while (target.fadePanel.color.a < 1)
         {
             newColor.a += modifyAmount * Time.deltaTime;
             target.fadePanel.color = newColor;
@@ -118,32 +179,9 @@ public class FadeManager : MonoBehaviour
         {
             target.onFadedIn.Invoke();
         }
-
-        if (destroyOnComplete)
+        if (target.onFadedInSpecificPlayer != null && specificPlayer != null)
         {
-            Destroy(target.gameObject);
-        }
-    }
-
-    IEnumerator FadeInRoutine(FadePanel target, float duration, bool destroyOnComplete = true)
-    {
-        target.fadePanel.raycastTarget = true;
-        Color newColor = target.fadePanel.color;
-
-        float modifyAmount = 1;
-        modifyAmount /= duration;
-        modifyAmount /= 2;
-
-        while (target.fadePanel.color.a < 1)
-        {
-            newColor.a += modifyAmount * Time.deltaTime;
-            target.fadePanel.color = newColor;
-            yield return null;
-        }
-
-        if (target.onFadedOut != null)
-        {
-            target.onFadedOut.Invoke();
+            target.onFadedInSpecificPlayer.Invoke(specificPlayer.gameObject);
         }
 
         if (destroyOnComplete)

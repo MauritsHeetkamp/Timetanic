@@ -63,6 +63,8 @@ public class SpawnManager : MonoBehaviour
         }
 
         cameraHandler.InitializeSplitscreenCameras();
+        cameraHandler.handleTheCameras = true;
+        cameraHandler.ResetCamera();
     }
 
     void ActualSpawn(Transform location, GameObject character, int playerIndex)
