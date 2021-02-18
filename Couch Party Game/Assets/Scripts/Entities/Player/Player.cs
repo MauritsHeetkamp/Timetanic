@@ -96,16 +96,19 @@ public class Player : MovingEntity
         if (canInteract && currentHoldingItem != null)
         {
             UsableGrabbable grabbable = currentHoldingItem.GetComponent<UsableGrabbable>();
-            if(grabbable != null && grabbable.CheckUse())
+            if(grabbable != null)
             {
-                    if (context.started && grabbable.CheckUse())
+                if (context.started && grabbable.CheckUse())
+                {
+                    if (grabbable.CheckUse())
                     {
                         grabbable.Use();
                     }
-                    if (context.canceled)
-                    {
-                        grabbable.StopUse();
-                    }
+                }
+                if (context.canceled)
+                {
+                    grabbable.StopUse();
+                }
             }
 
         }

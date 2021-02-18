@@ -49,8 +49,10 @@ public class SpawnManager : MonoBehaviour
                         if (roleLocation.locations.Length > 0)
                         {
                             selectedSpawn = roleLocation.locations[Random.Range(0, roleLocation.locations.Length)];
+                            Debug.Log(selectedSpawn);
                             if (roleLocation.locations.Length > 1)
                             {
+                                Debug.Log("REMOVED");
                                 roleLocation.RemoveLocation(selectedSpawn);
                             }
                         }
@@ -79,7 +81,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     [System.Serializable]
-    public struct SpawnLocations
+    public class SpawnLocations
     {
         public Player.Role requiredRole;
         public Transform[] locations;
