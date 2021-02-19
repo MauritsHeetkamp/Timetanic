@@ -299,7 +299,7 @@ Rigidbody:
   m_GameObject: {fileID: 5306044696326595236}
   serializedVersion: 2
   m_Mass: 70
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -334,11 +334,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   thisRigid: {fileID: 5000036102728392604}
-  movementSpeed: 800
+  movementSpeed: 8000
   role: 1
   rawMovement: {x: 0, y: 0}
   canMove: 1
-  maxVelocity: 15
+  maxVelocity: 11
   decellerationBlocks: 0
   decellerationSpeed: 15
   rotateSpeed: 300
@@ -350,12 +350,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   maxAngle: 60
-  slopeBoosterModifier: 3
+  slopeBoosterModifier: 0
   slopeCheckOrigin: {fileID: 5000036103337669258}
-  rayRange: 0.5
+  forwardRayRange: 0.12
+  downwardRayRange: 0.12
   slopeMask:
     serializedVersion: 2
     m_Bits: 256
+  onSlope: 0
   playerCamera: {fileID: 2116326721651732736}
   followX: 1
   followY: 1

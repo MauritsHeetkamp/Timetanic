@@ -27,11 +27,13 @@ public class Player : MovingEntity
     [SerializeField] LayerMask jumpableLayers;
 
     [Header("Slopes")]
+
     [SerializeField] float maxAngle;
     [SerializeField] float slopeBoosterModifier = 1;
     [SerializeField] Transform slopeCheckOrigin;
-    [SerializeField] float rayRange;
+    [SerializeField] float forwardRayRange, downwardRayRange;
     [SerializeField] LayerMask slopeMask;
+    public bool onSlope;
 
     [Header("Camera")]
     public Transform playerCamera;
@@ -78,6 +80,7 @@ public class Player : MovingEntity
     private void FixedUpdate()
     {
         Movement();
+        CheckSlope();
     }
 
 
@@ -162,6 +165,53 @@ public class Player : MovingEntity
         }
     }
 
+    void CheckSlope()
+    {
+        RaycastHit forwardHitdata, downwardHitdata;
+
+        if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out forwardHitdata, forwardRayRange, slopeMask))
+        {
+            if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out downwardHitdata, downwardRayRange, slopeMask))
+            {
+                float angle = Vector3.Angle(transform.up, forwardHitdata.transform.up);
+                if (angle <= maxAngle)
+                {
+                    if (!onSlope)
+                    {
+                        onSlope = true;
+                        thisRigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+                    }
+                    float yDifference = forwardHitdata.point.y - transform.position.y;
+                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0));
+                }
+                else
+                {
+                    if (onSlope)
+                    {
+                        onSlope = false;
+                        thisRigid.constraints = RigidbodyConstraints.FreezeRotation;
+                    }
+                }
+            }
+            else
+            {
+                if (onSlope)
+                {
+                    onSlope = false;
+                    thisRigid.constraints = RigidbodyConstraints.FreezeRotation;
+                }
+            }
+        }
+        else
+        {
+            if (onSlope)
+            {
+                onSlope = false;
+                thisRigid.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+        }
+    }
+
     void Movement()
     {
         Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
@@ -204,18 +254,6 @@ public class Player : MovingEntity
             velocityDirection.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(movementAmount.normalized);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime);
-
-            RaycastHit hitData;
-
-            if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out hitData, rayRange, slopeMask))
-            {
-                float angle = Vector3.Angle(transform.up, hitData.transform.up);
-                if (angle <= maxAngle)
-                {
-                    float yDifference = hitData.point.y - transform.position.y;
-                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0));
-                }
-            }
         }
         else
         {

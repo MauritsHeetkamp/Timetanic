@@ -224,12 +224,20 @@ public class CameraHandler : MonoBehaviour
     void Split()
     {
         splitscreenImageHolder.gameObject.SetActive(true);
+        foreach(Player player in playerHandler.localPlayers)
+        {
+            player.playerCamera.GetComponent<Camera>().enabled = true;
+        }
         globalCamera.GetComponent<Camera>().enabled = false;
     }
 
     void Unsplit()
     {
         splitscreenImageHolder.gameObject.SetActive(false);
+        foreach (Player player in playerHandler.localPlayers)
+        {
+            player.playerCamera.GetComponent<Camera>().enabled = false;
+        }
         globalCamera.GetComponent<Camera>().enabled = true;
     }
 }

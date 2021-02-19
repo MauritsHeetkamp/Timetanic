@@ -176,7 +176,7 @@ MonoBehaviour:
   role: 1
   rawMovement: {x: 0, y: 0}
   canMove: 1
-  maxVelocity: 15
+  maxVelocity: 11
   decellerationBlocks: 0
   decellerationSpeed: 15
   rotateSpeed: 300
@@ -190,10 +190,12 @@ MonoBehaviour:
   maxAngle: 60
   slopeBoosterModifier: 3
   slopeCheckOrigin: {fileID: 1170049847835909018}
-  rayRange: 0.5
+  forwardRayRange: 0.12
+  downwardRayRange: 0.12
   slopeMask:
     serializedVersion: 2
     m_Bits: 256
+  onSlope: 0
   playerCamera: {fileID: 5188669639493965840}
   followX: 1
   followY: 1
