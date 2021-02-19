@@ -8,6 +8,8 @@ public class FireExtuingisher : Extuingisher
     [SerializeField] ParticleSystem extuingishParticles;
     Coroutine extuingishRoutine;
 
+    [SerializeField] AudioClip startSpray, staySpray, endSpray;
+    GameObject sprayAudio;
     public override bool CheckUse()
     {
         if (canUse && extuingishZone != null)
@@ -25,10 +27,19 @@ public class FireExtuingisher : Extuingisher
             StopCoroutine(extuingishRoutine);
         }
         extuingishRoutine = StartCoroutine(Extuinguish());
+        //GameObject startSprayObject = SoundManager.instance.SpawnAudio(startSpray, false);
+        //Destroy(startSprayObject, startSprayObject.GetComponent<AudioSource>().clip.length);
+        //sprayAudio = SoundManager.instance.SpawnAudio(staySpray, true);
     }
 
     public override void StopUse()
     {
+        if(sprayAudio != null)
+        {
+            Destroy(sprayAudio);
+        }
+        //GameObject stopSprayObject = SoundManager.instance.SpawnAudio(endSpray, false);
+        //Destroy(stopSprayObject, stopSprayObject.GetComponent<AudioSource>().clip.length);
         extuingishParticles.Stop();
         if (extuingishRoutine != null)
         {

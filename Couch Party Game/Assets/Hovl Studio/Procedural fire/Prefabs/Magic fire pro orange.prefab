@@ -23803,3 +23803,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   health: 3
+  destroyOnExtuingished: 0
+  smallestScale: {x: 0.25, y: 0.25, z: 0.25}
+  finalizerSpeed: 1

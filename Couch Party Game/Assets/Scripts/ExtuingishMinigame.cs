@@ -23,6 +23,15 @@ public class ExtuingishMinigame : Minigame
         }
     }
 
+    public override void Reset()
+    {
+        foreach (Extuingishable extuingishable in extuingishableFires)
+        {
+            extuingishable.Reset();
+        }
+        base.Reset();
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Fire : Extuingishable
 {
     Vector3 defaultScale;
+    [SerializeField] Vector3 smallestScale;
+    [SerializeField] float finalizerSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,16 +15,47 @@ public class Fire : Extuingishable
 
     public override void Extuingish(float amount)
     {
-        base.Extuingish(amount);
-        Vector3 newScale = defaultScale;
-        if(health > 0 &&  maxHealth > 0)
+        if (health > 0)
         {
-            newScale *= health / maxHealth;
+            health -= amount;
+            Vector3 newScale = defaultScale - smallestScale;
+            if (health > 0 && maxHealth > 0)
+            {
+                newScale = smallestScale + (newScale * (health / maxHealth));
+            }
+            else
+            {
+                newScale = smallestScale;
+            }
+            transform.localScale = newScale;
+
+            if (smallestScale != Vector3.zero)
+            {
+                if (newScale == smallestScale)
+                {
+                    StartCoroutine(ScaleRoutine());
+                }
+            }
+            else
+            {
+                if (newScale == Vector3.zero)
+                {
+                    OnExtuingished();
+                }
+            }
         }
-        else
-        {
-            newScale = Vector3.zero;
-        }
-        transform.localScale = newScale;
     }
+
+    IEnumerator ScaleRoutine()
+    {
+        while(transform.localScale != Vector3.zero)
+        {
+            yield return null;
+            transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.zero, finalizerSpeed * Time.deltaTime);
+        }
+
+        OnExtuingished();
+        Debug.Log("COMPLETE");
+    }
+
 }
