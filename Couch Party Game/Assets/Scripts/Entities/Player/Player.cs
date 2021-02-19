@@ -346,6 +346,26 @@ public class Player : MovingEntity
         canInteract = true;
     }
 
+    public void ResetCameraLocation()
+    {
+        Vector3 targetPosition = playerCamera.transform.position;
+        if (followX)
+        {
+            targetPosition.x = transform.position.x;
+        }
+        if (followY)
+        {
+            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            targetPosition.y = transform.position.y + distanceToMoveOnY;
+        }
+        if (followZ)
+        {
+            float distanceToMoveOnZ = playerCamera.transform.position.z - transform.position.z <= 0 ? -1 * zDistance : 1 * zDistance;
+            targetPosition.z = transform.position.z + distanceToMoveOnZ;
+        }
+        playerCamera.transform.position = targetPosition;
+    }
+
     void CameraFollow()
     {
         Vector3 targetPosition = playerCamera.transform.position;

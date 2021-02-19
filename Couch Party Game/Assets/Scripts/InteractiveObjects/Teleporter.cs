@@ -29,6 +29,7 @@ public class Teleporter : MonoBehaviour
             if (resetCamera)
             {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera();
+                player.ResetCameraLocation();
             }
 
             if (newEulers)
@@ -59,12 +60,19 @@ public class Teleporter : MonoBehaviour
             }
             else
             {
-                FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
-
-                if(fadeManager != null)
+                if(fadeDuration > 0)
                 {
-                    FadePanel fader = fadeManager.FadeInOut(fadeDuration, player);
-                    fader.onFadedInSpecificPlayer += PerformTeleport;
+                    FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
+
+                    if (fadeManager != null)
+                    {
+                        FadePanel fader = fadeManager.FadeInOut(fadeDuration, player);
+                        fader.onFadedInSpecificPlayer += PerformTeleport;
+                    }
+                }
+                else
+                {
+                    PerformTeleport(targetToTeleport);
                 }
             }
         }
