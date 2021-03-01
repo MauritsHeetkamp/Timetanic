@@ -7,12 +7,16 @@ public class Extuingishable : MonoBehaviour
 {
     public float maxHealth;
     public float health = 1;
-    public UnityAction onExtuingished;
+    public UnityAction<Extuingishable> onExtuingished;
     public bool destroyOnExtuingished;
-    public virtual void Extuingish(float amount)
+
+    [HideInInspector] public Player lastPlayerToExtuingish;
+
+    public virtual void Extuingish(float amount, Player owner = null)
     {
         if(health > 0)
         {
+            lastPlayerToExtuingish = owner;
             health -= amount;
             if (health < 0)
             {
@@ -25,7 +29,7 @@ public class Extuingishable : MonoBehaviour
     {
         if(onExtuingished != null)
         {
-            onExtuingished.Invoke();
+            onExtuingished.Invoke(this);
         }
         if (destroyOnExtuingished)
         {
@@ -40,6 +44,7 @@ public class Extuingishable : MonoBehaviour
 
     public virtual void Reset()
     {
+        lastPlayerToExtuingish = null;
         health = maxHealth;
     }
 }

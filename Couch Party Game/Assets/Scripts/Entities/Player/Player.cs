@@ -8,6 +8,7 @@ public class Player : MovingEntity
     [Header("General")]
     public Role role; //The role of the player, this is used for where the player needs to be spawned
     PlayerControls controls;
+    public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
     [Header("Movement")]
     [SerializeField]Vector2 rawMovement;

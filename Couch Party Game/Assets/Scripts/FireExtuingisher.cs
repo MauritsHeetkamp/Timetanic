@@ -62,7 +62,7 @@ public class FireExtuingisher : Extuingisher
                     Extuingishable extuingishable = target.GetComponent<Extuingishable>();
                     if(extuingishable != null)
                     {
-                        extuingishable.Extuingish(extuingishAmount * Time.deltaTime);
+                        extuingishable.Extuingish(extuingishAmount * Time.deltaTime, currentInteractingPlayer);
                     }
                 }
             }

@@ -5,8 +5,9 @@ using UnityEngine;
 public class Minigame : MonoBehaviour
 {
     [SerializeField] PlayerCounter[] playerCounters;
+    public GameObject[] triggerZones;
     bool active;
-    bool finished;
+    public bool finished;
     public void CheckStart()
     {
         foreach(PlayerCounter counter in playerCounters)
@@ -34,6 +35,10 @@ public class Minigame : MonoBehaviour
         {
             counter.ToggleUI(false);
         }
+        foreach (GameObject triggerZone in triggerZones)
+        {
+            triggerZone.SetActive(false);
+        }
     }
 
     public virtual void StopMinigame()
@@ -53,6 +58,10 @@ public class Minigame : MonoBehaviour
         {
             counter.Reset();
             counter.gameObject.SetActive(true);
+        }
+        foreach (GameObject triggerZone in triggerZones)
+        {
+            triggerZone.SetActive(true);
         }
     }
 

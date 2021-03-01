@@ -10,6 +10,7 @@ public class Teleporter : MonoBehaviour
 
 
     [SerializeField] Transform target;
+    [SerializeField] Teleporter connectedTeleporter;
 
     [Header("Local Camera Properties")]
     [SerializeField] bool newEulers; // If the camera should be updating its eulers
@@ -18,14 +19,31 @@ public class Teleporter : MonoBehaviour
 
     [SerializeField] float fadeDuration = 0.5f;
 
+    [HideInInspector] public List<GameObject> attachedTargets;
+
     void PerformTeleport(GameObject targetToTeleport)
     {
+        if (connectedTeleporter != null)
+        {
+            connectedTeleporter.attachedTargets.Add(targetToTeleport);
+        }
+
         Player player = targetToTeleport.GetComponent<Player>();
 
         targetToTeleport.transform.position = target.position;
 
         if (player != null)
         {
+            foreach(MobilePassenger passenger in player.followingPassengers)
+            {
+                if (connectedTeleporter != null)
+                {
+                    connectedTeleporter.attachedTargets.Add(passenger.gameObject);
+                }
+                passenger.navmeshAgent.Warp(target.position);
+                passenger.transform.Translate(Vector3.one); // makes sure that the navmesh agents aren't stacked up in eachother
+            }
+
             if (resetCamera)
             {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera();
@@ -47,6 +65,8 @@ public class Teleporter : MonoBehaviour
                 player.zDistance = newZDistance;
             }
         }
+
+
     }
 
     public void Teleport(GameObject targetToTeleport)
@@ -80,9 +100,17 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (teleportOnTrigger)
+        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject))
         {
             Teleport(other.gameObject);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (attachedTargets.Contains(other.gameObject))
+        {
+            attachedTargets.Remove(other.gameObject);
         }
     }
 }

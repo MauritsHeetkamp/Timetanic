@@ -20,11 +20,13 @@ public class Fire : Extuingishable
         defaultScale = particleHolder.transform.localScale;
     }
 
-    public override void Extuingish(float amount)
+    public override void Extuingish(float amount, Player owner)
     {
         if (health > 0)
         {
             health -= amount;
+
+            lastPlayerToExtuingish = owner;
 
             if(resetRoutine != null)
             {
@@ -88,7 +90,7 @@ public class Fire : Extuingishable
     {
         if (onExtuingished != null)
         {
-            onExtuingished.Invoke();
+            onExtuingished.Invoke(this);
         }
         if (destroyOnExtuingished)
         {
