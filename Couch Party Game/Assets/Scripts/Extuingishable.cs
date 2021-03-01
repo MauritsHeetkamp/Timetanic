@@ -7,8 +7,8 @@ public class Extuingishable : MonoBehaviour
 {
     public float maxHealth;
     public float health = 1;
-    public UnityAction<Extuingishable> onExtuingished;
-    [SerializeField] bool destroyOnExtuingished;
+    public UnityAction onExtuingished;
+    public bool destroyOnExtuingished;
     public virtual void Extuingish(float amount)
     {
         if(health > 0)
@@ -25,12 +25,17 @@ public class Extuingishable : MonoBehaviour
     {
         if(onExtuingished != null)
         {
-            onExtuingished.Invoke(this);
+            onExtuingished.Invoke();
         }
         if (destroyOnExtuingished)
         {
             Destroy(gameObject);
         }
+    }
+
+    public virtual void Disable()
+    {
+
     }
 
     public virtual void Reset()

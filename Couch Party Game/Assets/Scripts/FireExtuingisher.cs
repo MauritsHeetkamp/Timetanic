@@ -27,9 +27,9 @@ public class FireExtuingisher : Extuingisher
             StopCoroutine(extuingishRoutine);
         }
         extuingishRoutine = StartCoroutine(Extuinguish());
-        //GameObject startSprayObject = SoundManager.instance.SpawnAudio(startSpray, false);
-        //Destroy(startSprayObject, startSprayObject.GetComponent<AudioSource>().clip.length);
-        //sprayAudio = SoundManager.instance.SpawnAudio(staySpray, true);
+        GameObject startSprayObject = SoundManager.instance.SpawnAudio(startSpray, false);
+        Destroy(startSprayObject, startSprayObject.GetComponent<AudioSource>().clip.length);
+        sprayAudio = SoundManager.instance.SpawnAudio(staySpray, true);
     }
 
     public override void StopUse()
@@ -38,8 +38,8 @@ public class FireExtuingisher : Extuingisher
         {
             Destroy(sprayAudio);
         }
-        //GameObject stopSprayObject = SoundManager.instance.SpawnAudio(endSpray, false);
-        //Destroy(stopSprayObject, stopSprayObject.GetComponent<AudioSource>().clip.length);
+        GameObject stopSprayObject = SoundManager.instance.SpawnAudio(endSpray, false);
+        Destroy(stopSprayObject, stopSprayObject.GetComponent<AudioSource>().clip.length);
         extuingishParticles.Stop();
         if (extuingishRoutine != null)
         {

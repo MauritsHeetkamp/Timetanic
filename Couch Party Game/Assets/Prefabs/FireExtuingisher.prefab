@@ -4894,7 +4894,7 @@ MonoBehaviour:
     m_Bits: 2048
   extuingishZone: {fileID: 6360709106772444452}
   extuingishParticles: {fileID: 2723752190433288870}
-  startSpray: {fileID: 8300000, guid: 3dccda55be43dbb4a80af663d0dfdca3, type: 3}
+  startSpray: {fileID: 8300000, guid: 933eea0069427564292cf45e0d46ec5c, type: 3}
   staySpray: {fileID: 8300000, guid: 96f4fb35db119f042920afac46163181, type: 3}
   endSpray: {fileID: 8300000, guid: 933eea0069427564292cf45e0d46ec5c, type: 3}
 --- !u!54 &5102792967842815808
@@ -4952,8 +4952,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6602790514523266672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.11, y: -2.581, z: -0.017}
-  m_LocalScale: {x: 1.9657786, y: 4.277953, z: 2.62}
+  m_LocalPosition: {x: -0.167, y: -2.581, z: -0.017}
+  m_LocalScale: {x: 2.5206683, y: 4.277953, z: 2.62}
   m_Children: []
   m_Father: {fileID: 4072575232128697406}
   m_RootOrder: 1

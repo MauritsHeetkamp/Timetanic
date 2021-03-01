@@ -47,6 +47,8 @@ public class Minigame : MonoBehaviour
 
     public virtual void Reset()
     {
+        finished = false;
+        active = false;
         foreach (PlayerCounter counter in playerCounters)
         {
             counter.Reset();
@@ -56,6 +58,7 @@ public class Minigame : MonoBehaviour
 
     public virtual void FinishMinigame()
     {
+        Debug.Log("Finished");
         active = false;
         finished = true;
         foreach (PlayerCounter counter in playerCounters)

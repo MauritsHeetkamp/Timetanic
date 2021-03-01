@@ -4,31 +4,53 @@ using UnityEngine;
 
 public class ExtuingishMinigame : Minigame
 {
-    List<Extuingishable> extuingishableFires;
+    [SerializeField] List<Extuingishable> extuingishableFires;
     // Start is called before the first frame update
     void Start()
     {
         foreach(Extuingishable extuingishable in extuingishableFires)
         {
-            extuingishable.onExtuingished += RemoveExtuingishable;
+            extuingishable.onExtuingished += CheckExtuingishables;
         }
     }
 
-    void RemoveExtuingishable(Extuingishable target)
+    void CheckExtuingishables()
     {
-        extuingishableFires.Remove(target);
-        if(extuingishableFires.Count == 0)
+        Debug.Log("CHECKING");
+        foreach(Extuingishable extuingishable in extuingishableFires)
         {
-            FinishMinigame();
+            if(extuingishable != null && extuingishable.health > 0 || extuingishable == null)
+            {
+                return;
+            }
+        }
+
+        Debug.Log("PASSED");
+        FinishMinigame();
+    }
+
+    public override void FinishMinigame()
+    {
+        base.FinishMinigame();
+
+        foreach(Extuingishable extuingishable in extuingishableFires)
+        {
+            extuingishable.Disable();
+        }
+
+        Debug.Log("COMPLETE");
+    }
+    public override void StartMinigame()
+    {
+        base.StartMinigame();
+        foreach (Extuingishable extuingishable in extuingishableFires)
+        {
+            extuingishable.Reset();
         }
     }
 
     public override void Reset()
     {
-        foreach (Extuingishable extuingishable in extuingishableFires)
-        {
-            extuingishable.Reset();
-        }
         base.Reset();
     }
 
