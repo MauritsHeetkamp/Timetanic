@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6862040279715084373}
   - component: {fileID: 7535937052045080560}
   - component: {fileID: 5724622252453462842}
+  - component: {fileID: 4971647099113827153}
   m_Layer: 0
   m_Name: SM_TitanicPoles
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &4971647099113827153
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6084659876676936431}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3944073510091631902, guid: 5e4c9e7a12b51404ea8e063d17a574de, type: 3}

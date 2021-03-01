@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 7543874673083622753}
   - component: {fileID: 6854163753793497796}
   - component: {fileID: 8717305143200636430}
+  - component: {fileID: 6086501577276215649}
+  - component: {fileID: 8444580389497663477}
   m_Layer: 0
   m_Name: SM_Boatholders
   m_TagString: Untagged
@@ -79,3 +81,29 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6086501577276215649
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7204328558482128859}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0881386, y: 3.4779756, z: 2.174066}
+  m_Center: {x: 2.6462116, y: 1.5272552, z: 0.82793546}
+--- !u!65 &8444580389497663477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7204328558482128859}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1730337, y: 3.4779756, z: 2.2930923}
+  m_Center: {x: -2.6191401, y: 1.5272552, z: 0.88744855}

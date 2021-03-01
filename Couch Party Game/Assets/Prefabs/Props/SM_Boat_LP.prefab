@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3943170995506575643}
   - component: {fileID: 78582876341663422}
   - component: {fileID: 2806826670342079092}
+  - component: {fileID: 8889870965519282058}
   m_Layer: 0
   m_Name: SM_Boat_LP
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &8889870965519282058
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463952940783805345}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 5744080407588983988, guid: 122bc27b2ad13654db64b827f1d6e30a, type: 3}
