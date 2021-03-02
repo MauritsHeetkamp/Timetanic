@@ -5,49 +5,51 @@ using UnityEngine;
 public class Teleporter : MonoBehaviour
 {
     [SerializeField] bool canTeleport = true;
-    [SerializeField] bool resetCamera;
+    [SerializeField] bool resetCamera; // Reset the camera its location
     [SerializeField] bool teleportOnTrigger;
 
 
-    [SerializeField] Transform target;
-    [SerializeField] Teleporter connectedTeleporter;
+    [SerializeField] Transform target; // Target to teleport to
+    [SerializeField] Teleporter connectedTeleporter; // Teleporter that this is possibly teleporting to
 
     [Header("Local Camera Properties")]
     [SerializeField] bool newEulers; // If the camera should be updating its eulers
-    [SerializeField] Vector3 newEulerAngles;
-    [SerializeField] float newYDistance, newZDistance;
+    [SerializeField] Vector3 newEulerAngles; // New camera rotation
+    [SerializeField] float newYDistance, newZDistance; // New camera location
 
-    [SerializeField] float fadeDuration = 0.5f;
+    [SerializeField] float fadeDuration = 0.5f; // Fade duration in teleports
 
-    [HideInInspector] public List<GameObject> attachedTargets;
+    [HideInInspector] public List<GameObject> attachedTargets; // Targets that should be ignored from teleportation
 
+
+    // Performs teleport
     void PerformTeleport(GameObject targetToTeleport)
     {
-        if (connectedTeleporter != null)
+        if (connectedTeleporter != null) // Does this lead to another teleporter?
         {
-            connectedTeleporter.attachedTargets.Add(targetToTeleport);
+            connectedTeleporter.attachedTargets.Add(targetToTeleport); // Make sure the connected teleporter doesn't teleport us back
         }
 
         Player player = targetToTeleport.GetComponent<Player>();
 
-        targetToTeleport.transform.position = target.position;
+        targetToTeleport.transform.position = target.position; // Teleports target to target location
 
-        if (player != null)
+        if (player != null) // Is the target a player?
         {
-            foreach(MobilePassenger passenger in player.followingPassengers)
+            foreach(MobilePassenger passenger in player.followingPassengers) // Goes through all the passengers that are following this player
             {
-                if (connectedTeleporter != null)
+                if (connectedTeleporter != null) // Does this lead to another teleporter?
                 {
-                    connectedTeleporter.attachedTargets.Add(passenger.gameObject);
+                    connectedTeleporter.attachedTargets.Add(passenger.gameObject); // Make sure the connected teleporter doesn't teleport the npc back
                 }
-                passenger.navmeshAgent.Warp(target.position);
-                passenger.transform.Translate(Vector3.one); // makes sure that the navmesh agents aren't stacked up in eachother
+                passenger.navmeshAgent.Warp(target.position); // Teleports the npc to the target location
+                passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
             }
 
-            if (resetCamera)
+            if (resetCamera) // Should the camera be reset
             {
-                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera();
-                player.ResetCameraLocation();
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera(); // Resets single screen camera
+                player.ResetCameraLocation(); // Resets split screen camera
             }
 
             if (newEulers)
@@ -69,25 +71,30 @@ public class Teleporter : MonoBehaviour
 
     }
 
+    // Teleport target
     public void Teleport(GameObject targetToTeleport)
     {
         Player player = targetToTeleport.GetComponent<Player>();
         if (canTeleport)
         {
-            if(player == null)
+            if(player == null) // Is the target not a player?
             {
                 PerformTeleport(targetToTeleport);
             }
             else
             {
-                if(fadeDuration > 0)
+                if(fadeDuration > 0) // Is there a fade required?
                 {
-                    FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
+                    FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>(); // Finds fade handler
 
                     if (fadeManager != null)
                     {
                         FadePanel fader = fadeManager.FadeInOut(fadeDuration, player);
-                        fader.onFadedInSpecificPlayer += PerformTeleport;
+                        fader.onFadedInSpecificPlayer += PerformTeleport; // Makes sure the player gets teleported after the fade is complete
+                    }
+                    else
+                    {
+                        PerformTeleport(targetToTeleport);
                     }
                 }
                 else
@@ -100,7 +107,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject))
+        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject)) // Checks if target can be teleported
         {
             Teleport(other.gameObject);
         }
@@ -108,7 +115,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (attachedTargets.Contains(other.gameObject))
+        if (attachedTargets.Contains(other.gameObject)) // Checks if target was attached
         {
             attachedTargets.Remove(other.gameObject);
         }

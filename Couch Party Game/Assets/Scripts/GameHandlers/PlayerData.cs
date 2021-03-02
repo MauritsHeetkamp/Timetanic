@@ -7,14 +7,15 @@ using UnityEngine.Events;
 public class PlayerData : MonoBehaviour
 {
     public bool isConnected = true;
-    public PlayerInput playerInput;
+    public PlayerInput playerInput; // Connected input scheme
 
     public UnityAction<PlayerData> onPlayerDisconnect;
     public UnityAction<PlayerData> onPlayerReconnect;
-    // Start is called before the first frame update
+
+
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this); // Prevents object from being destroyed when swapping scenes
         if(playerInput == null)
         {
             Debug.LogError("No PlayerInput found");
@@ -26,12 +27,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Sets the player connection state to true
     void SetConnectionTrue(PlayerInput input)
     {
         isConnected = true;
@@ -41,6 +37,7 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    // Sets the player connection state to false
     void SetConnectionFalse(PlayerInput input)
     {
         isConnected = false;

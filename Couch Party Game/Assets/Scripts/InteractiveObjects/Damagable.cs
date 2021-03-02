@@ -6,11 +6,13 @@ public class Damagable : MonoBehaviour
 {
     [SerializeField] int health;
 
+    // Taking damage
     public virtual void TakeDamage(int damage, string damagedBy)
     {
 
     }
 
+    // What happens on death
     public virtual void OnDeath()
     {
 

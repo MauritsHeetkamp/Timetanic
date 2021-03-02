@@ -12,6 +12,8 @@ public class Extuingishable : MonoBehaviour
 
     [HideInInspector] public Player lastPlayerToExtuingish;
 
+
+    // Extuingishes fire for a set amount
     public virtual void Extuingish(float amount, Player owner = null)
     {
         if(health > 0)
@@ -25,6 +27,7 @@ public class Extuingishable : MonoBehaviour
         }
     }
 
+    // What happens when extuingished
     public virtual void OnExtuingished()
     {
         if(onExtuingished != null)
@@ -37,11 +40,13 @@ public class Extuingishable : MonoBehaviour
         }
     }
 
+    // Disables the extuingishable
     public virtual void Disable()
     {
 
     }
 
+    // Resets the extuingishable
     public virtual void Reset()
     {
         lastPlayerToExtuingish = null;

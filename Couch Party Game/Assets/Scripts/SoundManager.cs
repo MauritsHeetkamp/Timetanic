@@ -6,45 +6,43 @@ using Custom.Audio;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager instance; // Global soundmanager object instance
     [SerializeField] GameObject audioPrefab;
     [SerializeField] AudioSource backgroundMusic;
-    [SerializeField] float backgroundMusicFadeSpeed = 1;
+    [SerializeField] float backgroundMusicFadeSpeed = 1; // Speed at which the background music fades when changing clips
 
     [SerializeField] AudioPrefab[] defaultBackgroundMusic;
-    int lastAudioUsed = -1;
-    public List<AudioPrefab> playlist = new List<AudioPrefab>();
-    Coroutine swapBackgroundRoutine;
-    Coroutine currentMusicRoutine;
+    int lastAudioUsed = -1; // Last audio index that was used
+    public List<AudioPrefab> playlist = new List<AudioPrefab>(); // Audio playlist
+    Coroutine swapBackgroundRoutine; // Coroutine that swaps background music
+    Coroutine currentMusicRoutine; // Coroutine that tracks the current background music and its duration
     float currentDurationPassed;
-    // Start is called before the first frame update
+
+
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject); // Makes sure this object doesn't get destroyed when swapping scenes
         if(instance != null)
         {
-            Destroy(instance.gameObject);
+            Destroy(instance.gameObject); // Removes last instance if it excists
         }
         instance = this;
     }
 
+    // Start is called before the first frame update
     private void Start()
     {
         ShuffleBackgroundAudio();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Set new background audio list
     public void SetBackgroundAudioList(AudioPrefab[] newAudioList)
     {
         defaultBackgroundMusic = newAudioList;
-        ShuffleBackgroundAudio(false);
+        ShuffleBackgroundAudio(false); // Makes sure new audio gets played
     }
 
+    // Shuffles the background audio playlist
     public void ShuffleBackgroundAudio(bool instant = true)
     {
         List<AudioPrefab> remainingClips = new List<AudioPrefab>(defaultBackgroundMusic);
@@ -52,9 +50,9 @@ public class SoundManager : MonoBehaviour
 
         while (remainingClips.Count > 0)
         {
-            int selectedIndex = Random.Range(0, remainingClips.Count);
+            int selectedIndex = Random.Range(0, remainingClips.Count); // Selects clip from remaining clips
 
-            if(defaultBackgroundMusic.Length > 1 && playlist.Count < defaultBackgroundMusic.Length / 2 && lastAudioUsed != -1)
+            if(defaultBackgroundMusic.Length > 1 && playlist.Count < defaultBackgroundMusic.Length / 2 && lastAudioUsed != -1) // Checks if this clip was played as last clip
             {
                 if(selectedIndex == lastAudioUsed)
                 {
@@ -62,30 +60,32 @@ public class SoundManager : MonoBehaviour
                 }
             }
 
-            AudioPrefab selectedPrefab = remainingClips[selectedIndex];
-            playlist.Add(selectedPrefab);
+            AudioPrefab selectedPrefab = remainingClips[selectedIndex]; // Selected audio prefab
+            playlist.Add(selectedPrefab); // Adds audio prefab to playlist
             remainingClips.RemoveAt(selectedIndex);
         }
 
         if(playlist.Count > 0)
         {
-            SetBackgroundMusic(playlist[0], instant);
+            SetBackgroundMusic(playlist[0], instant); // Sets background music
             playlist.RemoveAt(0);
         }
     }
 
+    // Plays specific music clip
     public void SetBackgroundMusic(AudioPrefab audioPrefab, bool instant = false)
     {
         if (swapBackgroundRoutine != null)
         {
-            StopCoroutine(swapBackgroundRoutine);
+            StopCoroutine(swapBackgroundRoutine); // Stops current swap music coroutine
         }
-        swapBackgroundRoutine = StartCoroutine(SwapBackgroundMusic(audioPrefab.clip, audioPrefab.volume, audioPrefab.pitch, audioPrefab.loop, instant));
+        swapBackgroundRoutine = StartCoroutine(SwapBackgroundMusic(audioPrefab.clip, audioPrefab.volume, audioPrefab.pitch, audioPrefab.loop, instant)); // Starts new swap music coroutine
     }
 
+    // Swaps background music
     IEnumerator SwapBackgroundMusic(AudioClip newClip, float volume = 1, float pitch = 1, bool loop = false, bool instant = false)
     {
-        if (!instant && backgroundMusicFadeSpeed > 0 && backgroundMusic.volume > 0)
+        if (!instant && backgroundMusicFadeSpeed > 0 && backgroundMusic.volume > 0) // Should the transition be smooth?
         {
             float changeAmount = -backgroundMusicFadeSpeed;
 
@@ -96,13 +96,13 @@ public class SoundManager : MonoBehaviour
             }
         }
 
-        lastAudioUsed = -1;
+        lastAudioUsed = -1; // Resets last audio used
 
         for(int i = 0; i < defaultBackgroundMusic.Length; i++)
         {
             if(defaultBackgroundMusic[i].clip == newClip)
             {
-                lastAudioUsed = i;
+                lastAudioUsed = i; // Sets last audio used
             }
         }
 
@@ -113,17 +113,17 @@ public class SoundManager : MonoBehaviour
 
         if(currentMusicRoutine != null)
         {
-            StopCoroutine(currentMusicRoutine);
+            StopCoroutine(currentMusicRoutine); // Stops current music tracking coroutine
         }
         if (!backgroundMusic.loop)
         {
-            currentMusicRoutine = StartCoroutine(MusicDurationCounter(false));
+            currentMusicRoutine = StartCoroutine(MusicDurationCounter(false)); // Starts new music tracking coroutine
         }
 
-        if(volume > 0)
+        if(volume > 0) // Should the new clip be played at all?
         {
             backgroundMusic.Play();
-            if (!instant && backgroundMusicFadeSpeed > 0)
+            if (!instant && backgroundMusicFadeSpeed > 0) // Should the music fade in smoothly?
             {
                 float changeAmount = backgroundMusicFadeSpeed;
 
@@ -134,40 +134,42 @@ public class SoundManager : MonoBehaviour
                 }
             }
 
-            backgroundMusic.volume = volume;
+            backgroundMusic.volume = volume; // Sets volume to final target
         }
         else
         {
-            backgroundMusic.Stop();
+            backgroundMusic.Stop(); // Stops background music
         }
         swapBackgroundRoutine = null;
     }
 
+    // Tracks music and its duration
     IEnumerator MusicDurationCounter(bool resume)
     {
-        if (!resume)
+        if (!resume) // Should it reset?
         {
             currentDurationPassed = 0;
         }
 
-        while(currentDurationPassed < backgroundMusic.clip.length)
+        while(currentDurationPassed < backgroundMusic.clip.length) // Is clip not completed yet?
         {
             yield return null;
             currentDurationPassed += Time.deltaTime * backgroundMusic.pitch;
         }
 
         currentMusicRoutine = null;
-        if(playlist.Count > 0)
+        if(playlist.Count > 0) // Play next clip in playlist if possible
         {
             SetBackgroundMusic(playlist[0], true);
             playlist.RemoveAt(0);
         }
         else
         {
-            ShuffleBackgroundAudio();
+            ShuffleBackgroundAudio(); // Shuffle if playlist was finished
         }
     }
 
+    // Spawns audio clip
     public GameObject SpawnAudio(AudioClip clip, bool loop)
     {
         GameObject newAudio = Instantiate(audioPrefab);
@@ -179,6 +181,7 @@ public class SoundManager : MonoBehaviour
         return newAudio;
     }
 
+    // Spawns audio clip
     public GameObject SpawnAudio(AudioClip clip, bool loop, float pitch)
     {
         GameObject newAudio = Instantiate(audioPrefab);
@@ -191,6 +194,7 @@ public class SoundManager : MonoBehaviour
         return newAudio;
     }
 
+    // Spawns audio clip
     public GameObject SpawnAudio(AudioClip clip, float volume, bool loop)
     {
         GameObject newAudio = Instantiate(audioPrefab);
@@ -203,6 +207,7 @@ public class SoundManager : MonoBehaviour
         return newAudio;
     }
 
+    // Spawns audio clip
     public GameObject SpawnAudio(AudioClip clip, bool loop, float pitch, float volume)
     {
         GameObject newAudio = Instantiate(audioPrefab);

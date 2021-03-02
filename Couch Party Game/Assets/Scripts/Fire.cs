@@ -4,47 +4,50 @@ using UnityEngine;
 
 public class Fire : Extuingishable
 {
-    [SerializeField] GameObject particleHolder;
+    [SerializeField] GameObject particleHolder; // The fire particle object
 
-    [SerializeField] Vector3 smallestScale;
-    [SerializeField] float finalizerSpeed;
-    [SerializeField] float timeBeforeReset;
+    [SerializeField] Vector3 smallestScale; // The smallest visual scale it can be before being removed
+    [SerializeField] float finalizerSpeed; // The speed at which the fire shrinks
+    [SerializeField] float timeBeforeReset;  // The time before the fire regrows after not being extuingished
 
-    Coroutine resetRoutine;
-    Coroutine scaleRoutine;
+    Coroutine resetRoutine; // The reset routine for the fire regrowth
+    Coroutine scaleRoutine; // The scaling routine for the fires size
     Vector3 targetScale;
-    Vector3 defaultScale;
-    // Start is called before the first frame update
+    Vector3 defaultScale; // The default scale of the fire
+
+
     void Awake()
     {
         defaultScale = particleHolder.transform.localScale;
     }
 
+    // Extuingishes for a set amount
     public override void Extuingish(float amount, Player owner)
     {
         if (health > 0)
         {
             health -= amount;
 
-            lastPlayerToExtuingish = owner;
+            lastPlayerToExtuingish = owner; // Sets last extuingisher
 
             if(resetRoutine != null)
             {
-                StopCoroutine(resetRoutine);
+                StopCoroutine(resetRoutine); // Stops reset routine if it was active
             }
-            resetRoutine = StartCoroutine(ResetTimer());
+            resetRoutine = StartCoroutine(ResetTimer()); // Resets reset routine
 
             CalculateTargetScale();
         }
     }
 
+    // Calculate the target scale of the fire based on health
     void CalculateTargetScale()
     {
         targetScale = defaultScale - smallestScale;
 
         if (health > 0 && maxHealth > 0)
         {
-            targetScale = smallestScale + (targetScale * (health / maxHealth));
+            targetScale = smallestScale + (targetScale * (health / maxHealth)); // Calculates scale based on health
         }
         else
         {
@@ -53,10 +56,11 @@ public class Fire : Extuingishable
 
         if (scaleRoutine == null)
         {
-            scaleRoutine = StartCoroutine(ScaleRoutine());
+            scaleRoutine = StartCoroutine(ScaleRoutine()); // Starts scale routine if it was not active yet
         }
     }
 
+    // Timer before fire resets
     IEnumerator ResetTimer()
     {
         yield return new WaitForSeconds(timeBeforeReset);
@@ -64,21 +68,21 @@ public class Fire : Extuingishable
         resetRoutine = null;
     }
 
+    // Coroutine that handles the fires smooth scaling
     IEnumerator ScaleRoutine()
     {
 
         while (particleHolder.transform.localScale != targetScale)
         {
             yield return null;
-            particleHolder.transform.localScale = Vector3.MoveTowards(particleHolder.transform.localScale, targetScale, finalizerSpeed * Time.deltaTime);
+            particleHolder.transform.localScale = Vector3.MoveTowards(particleHolder.transform.localScale, targetScale, finalizerSpeed * Time.deltaTime); // Scales fire towards target scale over time
         }
 
-        if(health <= 0)
+        if(health <= 0) // Is fire dead?
         {
-            particleHolder.SetActive(false);
             if (destroyOnExtuingished && resetRoutine != null)
             {
-                StopCoroutine(resetRoutine);
+                StopCoroutine(resetRoutine); // Stops coroutine if object is getting destroyed
                 resetRoutine = null;
             }
             OnExtuingished();
@@ -86,6 +90,7 @@ public class Fire : Extuingishable
         scaleRoutine = null;
     }
 
+    // What happens when the fire is extuingished
     public override void OnExtuingished()
     {
         if (onExtuingished != null)
@@ -98,28 +103,29 @@ public class Fire : Extuingishable
         }
         else
         {
-            particleHolder.SetActive(false);
-            GetComponent<Collider>().enabled = false;
+            particleHolder.SetActive(false); // Disables the fire particle
+            GetComponent<Collider>().enabled = false; // Disables the fires collision
         }
     }
 
+    // Disables the fire entirely
     public override void Disable()
     {
         if(resetRoutine != null)
         {
-            StopCoroutine(resetRoutine);
+            StopCoroutine(resetRoutine); // Makes sure the fire doesnt reset
             resetRoutine = null;
         }
-        particleHolder.SetActive(false);
-        GetComponent<Collider>().enabled = false;
-        Debug.Log("DISABLED");
+        particleHolder.SetActive(false); // Disables the fire particle
+        GetComponent<Collider>().enabled = false; // Disables the fires collision
     }
 
+    // Resets the fire
     public override void Reset()
     {
         base.Reset();
-        particleHolder.SetActive(true);
-        CalculateTargetScale();
-        GetComponent<Collider>().enabled = true;
+        particleHolder.SetActive(true); // Enables the fire particle
+        CalculateTargetScale(); // Lets the fire regrow
+        GetComponent<Collider>().enabled = true; // Enables the fires collision
     }
 }

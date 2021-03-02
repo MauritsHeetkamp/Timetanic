@@ -8,18 +8,9 @@ public class Interactable : MonoBehaviour
     bool canInteract = true;
     [SerializeField] float interactDelay;
     public Player currentInteractingPlayer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    // Checks if this item can be interacted with
     public virtual bool CanInteract(Player askingPlayer)
     {
         if (canInteract && currentInteractingPlayer == null &&  askingPlayer != null && askingPlayer.currentHoldingItem == null)
@@ -31,11 +22,13 @@ public class Interactable : MonoBehaviour
         return false;
     }
 
-    public virtual void OnResultCanInteract(bool result) //If anything needs to happen based on if the player can interact
+    // If object can be interacted with
+    public virtual void OnResultCanInteract(bool result)
     {
 
     }
 
+    // Handles interaction
     public virtual void Interact(Player target)
     {
         canInteract = false;
@@ -44,11 +37,12 @@ public class Interactable : MonoBehaviour
         CompleteInteract();
     }
 
+     // Starts interaction delay
     public void InteractDelay()
     {
         if(currentInteractingPlayer != null)
         {
-            currentInteractingPlayer.FinishedInteract();
+            currentInteractingPlayer.FinishedInteract(); // Tells the player its done interacting
         }
         if(interactDelay > 0)
         {
@@ -59,23 +53,26 @@ public class Interactable : MonoBehaviour
             canInteract = true;
         }
     }
+
+    // Interaction delay timer
     IEnumerator StartInteractDelay()
     {
         yield return new WaitForSeconds(interactDelay);
         canInteract = true;
     }
 
+    // Cancels interaction
     public virtual void CancelInteract()
     {
-        InteractDelay();
+        InteractDelay(); // Starts interaction delay
         currentInteractingPlayer = null;
         currentInteractingPlayer.currentUsingInteractable = null;
     }
 
+    // Completes interaction
     public virtual void CompleteInteract()
     {
-        Debug.Log("INTERACTED");
-        InteractDelay();
+        InteractDelay(); // Starts interaction delay
         currentInteractingPlayer = null;
         currentInteractingPlayer.currentUsingInteractable = null;
     }
