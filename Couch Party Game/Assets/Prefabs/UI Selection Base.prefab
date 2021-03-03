@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 2fdd05e32b0fd2a45bb7808c0655182b,
+  m_Actions: {fileID: -944628639613478452, guid: a116562daa5be0b4e9162375be75b895,
     type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
@@ -78,34 +78,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 70b855e3-1514-46b8-9a64-20323f9965c1
-    m_ActionName: Player/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ae180047-3548-4cf9-b95e-2d2ccb56b588
-    m_ActionName: Player/Dash[/XInputControllerWindows/buttonWest,/Keyboard/shift]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 3c229f79-8c46-412b-a024-bc0d2557a38b
-    m_ActionName: Player/Drop[/XInputControllerWindows/buttonNorth,/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5d2ba038-b0e8-4858-b100-5a84d8b80f37
-    m_ActionName: Player/Throw[/XInputControllerWindows/leftTrigger,/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0311d207-94ce-439d-9c2d-bb0fafca99a7
-    m_ActionName: Player/Interact[/XInputControllerWindows/buttonEast,/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7aa27752-3953-40fb-b048-964fd3900cff
-    m_ActionName: Player/Use[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0aa1e2b7-1e52-491b-bac9-a3bbb8487ec4
-    m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 788881827410079909}
@@ -136,6 +108,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: bcd78edc-98ca-4a99-9733-3afc7704a306
     m_ActionName: UI/Vertical[/XInputControllerWindows/leftStick/down,/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/up,/Keyboard/s,/Keyboard/w,/Keyboard/downArrow,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 788881827410079909}
+        m_MethodName: Select
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fa7dcb84-cce8-4509-822e-4ac4b82c3ef3
+    m_ActionName: UI/Interact[/XInputControllerWindows/rightTrigger,/XInputControllerWindows/buttonEast,/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI

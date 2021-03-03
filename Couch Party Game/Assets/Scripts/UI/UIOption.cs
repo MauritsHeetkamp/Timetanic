@@ -26,4 +26,9 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     {
         ownerController.SetSelected(this);
     }
+
+    public virtual void Interact()
+    {
+
+    }
 }

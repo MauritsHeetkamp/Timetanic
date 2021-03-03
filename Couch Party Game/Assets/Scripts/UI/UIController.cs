@@ -24,6 +24,14 @@ public class UIController : MonoBehaviour
         SetSelected(0); // Selects the first option
     }
 
+    // Selects the current option
+    public void Select(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            allOptions[currentSelectedOption].Interact();
+        }
+    }
 
     // Moves the selection vertically by requested amount
     public void MoveVertical(InputAction.CallbackContext context)
