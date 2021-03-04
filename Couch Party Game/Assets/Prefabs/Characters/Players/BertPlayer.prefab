@@ -65,6 +65,7 @@ Transform:
   - {fileID: 1170049847835909018}
   - {fileID: 5188669638516531088}
   - {fileID: 5188669639493965840}
+  - {fileID: 8507884015528430750}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   thisRigid: {fileID: 1170049847086200460}
-  movementSpeed: 800
+  movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player
   role: 1
@@ -198,12 +199,12 @@ MonoBehaviour:
     m_Bits: 256
   onSlope: 0
   playerCamera: {fileID: 5188669639493965840}
-  followX: 1
+  followXY: 1
   followY: 1
-  followZ: 1
   zDistance: 16.31493
   yDistance: 14.8
   followSpeed: 1
+  cameraDirection: {fileID: 8507884015528430750}
   attachedSplitscreen: {fileID: 0}
   interactionBox: {fileID: 5188669638516531088}
   interactableLayers:
@@ -227,6 +228,36 @@ MonoBehaviour:
   hittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &3792926577925823587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8507884015528430750}
+  m_Layer: 0
+  m_Name: DirectionTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8507884015528430750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3792926577925823587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1708662365790638350}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5188669638516531095
 GameObject:
   m_ObjectHideFlags: 0

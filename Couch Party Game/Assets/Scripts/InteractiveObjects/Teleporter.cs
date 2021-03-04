@@ -13,8 +13,7 @@ public class Teleporter : MonoBehaviour
     [SerializeField] Teleporter connectedTeleporter; // Teleporter that this is possibly teleporting to
 
     [Header("Local Camera Properties")]
-    [SerializeField] bool newEulers; // If the camera should be updating its eulers
-    [SerializeField] Vector3 newEulerAngles; // New camera rotation
+    [SerializeField] Transform newCameraDirection; // New camera direction
     [SerializeField] float newYDistance, newZDistance; // New camera location
 
     [SerializeField] float fadeDuration = 0.5f; // Fade duration in teleports
@@ -46,15 +45,10 @@ public class Teleporter : MonoBehaviour
                 passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
             }
 
-            if (resetCamera) // Should the camera be reset
+            if (newCameraDirection != null)
             {
-                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera(); // Resets single screen camera
-                player.ResetCameraLocation(); // Resets split screen camera
-            }
-
-            if (newEulers)
-            {
-                player.playerCamera.eulerAngles = newEulerAngles;
+                player.SetCameraRotationX(newCameraDirection.eulerAngles);
+                player.SetCameraRotationY(newCameraDirection.eulerAngles);
             }
 
             if (newYDistance != 0)
@@ -65,6 +59,12 @@ public class Teleporter : MonoBehaviour
             if (newZDistance != 0)
             {
                 player.zDistance = newZDistance;
+            }
+
+            if (resetCamera) // Should the camera be reset
+            {
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera(); // Resets single screen camera
+                player.ResetCameraLocation(); // Resets split screen camera
             }
         }
 

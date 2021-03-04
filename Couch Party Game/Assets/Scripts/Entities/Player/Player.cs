@@ -38,9 +38,12 @@ public class Player : MovingEntity
 
     [Header("Camera")]
     public Transform playerCamera;
-    [SerializeField] bool followX = true, followY = true, followZ = true; //Directions the camera should be following
+    [SerializeField] bool followXY = true, followY = true; //Directions the camera should be following
     public float zDistance, yDistance; //Camera distance from the player away
     [SerializeField] float followSpeed;
+    [SerializeField] Transform cameraDirection; // Handles the camera its direction
+
+    CameraHandler cameraHandler; // Object that manages the cameras
 
     public GameObject attachedSplitscreen; //Split screen owned by this player
 
@@ -107,6 +110,11 @@ public class Player : MovingEntity
         }
     }
 
+    private void Awake()
+    {
+        cameraDirection.parent = null;
+    }
+
     private void Start()
     {
         OnEnable();
@@ -118,6 +126,17 @@ public class Player : MovingEntity
         {
             playerCamera.parent = null; //Disattaches the players camera for free movement
         }
+
+        if(cameraHandler == null)
+        {
+            GameObject cameraHandlerObject = GameObject.FindGameObjectWithTag("MainCamera");
+
+            if(cameraHandlerObject != null)
+            {
+                cameraHandler = cameraHandlerObject.GetComponent<CameraHandler>();
+            }
+        }
+
     }
 
     // Uses holding item if possible
@@ -184,11 +203,24 @@ public class Player : MovingEntity
     {
         if(context.performed || context.started) // Checks input
         {
-            rawMovement = context.ReadValue<Vector2>(); // Sets raw movement vector
+            Transform selectedCamera = playerCamera;
+
+            if(cameraHandler != null && !cameraHandler.isSplit && cameraHandler.globalCamera != null)
+            {
+                selectedCamera = cameraHandler.globalCamera;
+            }
+
+            Vector2 axisValue = context.ReadValue<Vector2>();
+            Vector3 movementDirection = axisValue.x * selectedCamera.right;
+            movementDirection += axisValue.y * selectedCamera.forward;
+            movementDirection.y = 0;
+
+            rawMovement = new Vector2(movementDirection.normalized.x, movementDirection.normalized.z); // Sets raw movement vector
+
         }
         else // Stopped moving
         {
-            rawMovement = Vector3.zero; // Resets raw movement vector
+            rawMovement = Vector2.zero; // Resets raw movement vector
         }
     }
 
@@ -245,73 +277,16 @@ public class Player : MovingEntity
     {
         Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
 
-        movementAmount = movementAmount.normalized;
-
         if (rawMovement.x != 0 || rawMovement.y != 0) // If not standing still
         {
 
             movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
 
-            Vector3 newVelocity = thisRigid.velocity + movementAmount; // Calculates new velocity
+            Debug.Log(movementAmount);
 
-            Vector3 actualMaxVelocity = new Vector3(maxVelocity, maxVelocity, maxVelocity); // Creates the max velocity vector
-
-            if (newVelocity.x < -actualMaxVelocity.x)
-            {
-                newVelocity.x = -actualMaxVelocity.x; // Sets velocity.x if its under the min velocity;
-            }
-            if (newVelocity.x > actualMaxVelocity.x)
-            {
-                newVelocity.x = actualMaxVelocity.x; // Sets velocity.x if its above the max velocity;
-            }
-
-            if (newVelocity.z < -actualMaxVelocity.z)
-            {
-                newVelocity.z = -actualMaxVelocity.z; // Sets velocity.z if its under the min velocity;
-            }
-            if (newVelocity.z > actualMaxVelocity.z)
-            {
-                newVelocity.z = actualMaxVelocity.z; // Sets velocity.z if its above the max velocity;
-            }
-
-            newVelocity = newVelocity - thisRigid.velocity; // Removes current velocity to get the force to add
-
-            thisRigid.AddForce(newVelocity, ForceMode.Acceleration); // Adds the movement velocity
-
-            Vector3 velocityDirection = thisRigid.velocity;
-            velocityDirection.y = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(movementAmount.normalized); // Calculates the direction the player should be facing
+            transform.Translate(movementAmount, Space.World);
+            Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
-        }
-        else // If not moving
-        {
-            if (decellerationBlocks <= 0) // Checks if decelleration should be used
-            {
-                if (thisRigid.velocity.x < -0.1 || thisRigid.velocity.x > 0.1f || thisRigid.velocity.z < -0.1 || thisRigid.velocity.z > 0.1f) // Checks if decelleration is necessary
-                {
-                    Vector3 velocityDecrease = Vector3.zero;
-
-                    if (thisRigid.velocity.x > 0)
-                    {
-                        velocityDecrease.x = decellerationSpeed * Time.fixedDeltaTime > thisRigid.velocity.x ? thisRigid.velocity.x : decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the x axis
-                    }
-                    if (thisRigid.velocity.z > 0)
-                    {
-                        velocityDecrease.z = decellerationSpeed * Time.fixedDeltaTime > thisRigid.velocity.z ? thisRigid.velocity.z : decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the z axis
-                    }
-
-                    if (thisRigid.velocity.x < 0)
-                    {
-                        velocityDecrease.x = -decellerationSpeed * Time.fixedDeltaTime < thisRigid.velocity.x ? thisRigid.velocity.x : -decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the x axis
-                    }
-                    if (thisRigid.velocity.z < 0)
-                    {
-                        velocityDecrease.z = -decellerationSpeed * Time.fixedDeltaTime < thisRigid.velocity.z ? thisRigid.velocity.z : -decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the z axis
-                    }
-
-                    thisRigid.velocity -= velocityDecrease; // Decellerates the player with the set amount
-                }
-            }
         }
     }
 
@@ -423,19 +398,20 @@ public class Player : MovingEntity
     public void ResetCameraLocation()
     {
         Vector3 targetPosition = playerCamera.transform.position;
-        if (followX)
+        if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
+            targetPosition.z = transform.position.z; // Calculates the target location on the z axis
+
+            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward;
+            moveBackwardsAmount.y = 0;
+
+            targetPosition += moveBackwardsAmount;
         }
         if (followY)
         {
             float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
-        }
-        if (followZ)
-        {
-            float distanceToMoveOnZ = playerCamera.transform.position.z - transform.position.z <= 0 ? -1 * zDistance : 1 * zDistance;
-            targetPosition.z = transform.position.z + distanceToMoveOnZ; // Calculates the target location on the z axis
         }
         playerCamera.transform.position = targetPosition; // Sets camera location
     }
@@ -444,21 +420,47 @@ public class Player : MovingEntity
     void CameraFollow()
     {
         Vector3 targetPosition = playerCamera.transform.position;
-        if (followX)
+        if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
+            targetPosition.z = transform.position.z; // Calculates the target location on the z axis
+
+            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward;
+            moveBackwardsAmount.y = 0;
+
+            targetPosition += moveBackwardsAmount;
         }
         if (followY)
         {
             float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
-        if (followZ)
-        {
-            float distanceToMoveOnZ = playerCamera.transform.position.z - transform.position.z <= 0 ? -1 * zDistance : 1 * zDistance;
-            targetPosition.z = transform.position.z + distanceToMoveOnZ; // Calculates the target location on the z axis
-        }
+
         playerCamera.transform.position = Vector3.Lerp(playerCamera.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
+    }
+
+    // Sets the cameras direction
+    public void SetCameraRotationY(Vector3 targetEulers, bool instant = true)
+    {
+        Vector3 newEulers = new Vector3(playerCamera.eulerAngles.x, targetEulers.y, playerCamera.eulerAngles.z);
+        cameraDirection.eulerAngles = new Vector3(0, newEulers.y, 0);
+        playerCamera.eulerAngles = newEulers;
+
+        if (instant) // Should the camera be instantly reset?
+        {
+            ResetCameraLocation();
+        }
+    }
+
+    public void SetCameraRotationX(Vector3 targetEulers, bool instant = true)
+    {
+        Vector3 newEulers = new Vector3(targetEulers.x, playerCamera.eulerAngles.y, targetEulers.z);
+        playerCamera.eulerAngles = newEulers;
+
+        if (instant)
+        {
+            ResetCameraLocation();
+        }
     }
 
     public enum Role { TestRole, OtherTestRole} // Roles for spawn locations

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CameraHandler : MonoBehaviour
 {
     [SerializeField] SpawnManager playerHandler; // The spawner keeps track of players
-    [SerializeField] Transform globalCamera; // The global camera for all-in-one screen
+    public Transform globalCamera; // The global camera for all-in-one screen
 
     [SerializeField] float cameraDistancePerUnit, defaultDistance; // Camera distance to zoom per unit of distance between players, distance to add standard
     [SerializeField] float minCameraDistance, maxCameraDistance; // Minimal and maximal camera distance
@@ -18,7 +18,7 @@ public class CameraHandler : MonoBehaviour
     [SerializeField] Transform splitscreenImageHolder; // Transform that holds all the splitscreens
 
     Vector3 targetLocation;
-    bool isSplit = true;
+    public bool isSplit = true;
     [SerializeField] float splitFadeDuration = 1; // Duration of the fade when swapping between all-in-one and split screen (fade in and out combined)
 
     public bool handleTheCameras = true; // Should the cameras be handled automatically?
@@ -241,13 +241,80 @@ public class CameraHandler : MonoBehaviour
         globalCamera.GetComponent<Camera>().enabled = false; // Disables global camera
     }
 
+    // Recalculates the global cameras rotation
+    public void RecalculateRotation()
+    {
+        List<GenericCounter<Vector3>> cameraEulers = new List<GenericCounter<Vector3>>(); // Creates counter
+
+        foreach (Player player in playerHandler.localPlayers) // Goes through every spawned player
+        {
+            bool found = false;
+            foreach (GenericCounter<Vector3> counter in cameraEulers)
+            {
+                if (counter.data == player.playerCamera.eulerAngles)
+                {
+                    counter.Change(1); // increments counter with 1
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                cameraEulers.Add(new GenericCounter<Vector3>(player.playerCamera.eulerAngles)); // Adds new counterdata
+            }
+
+        }
+
+        Vector3 selectedEulers = globalCamera.eulerAngles;
+
+        if (cameraEulers.Count > 0)
+        {
+            int highestAmount = -1;
+
+            foreach (GenericCounter<Vector3> counter in cameraEulers) // selects counter with highest amount
+            {
+                if (counter.count > highestAmount)
+                {
+                    highestAmount = counter.count;
+                    selectedEulers = counter.data;
+                }
+            }
+        }
+
+        Vector3 newEulers = new Vector3(globalCamera.eulerAngles.x, selectedEulers.y, globalCamera.eulerAngles.z); // New camera eulers based on amounts
+
+        globalCamera.eulerAngles = newEulers;
+    }
+
     void Unsplit()
     {
         splitscreenImageHolder.gameObject.SetActive(false); // Disables split screens
+
+        List<GenericCounter<Vector3>> cameraEulers = new List<GenericCounter<Vector3>>();
+
         foreach (Player player in playerHandler.localPlayers)
         {
             player.playerCamera.GetComponent<Camera>().enabled = false; // Disables all players their cameras
         }
+
         globalCamera.GetComponent<Camera>().enabled = true; // Enables global camera
+    }
+
+    struct GenericCounter<T>
+    {
+        public int count;
+        public T data;
+
+        public GenericCounter(T _data, int _count = 1)
+        {
+            count = _count;
+            data = _data;
+        }
+
+        public void Change(int amount)
+        {
+            count += amount;
+        }
     }
 }
