@@ -11,6 +11,9 @@ public class Player : MovingEntity
     public Role role; //The role of the player, this is used for where the player needs to be spawned
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
+    [Header("Animation")]
+    public Animator playerAnimator;
+
     [Header("Movement")]
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
 
@@ -277,9 +280,12 @@ public class Player : MovingEntity
     {
         Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
 
-        if (rawMovement.x != 0 || rawMovement.y != 0) // If not standing still
+        if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
         {
-
+            if(playerAnimator != null)
+            {
+                playerAnimator.SetBool("Walking", true);
+            }
             movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
 
             Debug.Log(movementAmount);
@@ -287,6 +293,13 @@ public class Player : MovingEntity
             transform.Translate(movementAmount, Space.World);
             Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
+        }
+        else
+        {
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetBool("Walking", false);
+            }
         }
     }
 
