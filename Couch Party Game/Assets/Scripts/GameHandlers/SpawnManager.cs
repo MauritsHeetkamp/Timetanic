@@ -77,6 +77,7 @@ public class SpawnManager : MonoBehaviour
         newCharacterObject.transform.rotation = location.rotation;
 
         Player newCharacter = newCharacterObject.GetComponent<Player>(); // Gets player script
+        newCharacter.owner = data;
         localPlayers.Add(newCharacter);
         globalPlayers.Add(newCharacter);
     }

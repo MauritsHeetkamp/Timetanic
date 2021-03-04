@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MovingEntity
 {
     [Header("General")]
+    public PlayerData owner;
+    [SerializeField] string characterControlScheme = "Player";
     public Role role; //The role of the player, this is used for where the player needs to be spawned
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
@@ -80,6 +82,8 @@ public class Player : MovingEntity
 
     private void Start()
     {
+        owner.SwapInputScheme(characterControlScheme);
+
         zDistance = zDistance == 0 ? playerCamera.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
         yDistance = yDistance == 0 ? playerCamera.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
         if(playerCamera != null)
