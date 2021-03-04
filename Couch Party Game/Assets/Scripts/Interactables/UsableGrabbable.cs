@@ -8,7 +8,7 @@ public class UsableGrabbable : Grabbable
     [SerializeField] float useDelay;
 
 
-    public bool CheckUse()
+    public virtual bool CheckUse()
     {
         if (canUse)
         {
@@ -17,6 +17,17 @@ public class UsableGrabbable : Grabbable
         return false;
     }
 
+    public override void Disattach()
+    {
+        StopUse();
+        base.Disattach();
+    }
+
+    public override void Break()
+    {
+        StopUse();
+        base.Break();
+    }
     public virtual void Use()
     {
         canUse = false;

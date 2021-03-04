@@ -176,7 +176,7 @@
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>MinigameManager</Name>
+        <Name>Minigame</Name>
         <Access>Public</Access>
         <Location left="1314" top="1044" />
         <Size width="162" height="216" />
@@ -229,7 +229,7 @@
       <Entity type="Class">
         <Name>Weapon</Name>
         <Access>Public</Access>
-        <Location left="346" top="2714" />
+        <Location left="123" top="2714" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">int damage = 1</Member>
@@ -238,7 +238,7 @@
       <Entity type="Class">
         <Name>Axe</Name>
         <Access>Public</Access>
-        <Location left="465" top="2985" />
+        <Location left="242" top="2985" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -246,7 +246,7 @@
       <Entity type="Class">
         <Name>Gun</Name>
         <Access>Public</Access>
-        <Location left="233" top="2985" />
+        <Location left="10" top="2985" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Field">private ParticleSystem fireParticle</Member>
@@ -298,10 +298,9 @@
       <Entity type="Class">
         <Name>FireExtuingisher</Name>
         <Access>Public</Access>
-        <Location left="562" top="2714" />
+        <Location left="515" top="2985" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">private float extuingishAmountPerSecond</Member>
         <Member type="Method">private IEnumerator Extuinguish()</Member>
         <Modifier>None</Modifier>
       </Entity>
@@ -418,10 +417,9 @@
       <Entity type="Class">
         <Name>WaterBucket</Name>
         <Access>Public</Access>
-        <Location left="126" top="2714" />
+        <Location left="716" top="2985" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">float extuingishAmount</Member>
         <Member type="Field">float fillCapacity</Member>
         <Member type="Method">public IEnumerator FillBucket()</Member>
         <Member type="Method">public IEnumerator UnfillBucket()</Member>
@@ -495,7 +493,8 @@
         <Member type="Method">public void OnTriggerExit(Collider collider)</Member>
         <Member type="Method">public void RequirementCompleted()</Member>
         <Member type="Method">public void RequirementNotCompleted()</Member>
-        <Member type="Event">public event EventHandler onRequirementCompleted</Member>
+        <Member type="Event">public event EventHandler onPlayerCountChanged</Member>
+        <Member type="Method">public bool HasRequirements()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -671,6 +670,15 @@
         <Member type="Method">public virtual void OnCloseMenu()</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>Extuingisher</Name>
+        <Access>Public</Access>
+        <Location left="620" top="2718" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">float ExtuingishAmount</Member>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Generalization" first="26" second="1">
@@ -729,15 +737,7 @@
           <Y>2260</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Generalization" first="23" second="22">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
       <Relationship type="Generalization" first="16" second="22">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Generalization" first="34" second="22">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
@@ -806,50 +806,34 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="12" second="40">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="6" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="3" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="7" second="4">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="6" second="9">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="3" second="9">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="7" second="9">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="10" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -858,14 +842,10 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="32" second="31">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="46" second="45">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -874,6 +854,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="26" second="47">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="False">
@@ -882,10 +864,14 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="8" second="48">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="50" second="37">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
@@ -902,6 +888,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="41" second="52">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
@@ -938,6 +926,18 @@
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Generalization" first="3" second="57">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="34" second="58">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="23" second="58">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="58" second="22">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
