@@ -14,6 +14,39 @@ public class UIController : MonoBehaviour
 
     float lastMoveAmount; // Last amount that has been moved in the horizontal axis
 
+
+
+    private void OnEnable()
+    {
+        Debug.Log("ADDED");
+        PlayerManager.instance.onNewPlayerConnected += OnNewPlayerConnected;
+        foreach(PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+        {
+            data.onHorizontalAxis += MoveHorizontal;
+            data.onVerticalAxis += MoveVertical;
+            data.onSelect += Select;
+        }
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("REMOVED");
+        PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerConnected;
+        foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+        {
+            data.onHorizontalAxis -= MoveHorizontal;
+            data.onVerticalAxis -= MoveVertical;
+            data.onSelect -= Select;
+        }
+    }
+
+    public void OnNewPlayerConnected(PlayerData target)
+    {
+        target.onHorizontalAxis += MoveHorizontal;
+        target.onVerticalAxis += MoveVertical;
+        target.onSelect += Select;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +58,7 @@ public class UIController : MonoBehaviour
     }
 
     // Selects the current option
-    public void Select(InputAction.CallbackContext context)
+    public void Select(InputAction.CallbackContext context, PlayerData owner)
     {
         if (context.started)
         {
@@ -34,8 +67,9 @@ public class UIController : MonoBehaviour
     }
 
     // Moves the selection vertically by requested amount
-    public void MoveVertical(InputAction.CallbackContext context)
+    public void MoveVertical(InputAction.CallbackContext context, PlayerData owner)
     {
+        Debug.Log("VER");
         float direction = context.ReadValue<float>(); // Checks the direction the button is pressed
         if (verticalRecentered) // Can the selection be moved vertically
         {
@@ -71,7 +105,7 @@ public class UIController : MonoBehaviour
     }
 
     // Moves the selection horizontal by requested amount
-    public void MoveHorizontal(InputAction.CallbackContext context)
+    public void MoveHorizontal(InputAction.CallbackContext context, PlayerData owner)
     {
         if(allOptions.Length > 0)
         {
