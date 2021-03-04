@@ -72,11 +72,8 @@ public class SpawnManager : MonoBehaviour
     void ActualSpawn(Transform location, GameObject character, int playerIndex)
     {
         PlayerData data = PlayerManager.instance.connectedToLobbyPlayers[playerIndex]; // Finds the playerdata from this player
-        PlayerInput newCharacterObject = PlayerInput.Instantiate(character, data.playerInput.playerIndex, data.playerInput.currentControlScheme, -1, data.playerInput.devices[0]); // Spawns player and attaches control scheme based on local controller
-        newCharacterObject.transform.position = location.position;
-        newCharacterObject.transform.rotation = location.rotation;
 
-        Player newCharacter = newCharacterObject.GetComponent<Player>(); // Gets player script
+        Player newCharacter = Instantiate(character, location.position, location.rotation).GetComponent<Player>(); // Spawns player and stores player script
         newCharacter.owner = data;
         localPlayers.Add(newCharacter);
         globalPlayers.Add(newCharacter);

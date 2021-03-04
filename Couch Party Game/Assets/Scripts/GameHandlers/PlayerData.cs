@@ -65,6 +65,7 @@ public class PlayerData : MonoBehaviour
     // Swaps the used input action map
     public void SwapInputScheme(string schemeName)
     {
+        Debug.Log("SWAPPED");
         playerInput.SwitchCurrentActionMap(schemeName);
     }
 
