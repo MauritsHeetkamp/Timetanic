@@ -13,6 +13,7 @@ public class Lobby : Menu
 
     [SerializeField] bool keepSpecificSpot = true; // If players disconnect should everyone slide next to eachother
 
+    [SerializeField] UIController controller; // Controls the ui buttons on screen
 
     private void OnEnable()
     {
@@ -132,6 +133,15 @@ public class Lobby : Menu
             {
                 playerIcons[i].gameObject.SetActive(false); // disables that specific player icon
             }
+        }
+
+        if(connectedAmount > 0)
+        {
+            controller.enabled = true;
+        }
+        else
+        {
+            controller.enabled = false;
         }
 
         startButton.interactable = connectedAmount >= minPlayers ? true : false; // can the game start? enables button on result

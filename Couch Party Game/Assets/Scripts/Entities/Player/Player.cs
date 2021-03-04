@@ -79,9 +79,37 @@ public class Player : MovingEntity
         CheckSlope();
     }
 
+    private void OnEnable()
+    {
+        if(owner != null)
+        {
+            owner.onMove += SetMoveAmount;
+            owner.onUse += UseCurrentItem;
+            owner.onThrow += ThrowCurrentItem;
+            owner.onDrop += DropCurrentItem;
+            owner.onJump += Jump;
+            owner.onDash += Dash;
+            owner.onInteract += Interact;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (owner != null)
+        {
+            owner.onMove -= SetMoveAmount;
+            owner.onUse -= UseCurrentItem;
+            owner.onThrow -= ThrowCurrentItem;
+            owner.onDrop -= DropCurrentItem;
+            owner.onJump -= Jump;
+            owner.onDash -= Dash;
+            owner.onInteract -= Interact;
+        }
+    }
 
     private void Start()
     {
+        OnEnable();
         owner.SwapInputScheme(characterControlScheme);
 
         zDistance = zDistance == 0 ? playerCamera.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
@@ -93,7 +121,7 @@ public class Player : MovingEntity
     }
 
     // Uses holding item if possible
-    public void UseCurrentItem(InputAction.CallbackContext context)
+    public void UseCurrentItem(InputAction.CallbackContext context, PlayerData owner)
     {
         if (canInteract && currentHoldingItem != null) //Checks if you can interact and have an equipped item
         {
@@ -114,7 +142,7 @@ public class Player : MovingEntity
     }
 
     // Throws current holding item
-    public void ThrowCurrentItem(InputAction.CallbackContext context)
+    public void ThrowCurrentItem(InputAction.CallbackContext context, PlayerData owner)
     {
         if(context.started && canInteract && currentHoldingItem != null) //Checks input, if you can interact and if you are holding an item
         {
@@ -131,7 +159,7 @@ public class Player : MovingEntity
     }
 
     // Drops the current holding item
-    public void DropCurrentItem(InputAction.CallbackContext context)
+    public void DropCurrentItem(InputAction.CallbackContext context, PlayerData owner)
     {
         if (context.started && currentHoldingItem != null) // Checks input and if you are holding an item
         {
@@ -140,7 +168,7 @@ public class Player : MovingEntity
     }
 
     // Handles jumping
-    public void Jump(InputAction.CallbackContext context)
+    public void Jump(InputAction.CallbackContext context, PlayerData owner)
     {
         if(context.started && canJump) // Checks input and if player can jump
         {
@@ -152,7 +180,7 @@ public class Player : MovingEntity
     }
 
     // Sets the movement amounts
-    public void SetMoveAmount(InputAction.CallbackContext context)
+    public void SetMoveAmount(InputAction.CallbackContext context, PlayerData owner)
     {
         if(context.performed || context.started) // Checks input
         {
@@ -288,7 +316,7 @@ public class Player : MovingEntity
     }
 
     // Checks to use a dash
-    public void Dash(InputAction.CallbackContext context)
+    public void Dash(InputAction.CallbackContext context, PlayerData owner)
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
@@ -362,7 +390,7 @@ public class Player : MovingEntity
     }
 
     // Handles interaction
-    public void Interact(InputAction.CallbackContext context)
+    public void Interact(InputAction.CallbackContext context, PlayerData owner)
     {
         if (context.started && nearestInteractable != null && canInteract) // Checks input, if an interactable is near and if you can interact
         {
