@@ -1,0 +1,44 @@
+MachineRoom
+
+Wat het nodig heeft om zich heen om tot zijn recht te komen:
+
+Het model heeft modellen nodig die passen binnen een fabrieksomgeving om goed gebruikt te worden.
+____________________________________________________________________________________________________________________________________________
+Wat voor lighting heeft het nodig:
+
+Het model heeft duidelijk licht nodig zodat je kan zien wat er gebeurd, het licht moet er voor zorgen dat het een
+kille/koude area is. Het moet binnen de stylized stijl passen
+____________________________________________________________________________________________________________________________________________
+Wat voor texture heeft het nodig:
+
+Er moet een stylized texture op komen die aansluit op de Style Guide en de PVE. Ook moet het texture gradient(s) bevatten.
+____________________________________________________________________________________________________________________________________________
+Hoe/Waarvoor word het gebruikt:
+
+Het model word gebruikt als een lege area waarin je kan rondlopen, het moet de boundary worden van die specifieke play-area.
+____________________________________________________________________________________________________________________________________________
+Welke animaties heeft het nodig:
+
+N.V.T
+____________________________________________________________________________________________________________________________________________
+Hoe moeten de animaties aangestuurd worden:
+
+N.V.T
+____________________________________________________________________________________________________________________________________________
+Met welke animaties moet het samen werken:
+
+N.V.T
+____________________________________________________________________________________________________________________________________________
+Moet het object met dingen kunnen interacten zoja met welke:
+
+Het object moet box colliders bevatten aan de ingangen van de gamer, deze moeten ervoor zorgen dat als de speler hier doorheen loopt,
+hij geteleport word naar de juiste locatie met gebruikmaking van code via C# binnen Unity.
+____________________________________________________________________________________________________________________________________________
+Informatie over het model:
+
+
+Ik heb vooraf nagedacht over hoe ik dit model moest maken en kwam er snel achter dat ik het model modulair moest maken, omdat andere modellen
+binnen dit model ook modulair moeten werken (Stairways, Pipes, Tubes). Ik heb, toen ik bezig was met het maken van dit model, erover gedacht
+hoe de level design binnen dit model moet werken en heb hierop het model aangepast. Ik heb daarom meerdere deuropeningen gemaakt waarmee
+je binnen het project interactie mee moet kunnen hebben
+
