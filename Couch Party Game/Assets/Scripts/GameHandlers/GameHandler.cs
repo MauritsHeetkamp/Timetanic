@@ -8,17 +8,17 @@ using TMPro;
 public class GameHandler : MonoBehaviour
 {
     [Header("CountdownTimer")]
-    bool almostFinished;
-    [SerializeField] CountdownTimer gameTime;
-    [SerializeField] TimeDuration almostFinishedTime;
+    bool almostFinished; // Is the time almost over?
+    [SerializeField] CountdownTimer gameTime; // the timer
+    [SerializeField] TimeDuration almostFinishedTime; // Timestamp when the time is almost over
     [SerializeField] TextMeshProUGUI gameTimeText;
     [SerializeField] Animator textAnimator;
-    [SerializeField] AnimationClip defaultTextAnim, almostFinishedTextAnim;
-    Coroutine countdownRoutine;
+    [SerializeField] AnimationClip defaultTextAnim, almostFinishedTextAnim; // Custom panic effect clips
+    Coroutine countdownRoutine; // Countdown coroutine
 
 
     [Header("Score")]
-    int score;
+    public int score;
 
     [Header("Spawning")]
     [SerializeField] SpawnManager spawnHandler;
@@ -28,19 +28,17 @@ public class GameHandler : MonoBehaviour
         StartGame();
     }
 
-    private void Update()
-    {
-    }
-
+    // Starts the game
     public void StartGame()
     {      
-        StartStopCountdown(true, true);
-        spawnHandler.GetSpawnData();
+        StartStopCountdown(true, true); // Starts and resets timer
+        spawnHandler.GetSpawnData(); // Spawns players
     }
 
+    // Starts or stops the countdown
     public void StartStopCountdown(bool start, bool resetOnStart = false)
     {
-        if (countdownRoutine != null)
+        if (countdownRoutine != null) // Checks if there is already an countdown running
         {
             StopCoroutine(countdownRoutine);
             countdownRoutine = null;
@@ -50,23 +48,24 @@ public class GameHandler : MonoBehaviour
         {
             if (resetOnStart)
             {
-                gameTime.Reset();
+                gameTime.Reset(); // Resets the timer
             }
-            countdownRoutine = StartCoroutine(gameTime.Countdown());
+            countdownRoutine = StartCoroutine(gameTime.Countdown()); // Starts countdown
         }
     }
 
+    // Updates the timer ui
     public void UpdateTimer()
     {
-        string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString() : gameTime.remainingSeconds.ToString();
-        gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText;
+        string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString() : gameTime.remainingSeconds.ToString(); // Gets the seconds string
+        gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
 
         if (almostFinished)
         {
-            if (gameTime.IsLower(almostFinishedTime))
+            if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
             {
                 almostFinished = false;
-                if(textAnimator != null && defaultTextAnim != null)
+                if(textAnimator != null && defaultTextAnim != null) // Checks if animations should be stopped
                 {
                     textAnimator.Play(defaultTextAnim.name);
                 }
@@ -74,10 +73,10 @@ public class GameHandler : MonoBehaviour
         }
         else
         {
-            if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime))
+            if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
             {
                 almostFinished = true;
-                if(textAnimator != null && almostFinishedTextAnim != null)
+                if(textAnimator != null && almostFinishedTextAnim != null) // Checks if animations should be started
                 {
                     textAnimator.Play(almostFinishedTextAnim.name);
                 }
@@ -85,11 +84,13 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    // Finishes the game
     public void FinishGame()
     {
 
     }
 
+    // Modifies the final score
     public void ChangeScore(int value)
     {
         score += value;
@@ -105,9 +106,11 @@ namespace Custom.Time
         [SerializeField] UnityEvent onCompleteTimer;
         [SerializeField] UnityEvent onTimerChanged;
 
-        public float countdownSpeed = 1;
+        public float countdownSpeed = 1; // Countdown speed modifier
         public int remainingSeconds, remainingMinutes;
 
+
+        // Resets the timer
         public void Reset()
         {
             remainingSeconds = duration.seconds;
@@ -115,9 +118,10 @@ namespace Custom.Time
             onTimerChanged.Invoke();
         }
 
+        // Countdown routine
         public IEnumerator Countdown()
         {
-            while (remainingMinutes != 0 || remainingSeconds != 0)
+            while (remainingMinutes != 0 || remainingSeconds != 0) // Is the time over?
             {
                 if (remainingSeconds > 0)
                 {
@@ -125,10 +129,10 @@ namespace Custom.Time
                 }
                 else
                 {
-                    if (remainingMinutes > 0)
+                    if (remainingMinutes > 0) // Is there at least one minute left?
                     {
-                        remainingMinutes--;
-                        remainingSeconds = 59;
+                        remainingMinutes--; // Remove minute
+                        remainingSeconds = 59; // Add new seconds
                     }
                 }
                 onTimerChanged.Invoke();
@@ -137,6 +141,7 @@ namespace Custom.Time
             onCompleteTimer.Invoke();
         }
 
+        // Adds time to the timer
         public void ChangeTime(TimeDuration time)
         {
             remainingMinutes += time.minutes;
@@ -144,14 +149,15 @@ namespace Custom.Time
 
             if (remainingSeconds >= 60)
             {
-                remainingMinutes += Mathf.FloorToInt(remainingSeconds / 60);
-                remainingSeconds -= Mathf.FloorToInt(remainingSeconds / 60) * 60;
+                remainingMinutes += Mathf.FloorToInt(remainingSeconds / 60); // How many minutes are in the remaining seconds
+                remainingSeconds -= Mathf.FloorToInt(remainingSeconds / 60) * 60; // Extracts the minutes from seconds
                 remainingMinutes++;
             }
 
             onTimerChanged.Invoke();
         }
 
+        // Checks if a time is higher then the current time
         public bool IsHigher(TimeDuration time)
         {
             if (time.minutes > remainingMinutes)
@@ -169,6 +175,7 @@ namespace Custom.Time
             return false;
         }
 
+        // Checks if a time is lower then the current time
         public bool IsLower(TimeDuration time)
         {
             if (time.minutes < remainingMinutes)
@@ -186,6 +193,7 @@ namespace Custom.Time
             return false;
         }
 
+        // Checks if a time is equal to the current time
         public bool IsEqual(TimeDuration time)
         {
             if (time.minutes == remainingMinutes && time.seconds == remainingSeconds)

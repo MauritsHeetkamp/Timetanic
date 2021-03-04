@@ -9,5 +9,5 @@ public class FadePanel : MonoBehaviour
     public UnityAction onFadedIn, onFadedOut;
     public UnityAction<GameObject> onFadedInSpecificPlayer, onFadedOutSpecificPlayer;
 
-    public Image fadePanel;
+    public Image fadePanel; // Image that fades away
 }
