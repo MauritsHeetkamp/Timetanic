@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3575103608658646741}
   - component: {fileID: 4721824162079717195}
   - component: {fileID: 8487248312254634664}
-  - component: {fileID: 6936698987613289268}
+  - component: {fileID: 5144254384402893934}
   m_Layer: 0
   m_Name: SM_ClosetDoor2
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1726021169139022264}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44606704, y: 0.53580505, z: 0.3203174}
+  m_LocalPosition: {x: -0.36559, y: 0.44114, z: 0.2589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4197907504761852047}
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &6936698987613289268
+--- !u!65 &5144254384402893934
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,8 +91,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.49571204, y: 1.6021886, z: 0.1669065}
-  m_Center: {x: 0.19422328, y: 0.8088125, z: 0.056229264}
+  m_Size: {x: 0.40648386, y: 1.3137946, z: 0.04987535}
+  m_Center: {x: 0.15926309, y: 0.66322625, z: 0.0026140064}
 --- !u!1 &3462444499815688336
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3462444499815688336}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.21254927, y: 0.6672375, z: 0.22263795}
+  m_LocalPosition: {x: -0.174, y: 0.5498, z: 0.1811}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4197907504761852047}
@@ -184,8 +184,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.37492615, y: 0.1732176, z: 0.3838231}
-  m_Center: {x: -0.00056201965, y: 0.000000026077032, z: -0.16816697}
+  m_Size: {x: 0.30743945, y: 0.14203843, z: 0.31473494}
+  m_Center: {x: -0.00046085566, y: 0.000000022351742, z: -0.13789693}
 --- !u!1 &3533678702686014005
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3774858782150946448}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4463805, y: 0.5435233, z: 0.30563998}
+  m_LocalPosition: {x: 0.368, y: 0.4478, z: 0.245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4197907504761852047}
@@ -313,8 +313,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4965116, y: 1.6021887, z: 0.16681415}
-  m_Center: {x: -0.19630899, y: 0.80109435, z: 0.02974782}
+  m_Size: {x: 0.40713948, y: 1.3137947, z: 0.048124447}
+  m_Center: {x: -0.16097337, y: 0.65689737, z: -0.019938357}
 --- !u!1 &5461915606977948521
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +327,8 @@ GameObject:
   - component: {fileID: 3789770281138291289}
   - component: {fileID: 2779145046345408055}
   - component: {fileID: 4344578797146342904}
+  - component: {fileID: 7014154101867024599}
+  - component: {fileID: 3567482015811553484}
   m_Layer: 0
   m_Name: SM_ClosetDrawer1
   m_TagString: Untagged
@@ -342,7 +344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5461915606977948521}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0024290085, y: 0.3269585, z: 0.3473966}
+  m_LocalPosition: {x: 0.0024290085, y: 0.273, z: 0.2757}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4197907504761852047}
@@ -406,8 +408,34 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.92642003, y: 0.2786234, z: 0.7478396}
-  m_Center: {x: -0.0017301142, y: -0.000000022351742, z: -0.2618889}
+  m_Size: {x: 0.7596644, y: 0.22847119, z: 0.5243691}
+  m_Center: {x: -0.0014187098, y: -0.000000014901161, z: -0.25917858}
+--- !u!65 &7014154101867024599
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461915606977948521}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12847006, y: 0.11625752, z: 0.09206435}
+  m_Center: {x: 0.20706612, y: -0.032745406, z: 0.044602707}
+--- !u!65 &3567482015811553484
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5461915606977948521}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1284701, y: 0.1162575, z: 0.09206435}
+  m_Center: {x: -0.2070661, y: -0.03274541, z: 0.04460271}
 --- !u!1 &5543599770312272278
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +463,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5543599770312272278}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.21246949, y: 0.6556465, z: 0.22263795}
+  m_LocalPosition: {x: 0.174, y: 0.53820896, z: 0.1811}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4197907504761852047}
@@ -499,8 +527,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.3811986, y: 0.1732176, z: 0.3838231}
-  m_Center: {x: 0.0021608323, y: 0.011591036, z: -0.16816697}
+  m_Size: {x: 0.31258285, y: 0.14203843, z: 0.31473494}
+  m_Center: {x: 0.0017718822, y: 0.009504648, z: -0.13789693}
 --- !u!1 &6563955987517078221
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +540,7 @@ GameObject:
   - component: {fileID: 1994080505523839832}
   - component: {fileID: 6242153676337659497}
   - component: {fileID: 2947167632864838080}
-  - component: {fileID: 4466581810885282920}
+  - component: {fileID: 5641029613759783295}
   m_Layer: 0
   m_Name: SM_Closet1
   m_TagString: Untagged
@@ -581,7 +609,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &4466581810885282920
+--- !u!65 &5641029613759783295
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -592,5 +620,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4402994, y: 2.388853, z: 0.9863386}
-  m_Center: {x: 0, y: 1.1944265, z: -0.06298281}
+  m_Size: {x: 1.08, y: 1.9588594, z: 0.75}
+  m_Center: {x: 0, y: 0.9794297, z: -0.051645905}
