@@ -192,8 +192,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5575816415099164423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013999939, y: 0, z: 1.0793028}
-  m_LocalScale: {x: 2.5080376, y: 1, z: 2.3791754}
+  m_LocalPosition: {x: -0.013999939, y: 0.4187, z: 1.1060044}
+  m_LocalScale: {x: 2.5080376, y: 1.8032417, z: 2.3791766}
   m_Children: []
   m_Father: {fileID: 563214960578073462}
   m_RootOrder: 3
@@ -213,7 +213,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5575816415099164423}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -307,11 +307,10 @@ MonoBehaviour:
   characterControlScheme: Player
   role: 1
   followingPassengers: []
+  playerAnimator: {fileID: 8503430068137528046}
   rawMovement: {x: 0, y: 0}
   canMove: 1
-  maxVelocity: 11
   decellerationBlocks: 0
-  decellerationSpeed: 15
   rotateSpeed: 300
   jumpVelocity: 300
   canJump: 1
@@ -395,6 +394,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1252322285913596734, guid: e36532fa7beb76e4db723e8a884f794d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 63be729c08cb36f45b7a8af778f532ec, type: 2}
     - target: {fileID: 6968077864267217574, guid: e36532fa7beb76e4db723e8a884f794d,
         type: 3}
       propertyPath: m_RootOrder
@@ -453,7 +457,7 @@ PrefabInstance:
     - target: {fileID: 7780044543371026460, guid: e36532fa7beb76e4db723e8a884f794d,
         type: 3}
       propertyPath: m_Name
-      value: BertyPlayer
+      value: NewBertyPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 7780044543371026460, guid: e36532fa7beb76e4db723e8a884f794d,
         type: 3}
@@ -471,6 +475,12 @@ GameObject:
 --- !u!4 &563214960578073462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6968077864267217574, guid: e36532fa7beb76e4db723e8a884f794d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7449909138539801040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8503430068137528046 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1252322285913596734, guid: e36532fa7beb76e4db723e8a884f794d,
     type: 3}
   m_PrefabInstance: {fileID: 7449909138539801040}
   m_PrefabAsset: {fileID: 0}

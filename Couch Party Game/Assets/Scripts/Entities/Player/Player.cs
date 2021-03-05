@@ -18,9 +18,7 @@ public class Player : MovingEntity
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
 
     public bool canMove = true;
-    [SerializeField] float maxVelocity = 1; //The maximum velocity while moving
     public int decellerationBlocks; //System that blocks decelleration when higher then 0
-    [SerializeField] float decellerationSpeed = 1;
     [SerializeField] float rotateSpeed = 1;
 
     [Header("Jumping")]
@@ -73,22 +71,26 @@ public class Player : MovingEntity
     [SerializeField] float dashDuration;
     [SerializeField] LayerMask hittableLayers; // Layers that cancels the dash
 
+    // Handles camera following and interaction checks
     private void Update()
     {
         CameraFollow();
         CheckInteract();
     }
 
+    // Handles movement and slope checks
     private void FixedUpdate()
     {
         Movement();
         CheckSlope();
     }
 
+    // Sets input events
     private void OnEnable()
     {
-        if(owner != null)
+        if(owner != null) // Is this owner by a player?
         {
+            // Assigns buttons their functionality
             owner.onMove += SetMoveAmount;
             owner.onUse += UseCurrentItem;
             owner.onThrow += ThrowCurrentItem;
@@ -99,10 +101,12 @@ public class Player : MovingEntity
         }
     }
 
+    // Removes input events
     private void OnDisable()
     {
-        if (owner != null)
+        if (owner != null) // Is this owner by a player?
         {
+            // Assigns buttons their functionality
             owner.onMove -= SetMoveAmount;
             owner.onUse -= UseCurrentItem;
             owner.onThrow -= ThrowCurrentItem;
@@ -113,15 +117,17 @@ public class Player : MovingEntity
         }
     }
 
+    // Unparents the camera for free movement
     private void Awake()
     {
         cameraDirection.parent = null;
     }
 
+    // Start is called before the first frame update
     private void Start()
     {
         OnEnable();
-        owner.SwapInputScheme(characterControlScheme);
+        owner.SwapInputScheme(characterControlScheme); // Sets the control scheme to player controls
 
         zDistance = zDistance == 0 ? playerCamera.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
         yDistance = yDistance == 0 ? playerCamera.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
@@ -416,14 +422,14 @@ public class Player : MovingEntity
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
             targetPosition.z = transform.position.z; // Calculates the target location on the z axis
 
-            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward;
+            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward; // Calculates how much the camera should be moved backwards (locally)
             moveBackwardsAmount.y = 0;
 
-            targetPosition += moveBackwardsAmount;
+            targetPosition += moveBackwardsAmount; // Updates the cameras target position with the backwards amount
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance; // Calculates how much the camera should be moved upwards
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
         playerCamera.transform.position = targetPosition; // Sets camera location
@@ -452,12 +458,12 @@ public class Player : MovingEntity
         playerCamera.transform.position = Vector3.Lerp(playerCamera.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
     }
 
-    // Sets the cameras direction
+    // Sets the cameras direction on the Y axis
     public void SetCameraRotationY(Vector3 targetEulers, bool instant = true)
     {
-        Vector3 newEulers = new Vector3(playerCamera.eulerAngles.x, targetEulers.y, playerCamera.eulerAngles.z);
-        cameraDirection.eulerAngles = new Vector3(0, newEulers.y, 0);
-        playerCamera.eulerAngles = newEulers;
+        Vector3 newEulers = new Vector3(playerCamera.eulerAngles.x, targetEulers.y, playerCamera.eulerAngles.z); // Calculates new eulers
+        cameraDirection.eulerAngles = new Vector3(0, newEulers.y, 0); // Lets camera know which direction is forward
+        playerCamera.eulerAngles = newEulers; // Sets the camera rotation to the new angle
 
         if (instant) // Should the camera be instantly reset?
         {
@@ -465,12 +471,13 @@ public class Player : MovingEntity
         }
     }
 
-    public void SetCameraRotationX(Vector3 targetEulers, bool instant = true)
+    //Sets the cameras direction in the x and z axis
+    public void SetCameraRotationXZ(Vector3 targetEulers, bool instant = true)
     {
-        Vector3 newEulers = new Vector3(targetEulers.x, playerCamera.eulerAngles.y, targetEulers.z);
-        playerCamera.eulerAngles = newEulers;
+        Vector3 newEulers = new Vector3(targetEulers.x, playerCamera.eulerAngles.y, targetEulers.z); // Calculates new eulers
+        playerCamera.eulerAngles = newEulers; // Sets the camera rotation to the new angle
 
-        if (instant)
+        if (instant) // Should the camera be instantly reset?
         {
             ResetCameraLocation();
         }

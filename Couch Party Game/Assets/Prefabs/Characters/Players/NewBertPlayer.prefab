@@ -724,6 +724,7 @@ GameObject:
   - component: {fileID: 3051016953458959810}
   - component: {fileID: 7356186324155280608}
   - component: {fileID: 2379193980547537414}
+  - component: {fileID: 6489058870025747388}
   m_Layer: 0
   m_Name: NewBertPlayer
   m_TagString: Player
@@ -800,11 +801,10 @@ MonoBehaviour:
   characterControlScheme: Player
   role: 1
   followingPassengers: []
+  playerAnimator: {fileID: 6489058870025747388}
   rawMovement: {x: 0, y: 0}
   canMove: 1
-  maxVelocity: 11
   decellerationBlocks: 0
-  decellerationSpeed: 15
   rotateSpeed: 300
   jumpVelocity: 300
   canJump: 1
@@ -851,6 +851,25 @@ MonoBehaviour:
   hittableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!95 &6489058870025747388
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446156218242447020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5169073d895b8b643b271c205996d03e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2773766919586551937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,8 +1487,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5370689136665261724}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.013999939, y: 0.017086029, z: 1.1060044}
-  m_LocalScale: {x: 2.5080376, y: 1, z: 2.3791754}
+  m_LocalPosition: {x: -0.013999939, y: 0.4187, z: 1.1060044}
+  m_LocalScale: {x: 2.5080376, y: 1.8032417, z: 2.3791766}
   m_Children: []
   m_Father: {fileID: 3078683901418564630}
   m_RootOrder: 3
@@ -1489,7 +1508,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5370689136665261724}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

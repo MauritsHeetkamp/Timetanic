@@ -47,7 +47,7 @@ public class Teleporter : MonoBehaviour
 
             if (newCameraDirection != null)
             {
-                player.SetCameraRotationX(newCameraDirection.eulerAngles);
+                player.SetCameraRotationXZ(newCameraDirection.eulerAngles);
                 player.SetCameraRotationY(newCameraDirection.eulerAngles);
             }
 
