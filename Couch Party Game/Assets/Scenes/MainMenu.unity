@@ -2186,7 +2186,7 @@ MonoBehaviour:
   selectedIconPrefab: {fileID: 2740501799936104683, guid: 848a94b0e673977419bbe7138837d769,
     type: 3}
   iconHolderLayoutGroup: {fileID: 1118682380}
-  selectedColor: {r: 0, g: 0, b: 0, a: 0}
+  selectedColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
   defaultColor: {r: 0.81960785, g: 0.8156863, b: 0.8156863, a: 0.39215687}
 --- !u!114 &1112241945
 MonoBehaviour:
@@ -4294,7 +4294,7 @@ MonoBehaviour:
   sfxSlider: {fileID: 8101217}
   backgroundMusicSlider: {fileID: 1022983441}
   masterVolumeSlider: {fileID: 672814130}
-  qualitySettings: {fileID: 0}
+  qualitySettings: {fileID: 1112241944}
 --- !u!1 &1870798138
 GameObject:
   m_ObjectHideFlags: 0
