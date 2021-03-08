@@ -5,14 +5,33 @@ using UnityEngine.UI;
 
 public class UIButtonArray : UIOption
 {
-    int selectedButton;
+    public int selectedButton;
     [SerializeField] UISubOptionButton[] buttons;
+    public Transform buttonHolder;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Initialize();
+    }
+
+    public void Initialize(UISubOptionButton[] _buttons)
+    {
+        for(int i = buttons.Length - 1; i >= 0; i--)
+        {
+            Destroy(buttons[i].gameObject);
+        }
+
+        buttons = _buttons;
+
+        if (buttons.Length > selectedButton)
+        {
+            if (buttons[selectedButton].onHover != null)
+            {
+                buttons[selectedButton].onHover.Invoke();
+            }
+        }
     }
 
     void Initialize()

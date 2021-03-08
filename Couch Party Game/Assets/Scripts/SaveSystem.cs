@@ -13,6 +13,8 @@ public class SaveSystem : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(gameObject);
+        Load();
     }
 
     // Start is called before the first frame update
@@ -30,15 +32,7 @@ public class SaveSystem : MonoBehaviour
 
     public void Save()
     {
-        float value;
-        audio.GetFloat(masterAudioName, out value);
-        PlayerPrefs.SetFloat(masterAudioName, value);
 
-        audio.GetFloat(backgroundMusicName, out value);
-        PlayerPrefs.SetFloat(backgroundMusicName, value);
-
-        audio.GetFloat(sfxName, out value);
-        PlayerPrefs.SetFloat(sfxName, value);
     }
 
     public void Load()
@@ -49,6 +43,7 @@ public class SaveSystem : MonoBehaviour
         }
         if (PlayerPrefs.HasKey(backgroundMusicName))
         {
+            Debug.Log(PlayerPrefs.GetFloat(backgroundMusicName));
             audio.SetFloat(backgroundMusicName, PlayerPrefs.GetFloat(backgroundMusicName));
         }
         if (PlayerPrefs.HasKey(sfxName))

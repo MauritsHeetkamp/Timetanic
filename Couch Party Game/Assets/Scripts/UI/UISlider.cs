@@ -10,7 +10,7 @@ public class UISlider : UIOption
 
     public override void OnMovedHorizontalStay(float amount)
     {
-        attachedSlider.value += amount * Time.deltaTime * sensitivity;
+        attachedSlider.value += Mathf.Abs(attachedSlider.maxValue - attachedSlider.minValue) * (amount * Time.deltaTime * sensitivity);
         if (attachedSlider.onValueChanged != null)
         {
             attachedSlider.onValueChanged.Invoke(attachedSlider.value);

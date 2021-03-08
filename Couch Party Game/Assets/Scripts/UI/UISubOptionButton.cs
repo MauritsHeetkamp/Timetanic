@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UISubOptionButton : UISubOption
 {
-    [SerializeField] Button thisButton;
+    public Button thisButton;
+    public TextMeshProUGUI buttonText;
 
     public override void Interact()
     {
