@@ -145,19 +145,13 @@ public class UIController : MonoBehaviour
                 if (currentSelectedOption >= 0) // Was there an option already selected?
                 {
                     option = allOptions[currentSelectedOption]; // Gets the current selected option
-                    if (option.onLeaveHover != null)
-                    {
-                        option.onLeaveHover.Invoke(); // Tells the current selected option that it is being deselected
-                    }
+                    option.OnLeaveHover(); // Tells the current selected option that it is being deselected
                 }
 
                 currentSelectedOption = index; // Sets the new current selected option
                 option = allOptions[currentSelectedOption];
 
-                if (option.onHover != null)
-                {
-                    option.onHover.Invoke(); // Tells the new selected option that it has been selected
-                }
+                option.OnHover(); // Tells the new selected option that it has been selected
             }
         }
     }
@@ -177,19 +171,13 @@ public class UIController : MonoBehaviour
                     if (currentSelectedOption >= 0) // Was there an option already selected?
                     {
                         option = allOptions[currentSelectedOption]; // Gets the current selected option
-                        if (option.onLeaveHover != null)
-                        {
-                            option.onLeaveHover.Invoke(); // Tells the current selected option that it is being deselected
-                        }
+                        option.OnLeaveHover(); // Tells the current selected option that it is being deselected
                     }
 
                     currentSelectedOption = i; // Sets the new current selected option
                     option = allOptions[currentSelectedOption];
 
-                    if (option.onHover != null)
-                    {
-                        option.onHover.Invoke(); // Tells the new selected option that it has been selected
-                    }
+                    option.OnHover(); // Tells the new selected option that it has been selected
                     break;
                 }
             }

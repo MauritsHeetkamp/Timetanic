@@ -20,6 +20,24 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     {
 
     }
+     
+    // What happens when button is hovered over
+    public virtual void OnHover()
+    {
+        if(onHover != null)
+        {
+            onHover.Invoke();
+        }
+    }
+
+    // What happens when button is no longer being hovered over
+    public virtual void OnLeaveHover()
+    {
+        if(onLeaveHover != null)
+        {
+            onLeaveHover.Invoke();
+        }
+    }
 
     //Do this when the cursor enters the rect area of this selectable UI object.
     public void OnPointerEnter(PointerEventData eventData)

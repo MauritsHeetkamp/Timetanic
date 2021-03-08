@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIOptionButton : UIOption
+public class UISubOptionButton : UISubOption
 {
-    [SerializeField] Button button;
+    [SerializeField] Button thisButton;
+
     public override void Interact()
     {
-        button.onClick.Invoke();
         base.Interact();
+        thisButton.onClick.Invoke();
     }
 }

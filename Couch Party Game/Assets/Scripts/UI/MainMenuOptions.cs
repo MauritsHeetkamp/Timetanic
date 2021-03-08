@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class MainMenuOptions : Options
 {
-    [SerializeField] Dropdown qualitySettingDropdown;
-
+    [SerializeField] Slider sfxSlider, backgroundMusicSlider, masterVolumeSlider;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        masterVolumeSlider.value = PlayerPrefs.GetFloat(masterAudioString);
+        backgroundMusicSlider.value = PlayerPrefs.GetFloat(backgroundAudioString);
+        sfxSlider.value = PlayerPrefs.GetFloat(sfxAudioString);
     }
 
     // Update is called once per frame
