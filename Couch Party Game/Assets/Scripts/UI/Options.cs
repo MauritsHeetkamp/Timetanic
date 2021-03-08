@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.Events;
+using Custom.Types;
 
 public class Options : MonoBehaviour
 {
@@ -11,17 +13,13 @@ public class Options : MonoBehaviour
     public string sfxAudioString = "SFX";
     public string backgroundAudioString = "Background";
 
-    public GameObject qualitySettingButton;
-    [SerializeField] UIButtonArray qualitySettings;
-
     [SerializeField] Slider sfxSlider, backgroundMusicSlider, masterVolumeSlider;
+    [SerializeField] UIDropdown qualitySettings;
 
 
     private void Start()
     {
         Initialize();
-        QualitySettings.pixelLightCount = 10;
-        Debug.Log(QualitySettings.pixelLightCount);
     }
 
     void LoadAudio()
@@ -71,30 +69,15 @@ public class Options : MonoBehaviour
 
         if(qualitySettings != null)
         {
-            List<UISubOptionButton> newButtons = new List<UISubOptionButton>();
-            Debug.Log("Initialized");
+            List<DropdownData> data = new List<DropdownData>();
             for(int i = 0; i < QualitySettings.names.Length; i++)
             {
                 int index = i;
-                UISubOptionButton newButton = Instantiate(qualitySettingButton, qualitySettings.buttonHolder).GetComponent<UISubOptionButton>();
-                newButton.buttonText.text = QualitySettings.names[index];
-                newButton.thisButton.onClick.AddListener(() => SetQualityLevel(index));
-                newButtons.Add(newButton);
+                data.Add(new DropdownData(QualitySettings.names[i], () => SetQualityLevel(index)));
             }
 
-            RectTransform buttonHolder = qualitySettings.buttonHolder.GetComponent<RectTransform>();
-            Vector2 newButtonSize = new Vector2(buttonHolder.rect.width / newButtons.Count, buttonHolder.rect.height);
-
-            Debug.Log(buttonHolder.sizeDelta);
-
-            foreach(UISubOptionButton button in newButtons)
-            {
-                button.GetComponent<RectTransform>().sizeDelta = newButtonSize;
-
-            }
-
-            qualitySettings.selectedButton = QualitySettings.GetQualityLevel();
-            qualitySettings.Initialize(newButtons.ToArray());
+            qualitySettings.selected = QualitySettings.GetQualityLevel();
+            qualitySettings.Initialize(data.ToArray());
         }
     }
 
@@ -136,5 +119,21 @@ public class Options : MonoBehaviour
     void Save()
     {
         SaveSystem.instance.Save();
+    }
+}
+
+namespace Custom.Types
+{
+    [System.Serializable]
+    public struct DropdownData
+    {
+        public string name;
+        public UnityAction onSelected;
+
+        public DropdownData(string _name, UnityAction _onSelected)
+        {
+            name = _name;
+            onSelected = _onSelected;
+        }
     }
 }

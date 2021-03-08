@@ -2,46 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Custom.Types;
 
 public class UIButtonArray : UIOption
 {
     public int selectedButton;
+    [SerializeField] DropdownData[] arrayData;
     [SerializeField] UISubOptionButton[] buttons;
-    public Transform buttonHolder;
+    public Transform buttonHolderTransform;
+    [SerializeField] HorizontalLayoutGroup holderLayoutGroup;
+    public GameObject optionButton;
 
+    [SerializeField] bool initializeOnStart;
 
     // Start is called before the first frame update
     void Start()
     {
-        Initialize();
+        if (initializeOnStart)
+        {
+            Initialize();
+        }
     }
 
-    public void Initialize(UISubOptionButton[] _buttons)
+    public void Initialize(DropdownData[] _data)
     {
-        for(int i = buttons.Length - 1; i >= 0; i--)
-        {
-            Destroy(buttons[i].gameObject);
-        }
-
-        buttons = _buttons;
-
-        if (buttons.Length > selectedButton)
-        {
-            if (buttons[selectedButton].onHover != null)
-            {
-                buttons[selectedButton].onHover.Invoke();
-            }
-        }
+        arrayData = _data;
+        LoadData();
     }
 
     void Initialize()
     {
-        if(buttons.Length > selectedButton)
+        LoadData();
+    }
+
+    void LoadData()
+    {
+        for (int i = buttons.Length - 1; i >= 0; i--)
         {
-            if(buttons[selectedButton].onHover != null)
+            Destroy(buttons[i].gameObject);
+        }
+
+        if(arrayData.Length > 0)
+        {
+            List<UISubOptionButton> newButtons = new List<UISubOptionButton>();
+
+            foreach (DropdownData data in arrayData)
             {
-                buttons[selectedButton].onHover.Invoke();
+                UISubOptionButton newButton = Instantiate(optionButton, buttonHolderTransform).GetComponent<UISubOptionButton>();
+                newButton.buttonText.text = data.name;
+                newButton.thisButton.onClick.AddListener(data.onSelected);
+                newButtons.Add(newButton);
             }
+
+            buttons = newButtons.ToArray();
+            RectTransform buttonHolder = buttonHolderTransform.GetComponent<RectTransform>();
+            float widthToRemove = (holderLayoutGroup.spacing * buttons.Length - 1) + holderLayoutGroup.padding.left + holderLayoutGroup.padding.right;
+            widthToRemove /= buttons.Length;
+            Vector2 newButtonSize = new Vector2((buttonHolder.rect.width / buttons.Length) - widthToRemove, buttonHolder.rect.height);
+
+            foreach (UISubOptionButton button in buttons)
+            {
+                button.GetComponent<RectTransform>().sizeDelta = newButtonSize;
+            }
+
+            if (buttons.Length > selectedButton)
+            {
+                if (buttons[selectedButton].onHover != null)
+                {
+                    buttons[selectedButton].onHover.Invoke();
+                }
+            }
+        }
+        else
+        {
+            buttons = new UISubOptionButton[0];
         }
     }
 
