@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2604537202749985800}
   - component: {fileID: 1408209808288177069}
   - component: {fileID: 3777957231801937767}
-  - component: {fileID: 5441489271192408660}
+  - component: {fileID: 609863561759864981}
   m_Layer: 0
   m_Name: SM_DeckVentBig
   m_TagString: Untagged
@@ -80,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &5441489271192408660
-MeshCollider:
+--- !u!65 &609863561759864981
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,7 +90,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7387706064836869012, guid: d240b1395b610644781eff25b06a2854, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 2.9211392, y: 8.257706, z: 3.074068}
+  m_Center: {x: 0.6195533, y: 4.128853, z: 0.0000019669533}
