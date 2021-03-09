@@ -6,25 +6,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager instance;
+    public static PlayerManager instance; // Global playermanager instance
     public List<PlayerData> connectedToPCPlayers = new List<PlayerData>();
 
     public List<PlayerData> connectedToLobbyPlayers = new List<PlayerData>();
 
     public UnityAction<PlayerData> onNewPlayerConnected;
-    // Start is called before the first frame update
+    
+    
     void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this); // Prevents object from being destroyed when swapping scenes
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    // Gets called when a new player connected
     public void NewPlayerConnected(PlayerInput input)
     {
         connectedToPCPlayers.Add(input.GetComponent<PlayerData>());
@@ -34,6 +30,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    // Gets called when a player disconnects
     public void PlayerDisconnected(PlayerInput input)
     {
         connectedToPCPlayers.Remove(input.GetComponent<PlayerData>());
