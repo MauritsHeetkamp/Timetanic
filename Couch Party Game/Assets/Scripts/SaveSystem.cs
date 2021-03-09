@@ -14,7 +14,7 @@ public class SaveSystem : MonoBehaviour
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
-        Load();
+        LoadSettings();
     }
 
     // Start is called before the first frame update
@@ -35,7 +35,7 @@ public class SaveSystem : MonoBehaviour
 
     }
 
-    public void Load()
+    public void LoadSettings()
     {
         if (PlayerPrefs.HasKey(masterAudioName))
         {
@@ -49,6 +49,43 @@ public class SaveSystem : MonoBehaviour
         if (PlayerPrefs.HasKey(sfxName))
         {
             audio.SetFloat(sfxName, PlayerPrefs.GetFloat(sfxName));
+        }
+
+        if (PlayerPrefs.HasKey("QualityLevel"))
+        {
+            QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QualityLevel"));
+        }
+
+        if(PlayerPrefs.HasKey("ResolutionWidth") && PlayerPrefs.HasKey("ResolutionHeight"))
+        {
+            int width = PlayerPrefs.GetInt("ResolutionWidth");
+            int heigth = PlayerPrefs.GetInt("ResolutionHeight");
+
+            foreach(Resolution resolution in Screen.resolutions)
+            {
+                if(resolution.width == width && resolution.height == heigth)
+                {
+                    Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+                    break;
+                }
+            }
+        }
+
+        if (PlayerPrefs.HasKey("RefreshRate"))
+        {
+            int refreshRate = PlayerPrefs.GetInt("RefreshRate");
+            for (int i = 0; i < Screen.resolutions.Length; i++)
+            {
+                Resolution resolution = Screen.resolutions[i];
+                resolution.refreshRate = refreshRate;
+            }
+
+            Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen, refreshRate);
+        }
+
+        if (PlayerPrefs.HasKey("Fullscreen"))
+        {
+            Screen.fullScreen = PlayerPrefs.GetInt("Fullscreen") == 0 ? false : true;
         }
     }
 

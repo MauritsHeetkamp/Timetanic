@@ -57,6 +57,7 @@ public class UIDropdown : UIOption
 
     public void ChangeSelected(int amount)
     {
+        selectedIcons[selected].color = defaultColor;
         selected += amount;
 
         if (selected >= dropdownData.Length)

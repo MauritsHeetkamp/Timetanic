@@ -27,6 +27,7 @@ public class PlayerData : MonoBehaviour
     public UnityAction<InputAction.CallbackContext, PlayerData> onVerticalAxis;
     public UnityAction<InputAction.CallbackContext, PlayerData> onSelect;
     public UnityAction<InputAction.CallbackContext, PlayerData> onMenuEnd;
+    public UnityAction<InputAction.CallbackContext, PlayerData> onScroll;
 
     void Awake()
     {
@@ -67,6 +68,15 @@ public class PlayerData : MonoBehaviour
     {
         Debug.Log("SWAPPED");
         playerInput.SwitchCurrentActionMap(schemeName);
+    }
+
+    // Called when the scroll button is used
+    public void OnScrolled(InputAction.CallbackContext context)
+    {
+        if (onScroll != null)
+        {
+            onScroll.Invoke(context, this);
+        }
     }
 
     // Called when the movement button is used

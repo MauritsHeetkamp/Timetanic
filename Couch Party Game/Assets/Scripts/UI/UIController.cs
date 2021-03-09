@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
@@ -14,7 +15,9 @@ public class UIController : MonoBehaviour
 
     float lastMoveAmount; // Last amount that has been moved in the horizontal axis
 
-
+    [SerializeField] ScrollRect scroller;
+    [SerializeField] float scrollSensitivity = 1;
+    float scrollAmount;
 
     private void OnEnable()
     {
@@ -25,6 +28,18 @@ public class UIController : MonoBehaviour
             data.onHorizontalAxis += MoveHorizontal;
             data.onVerticalAxis += MoveVertical;
             data.onSelect += Select;
+            data.onScroll += Scroll;
+        }
+    }
+
+    void Scroll(InputAction.CallbackContext context, PlayerData owner)
+    {
+        if(scroller != null)
+        {
+            if(context.started || context.canceled)
+            {
+                scrollAmount = context.ReadValue<float>();
+            }
         }
     }
 
@@ -37,6 +52,7 @@ public class UIController : MonoBehaviour
             data.onHorizontalAxis -= MoveHorizontal;
             data.onVerticalAxis -= MoveVertical;
             data.onSelect -= Select;
+            data.onScroll -= Scroll;
         }
     }
 
@@ -45,6 +61,7 @@ public class UIController : MonoBehaviour
         target.onHorizontalAxis += MoveHorizontal;
         target.onVerticalAxis += MoveVertical;
         target.onSelect += Select;
+        target.onScroll += Scroll;
     }
 
     // Start is called before the first frame update
@@ -191,6 +208,11 @@ public class UIController : MonoBehaviour
         {
             UIOption option = allOptions[currentSelectedOption];
             option.OnMovedHorizontalStay(lastMoveAmount); // Tells the current option that it moved horizontally
+        }
+
+        if(scroller != null)
+        {
+            scroller.verticalNormalizedPosition += scrollAmount * Time.deltaTime * scrollSensitivity;
         }
     }
 }
