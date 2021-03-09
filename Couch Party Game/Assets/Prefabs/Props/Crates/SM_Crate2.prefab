@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7114819206274914903}
   - component: {fileID: 6130298261454165490}
   - component: {fileID: 8284308309460869432}
+  - component: {fileID: 3471017849500587360}
   m_Layer: 0
   m_Name: SM_Crate2
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3471017849500587360
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7635636512298942701}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6953163, y: 0.3978794, z: 0.42514467}
+  m_Center: {x: -0.0026515126, y: 0.1989397, z: 0.0018677562}

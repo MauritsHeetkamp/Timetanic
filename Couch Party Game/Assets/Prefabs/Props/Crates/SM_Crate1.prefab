@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7792194870374830807}
   - component: {fileID: 5025944850101998177}
   - component: {fileID: 6337682899997683966}
+  - component: {fileID: 3580257849386264533}
   m_Layer: 0
   m_Name: CrateTop1_low
   m_TagString: Untagged
@@ -79,6 +80,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &3580257849386264533
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467606455490849857}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0511842, y: 0.91748655, z: 0.9476993}
+  m_Center: {x: -0.023861352, y: -0.00010676682, z: 0.0005367398}
 --- !u!1 &1361168067090556289
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +104,7 @@ GameObject:
   - component: {fileID: 1876701131035455256}
   - component: {fileID: 1842102326100299357}
   - component: {fileID: 6268847948682497080}
+  - component: {fileID: 2550074367523159527}
   m_Layer: 0
   m_Name: Crate1_low
   m_TagString: Untagged
@@ -158,6 +173,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &2550074367523159527
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361168067090556289}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.9460263, y: 0.9842013, z: 0.9477141}
+  m_Center: {x: 0.00068461895, y: 0.49209028, z: 0.0034646988}
 --- !u!1 &3590602148775070284
 GameObject:
   m_ObjectHideFlags: 0

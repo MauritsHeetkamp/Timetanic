@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3734448802669250332}
   - component: {fileID: 323334428811380921}
   - component: {fileID: 2564872258244066419}
+  - component: {fileID: 7235221889343938049}
   m_Layer: 0
   m_Name: SM_Fireaxe
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &7235221889343938049
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4078218141896514982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1780940796484328934, guid: bad5d08e8d88c184db34041907f9476c, type: 3}
