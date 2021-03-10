@@ -57,24 +57,27 @@ public class UIDropdown : UIOption
 
     public void ChangeSelected(int amount)
     {
-        selectedIcons[selected].color = defaultColor;
-        selected += amount;
+        if (interactable)
+        {
+            selectedIcons[selected].color = defaultColor;
+            selected += amount;
 
-        if (selected >= dropdownData.Length)
-        {
-            selected = 0;
-        }
-        if (selected < 0)
-        {
-            selected = dropdownData.Length - 1;
-        }
+            if (selected >= dropdownData.Length)
+            {
+                selected = 0;
+            }
+            if (selected < 0)
+            {
+                selected = dropdownData.Length - 1;
+            }
 
-        DropdownData selectedData = dropdownData[selected];
-        selectedIcons[selected].color = selectedColor;
-        selectedText.text = selectedData.name;
-        if (selectedData.onSelected != null)
-        {
-            selectedData.onSelected.Invoke();
+            DropdownData selectedData = dropdownData[selected];
+            selectedIcons[selected].color = selectedColor;
+            selectedText.text = selectedData.name;
+            if (selectedData.onSelected != null)
+            {
+                selectedData.onSelected.Invoke();
+            }
         }
     }
 

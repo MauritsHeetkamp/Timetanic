@@ -10,18 +10,13 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] string sfxName, backgroundMusicName, masterAudioName;
 
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
         DontDestroyOnLoad(gameObject);
         LoadSettings();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -43,7 +38,6 @@ public class SaveSystem : MonoBehaviour
         }
         if (PlayerPrefs.HasKey(backgroundMusicName))
         {
-            Debug.Log(PlayerPrefs.GetFloat(backgroundMusicName));
             audio.SetFloat(backgroundMusicName, PlayerPrefs.GetFloat(backgroundMusicName));
         }
         if (PlayerPrefs.HasKey(sfxName))

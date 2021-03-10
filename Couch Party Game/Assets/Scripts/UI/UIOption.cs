@@ -6,9 +6,14 @@ using UnityEngine.EventSystems;
 
 public class UIOption : MonoBehaviour, IPointerEnterHandler
 {
-    [HideInInspector] public UIController ownerController;
+    public UIController ownerController;
     public UnityEvent onHover, onLeaveHover;
+    public bool interactable = true;
 
+    public virtual void SetInteractable(bool _interactable)
+    {
+        interactable = _interactable;
+    }
 
     // What should happen when the horizontal move is pressed
     public virtual void OnMovedHorizontal(int amount)

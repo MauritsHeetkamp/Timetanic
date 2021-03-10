@@ -18,22 +18,35 @@ public class UIToggleArray : UIOption
         {
             toggles[selected].OnHover();
         }
+        SetInteractable(interactable);
+    }
+
+    public override void SetInteractable(bool _interactable)
+    {
+        base.SetInteractable(_interactable);
+        foreach(UIToggle toggle in toggles)
+        {
+            toggle.SetInteractable(_interactable);
+        }
     }
 
     public void SetSelected(UIToggle selectedToggle)
     {
-        if(selectedToggle != toggles[selected])
+        if (interactable)
         {
-            for (int i = 0; i < toggles.Length; i++)
+            if (selectedToggle != toggles[selected])
             {
-                if (toggles[i] == selectedToggle)
+                for (int i = 0; i < toggles.Length; i++)
                 {
-                    if (toggles[selected].onLeaveHover != null)
+                    if (toggles[i] == selectedToggle)
                     {
-                        toggles[selected].onLeaveHover.Invoke();
+                        if (toggles[selected].onLeaveHover != null)
+                        {
+                            toggles[selected].onLeaveHover.Invoke();
+                        }
+                        selected = i;
+                        break;
                     }
-                    selected = i;
-                    break;
                 }
             }
         }
@@ -41,29 +54,32 @@ public class UIToggleArray : UIOption
 
     void MoveSelected(int amount)
     {
-        if(toggles.Length > 1)
+        if (interactable)
         {
-            if(toggles[selected].onLeaveHover != null)
+            if (toggles.Length > 1)
             {
-                toggles[selected].onLeaveHover.Invoke();
-            }
-            selected += amount;
-
-            if(selected >= toggles.Length)
-            {
-                selected = 0;
-            }
-            else
-            {
-                if(selected < 0)
+                if (toggles[selected].onLeaveHover != null)
                 {
-                    selected = toggles.Length - 1;
+                    toggles[selected].onLeaveHover.Invoke();
                 }
-            }
+                selected += amount;
 
-            if (toggles[selected].onHover != null)
-            {
-                toggles[selected].onHover.Invoke();
+                if (selected >= toggles.Length)
+                {
+                    selected = 0;
+                }
+                else
+                {
+                    if (selected < 0)
+                    {
+                        selected = toggles.Length - 1;
+                    }
+                }
+
+                if (toggles[selected].onHover != null)
+                {
+                    toggles[selected].onHover.Invoke();
+                }
             }
         }
     }

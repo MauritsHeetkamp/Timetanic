@@ -24,6 +24,15 @@ public class UIButtonArray : UIOption
         }
     }
 
+    public override void SetInteractable(bool _interactable)
+    {
+        base.SetInteractable(_interactable);
+        foreach(UISubOptionButton button in buttons)
+        {
+            button.SetInteract(_interactable);
+        }
+    }
+
     public void Initialize(DropdownData[] _data)
     {
         arrayData = _data;
@@ -33,6 +42,7 @@ public class UIButtonArray : UIOption
     void Initialize()
     {
         LoadData();
+        SetInteractable(interactable);
     }
 
     void LoadData()
@@ -81,8 +91,10 @@ public class UIButtonArray : UIOption
 
     public override void Interact()
     {
-        buttons[selectedButton].Interact();
-        base.Interact();
+        if (interactable)
+        {
+            buttons[selectedButton].Interact();
+        }
     }
 
     public void SetSelected(int index)

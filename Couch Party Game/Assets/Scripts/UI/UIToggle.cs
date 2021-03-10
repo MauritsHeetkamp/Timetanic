@@ -18,11 +18,14 @@ public class UIToggle : UIOption
 
     public override void Interact()
     {
-        base.Interact();
-        toggle.isOn = !toggle.isOn;
-        if(toggle.onValueChanged != null)
+        if (interactable)
         {
-            toggle.onValueChanged.Invoke(toggle.isOn);
+            base.Interact();
+            toggle.isOn = !toggle.isOn;
+            if (toggle.onValueChanged != null)
+            {
+                toggle.onValueChanged.Invoke(toggle.isOn);
+            }
         }
     }
 }

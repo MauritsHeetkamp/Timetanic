@@ -18,11 +18,14 @@ public class UISlider : UIOption
 
     public override void OnMovedHorizontalStay(float amount)
     {
-        attachedSlider.value += Mathf.Abs(attachedSlider.maxValue - attachedSlider.minValue) * (amount * Time.deltaTime * sensitivity);
-        if (attachedSlider.onValueChanged != null)
+        if (interactable)
         {
-            attachedSlider.onValueChanged.Invoke(attachedSlider.value);
+            attachedSlider.value += Mathf.Abs(attachedSlider.maxValue - attachedSlider.minValue) * (amount * Time.deltaTime * sensitivity);
+            if (attachedSlider.onValueChanged != null)
+            {
+                attachedSlider.onValueChanged.Invoke(attachedSlider.value);
+            }
+            base.OnMovedHorizontalStay(amount);
         }
-        base.OnMovedHorizontalStay(amount);
     }
 }

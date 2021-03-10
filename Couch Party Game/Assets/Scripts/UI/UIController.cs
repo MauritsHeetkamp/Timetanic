@@ -21,7 +21,6 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("ADDED");
         PlayerManager.instance.onNewPlayerConnected += OnNewPlayerConnected;
         foreach(PlayerData data in PlayerManager.instance.connectedToPCPlayers)
         {
@@ -36,16 +35,12 @@ public class UIController : MonoBehaviour
     {
         if(scroller != null)
         {
-            if(context.started || context.canceled)
-            {
-                scrollAmount = context.ReadValue<float>();
-            }
+            scrollAmount = context.ReadValue<float>();
         }
     }
 
     private void OnDisable()
     {
-        Debug.Log("REMOVED");
         PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerConnected;
         foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
         {
@@ -67,7 +62,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(UIOption option in allOptions)
+        foreach (UIOption option in allOptions)
         {
             option.ownerController = this; // Initializes option
         }
@@ -86,7 +81,6 @@ public class UIController : MonoBehaviour
     // Moves the selection vertically by requested amount
     public void MoveVertical(InputAction.CallbackContext context, PlayerData owner)
     {
-        Debug.Log("VER");
         float direction = context.ReadValue<float>(); // Checks the direction the button is pressed
         if (verticalRecentered) // Can the selection be moved vertically
         {

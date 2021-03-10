@@ -14,4 +14,10 @@ public class UISubOptionButton : UISubOption
         base.Interact();
         thisButton.onClick.Invoke();
     }
+
+    public override void SetInteract(bool _canInteract)
+    {
+        base.SetInteract(_canInteract);
+        thisButton.interactable = _canInteract;
+    }
 }
