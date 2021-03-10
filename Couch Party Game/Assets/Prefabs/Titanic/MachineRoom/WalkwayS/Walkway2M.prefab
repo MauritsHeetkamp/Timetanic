@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 5560731487600068486}
   - component: {fileID: 6111152811823581676}
   - component: {fileID: 1576448272017095600}
+  - component: {fileID: 5422488785373726724}
+  - component: {fileID: 3445893805754264426}
+  - component: {fileID: 3568000095873909187}
   m_Layer: 0
   m_Name: Walkway2M
   m_TagString: Untagged
@@ -79,3 +82,42 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5422488785373726724
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7157647062892627489}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.0000196, y: 0.071264625, z: 4.0000095}
+  m_Center: {x: -0.00000047683716, y: -0.21309966, z: -0.05764842}
+--- !u!65 &3445893805754264426
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7157647062892627489}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063874304, y: 0.85581625, z: 4.0000095}
+  m_Center: {x: 0.9680722, y: 0.17917615, z: -0.05764842}
+--- !u!65 &3568000095873909187
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7157647062892627489}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.06145042, y: 0.85581625, z: 4.0000095}
+  m_Center: {x: -0.969285, y: 0.17917615, z: -0.05764842}
