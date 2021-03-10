@@ -7,7 +7,7 @@ public class TriggerEffect : MonoBehaviour
 {
     [SerializeField] bool allowPlayers = true; // Should only players be able to trigger this effect
     [SerializeField] string[] allowedTags;
-    [SerializeField] UnityEvent onTriggerEnter, onTriggerExit;
+    public UnityEvent onTriggerEnter, onTriggerExit;
     public UnityAction<Collider> onTriggerEnterCollider, onTriggerExitCollider;
 
 
