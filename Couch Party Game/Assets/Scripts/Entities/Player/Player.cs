@@ -75,14 +75,59 @@ public class Player : MovingEntity
     private void Update()
     {
         CameraFollow();
-        CheckInteract();
+        if(disables <= 0)
+        {
+            CheckInteract();
+        }
     }
 
     // Handles movement and slope checks
     private void FixedUpdate()
     {
-        Movement();
-        CheckSlope();
+        if (disables <= 0)
+        {
+            Movement();
+            CheckSlope();
+        }
+    }
+
+    public void TogglePlayer()
+    {
+
+    }
+
+    public override void Disable(bool disable)
+    {
+        base.Disable(disable);
+
+        if(disables > 0)
+        {
+            if (owner != null) // Is this owner by a player?
+            {
+                // Assigns buttons their functionality
+                owner.onMove -= SetMoveAmount;
+                owner.onUse -= UseCurrentItem;
+                owner.onThrow -= ThrowCurrentItem;
+                owner.onDrop -= DropCurrentItem;
+                owner.onJump -= Jump;
+                owner.onDash -= Dash;
+                owner.onInteract -= Interact;
+            }
+        }
+        else
+        {
+            if (owner != null) // Is this owner by a player?
+            {
+                // Assigns buttons their functionality
+                owner.onMove += SetMoveAmount;
+                owner.onUse += UseCurrentItem;
+                owner.onThrow += ThrowCurrentItem;
+                owner.onDrop += DropCurrentItem;
+                owner.onJump += Jump;
+                owner.onDash += Dash;
+                owner.onInteract += Interact;
+            }
+        }
     }
 
     // Sets input events
