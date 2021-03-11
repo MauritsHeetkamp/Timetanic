@@ -20,10 +20,11 @@ public class CameraHandler : MonoBehaviour
     [SerializeField] Transform splitscreenImageHolder; // Transform that holds all the splitscreens
 
     Vector3 targetLocation;
-    public bool isSplit = true;
+    public bool isSplit;
     [SerializeField] float splitFadeDuration = 1; // Duration of the fade when swapping between all-in-one and split screen (fade in and out combined)
 
     public bool handleTheCameras = true; // Should the cameras be handled automatically?
+    bool singlePlayer;
     FadeManager globalFader; // The fade handler
 
 
@@ -31,6 +32,7 @@ public class CameraHandler : MonoBehaviour
     void Start()
     {
         globalFader = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
+
         targetLocation = globalCamera.position;
     }
 
@@ -44,7 +46,11 @@ public class CameraHandler : MonoBehaviour
         {
             forceSplit--;
         }
-        CheckSplit();
+
+        if (!singlePlayer)
+        {
+            CheckSplit();
+        }
     }
 
     // Resets the camera location
@@ -154,6 +160,14 @@ public class CameraHandler : MonoBehaviour
                 newSplitscreen.GetComponent<RawImage>().texture = texture; // Assigns the rendertexture to the splitscreen
             }
         }
+
+
+        if(playerAmount == 1)
+        {
+            singlePlayer = true;
+            handleTheCameras = false;
+            SetSplit(true, true);
+        }
     }
 
     // FixedUpdate is called once per Time.deltaTime
@@ -165,7 +179,7 @@ public class CameraHandler : MonoBehaviour
     // Handles the camera movement
     void CameraMovement(bool instantMove = false)
     {
-        if (globalCamera != null && playerHandler.localPlayers.Count > 0 && handleTheCameras) // Checks if there is a camera, enough players and if it should be handled
+        if (globalCamera != null && playerHandler.localPlayers.Count > 1 && handleTheCameras) // Checks if there is a camera, enough players and if it should be handled
         {
             Vector3 center = Vector3.zero;
 
