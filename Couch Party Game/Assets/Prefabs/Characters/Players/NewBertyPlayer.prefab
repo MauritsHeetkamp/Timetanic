@@ -1,5 +1,105 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!54 &2588172088542162669
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908356760983652812}
+  serializedVersion: 2
+  m_Mass: 70
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &4547190960188122956
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908356760983652812}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.31218266
+  m_Height: 1.6367302
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7985897, z: -0.08696282}
+--- !u!114 &7545685096111957728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908356760983652812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49f30bbf1c94394192c1563340393fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  disables: 0
+  thisRigid: {fileID: 2588172088542162669}
+  movementSpeed: 5
+  owner: {fileID: 0}
+  characterControlScheme: Player
+  role: 1
+  followingPassengers: []
+  playerAnimator: {fileID: 8503430068137528046}
+  rawMovement: {x: 0, y: 0}
+  canMove: 1
+  decellerationBlocks: 0
+  rotateSpeed: 300
+  jumpVelocity: 300
+  canJump: 1
+  jumpDetectionRange: 0.05
+  jumpableLayers:
+    serializedVersion: 2
+    m_Bits: 22327
+  maxAngle: 60
+  slopeBoosterModifier: 0
+  slopeCheckOrigin: {fileID: 1539183050538390282}
+  forwardRayRange: 1
+  downwardRayRange: 1
+  slopeMask:
+    serializedVersion: 2
+    m_Bits: 256
+  onSlope: 0
+  playerCamera: {fileID: 5575816414390030464}
+  followXY: 1
+  followY: 1
+  zDistance: 16.31493
+  yDistance: 14.8
+  followSpeed: 1
+  cameraDirection: {fileID: 4221900607633448502}
+  attachedSplitscreen: {fileID: 0}
+  interactionBox: {fileID: 5575816415099164416}
+  interactableLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  interactDelay: 0
+  canInteract: 1
+  currentUsingInteractable: {fileID: 0}
+  currentHoldingItem: {fileID: 0}
+  throwVelocity: 500
+  throwHeight: 300
+  minForwardRotationVelocity: 100
+  maxForwardRotationVelocity: 1000
+  minSidewaysRotationVelocity: 100
+  maxSidewaysRotationVelocity: 500
+  dashVelocity: 15
+  dashCooldown: 0.1
+  stopOnCollision: 1
+  checkRange: 0.01
+  dashDuration: 0.6
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1539183050538390293
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,105 +358,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2588172088542162669
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908356760983652812}
-  serializedVersion: 2
-  m_Mass: 70
-  m_Drag: 1
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!136 &4547190960188122956
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908356760983652812}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.31218266
-  m_Height: 1.6367302
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.7985897, z: -0.08696282}
---- !u!114 &7545685096111957728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908356760983652812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49f30bbf1c94394192c1563340393fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  thisRigid: {fileID: 2588172088542162669}
-  movementSpeed: 5
-  owner: {fileID: 0}
-  characterControlScheme: Player
-  role: 1
-  followingPassengers: []
-  playerAnimator: {fileID: 8503430068137528046}
-  rawMovement: {x: 0, y: 0}
-  canMove: 1
-  decellerationBlocks: 0
-  rotateSpeed: 300
-  jumpVelocity: 300
-  canJump: 1
-  jumpDetectionRange: 1
-  jumpableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  maxAngle: 60
-  slopeBoosterModifier: 0
-  slopeCheckOrigin: {fileID: 1539183050538390282}
-  forwardRayRange: 0.12
-  downwardRayRange: 0.12
-  slopeMask:
-    serializedVersion: 2
-    m_Bits: 256
-  onSlope: 0
-  playerCamera: {fileID: 5575816414390030464}
-  followXY: 1
-  followY: 1
-  zDistance: 16.31493
-  yDistance: 14.8
-  followSpeed: 1
-  cameraDirection: {fileID: 4221900607633448502}
-  attachedSplitscreen: {fileID: 0}
-  interactionBox: {fileID: 5575816415099164416}
-  interactableLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  interactDelay: 0
-  canInteract: 1
-  currentUsingInteractable: {fileID: 0}
-  currentHoldingItem: {fileID: 0}
-  throwVelocity: 500
-  throwHeight: 300
-  minForwardRotationVelocity: 100
-  maxForwardRotationVelocity: 1000
-  minSidewaysRotationVelocity: 100
-  maxSidewaysRotationVelocity: 500
-  dashVelocity: 15
-  dashCooldown: 0.1
-  stopOnCollision: 1
-  checkRange: 0.01
-  dashDuration: 0.6
-  hittableLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &8760234910215239225
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,6 +459,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NewBertyPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780044543371026460, guid: e36532fa7beb76e4db723e8a884f794d,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7780044543371026460, guid: e36532fa7beb76e4db723e8a884f794d,
         type: 3}

@@ -243,7 +243,7 @@ public class Player : MovingEntity
     // Handles jumping
     public void Jump(InputAction.CallbackContext context, PlayerData owner)
     {
-        if(context.started && canJump) // Checks input and if player can jump
+        if(context.started && canJump && thisRigid.velocity.y <= 0) // Checks input and if player can jump
         {
             if (Physics.Raycast(transform.position, -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
             {
@@ -283,45 +283,35 @@ public class Player : MovingEntity
     {
         RaycastHit forwardHitdata, downwardHitdata; // Hit data for the forward and downward ray
 
-        if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out forwardHitdata, forwardRayRange, slopeMask)) // Checks if a slope is in front of your check origin
+        if (Physics.Raycast(slopeCheckOrigin.position, -slopeCheckOrigin.up, out downwardHitdata, downwardRayRange, slopeMask, QueryTriggerInteraction.Ignore) || Physics.Raycast(slopeCheckOrigin.position, -slopeCheckOrigin.up, out downwardHitdata, downwardRayRange, slopeMask, QueryTriggerInteraction.Ignore)) //Checks if a slope is underneath your check origin
         {
-            if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out downwardHitdata, downwardRayRange, slopeMask)) //Checks if a slope is underneath your check origin
+            if (!onSlope)
             {
-                float angle = Vector3.Angle(transform.up, forwardHitdata.transform.up); // The angle of the slope
-                if (angle <= maxAngle)
-                {
-                    if (!onSlope)
-                    {
-                        onSlope = true;
-                        thisRigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; // Sets constraints to ignore gravity
-                    }
-                    float yDifference = forwardHitdata.point.y - transform.position.y; // Height difference
-                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0)); // Boost upwards based on height difference
-                }
-                else // Slope angle is too high
-                {
-                    if (onSlope)
-                    {
-                        onSlope = false;
-                        thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
-                    }
-                }
-            }
-            else // No slope underneath check origin
-            {
-                if (onSlope)
-                {
-                    onSlope = false;
-                    thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
-                }
+                onSlope = true;
+                thisRigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; // Sets constraints to ignore gravity
+                thisRigid.isKinematic = true;
             }
         }
-        else // No slope in front of check origin
+        else
         {
             if (onSlope)
             {
                 onSlope = false;
                 thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
+                thisRigid.isKinematic = false;
+            }
+        }
+
+        if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out forwardHitdata, forwardRayRange, slopeMask, QueryTriggerInteraction.Ignore)) // Checks if a slope is in front of your check origin
+        {
+            if (onSlope)
+            {
+                float angle = Vector3.Angle(transform.up, forwardHitdata.transform.up); // The angle of the slope
+                if (angle <= maxAngle)
+                {
+                    float yDifference = forwardHitdata.point.y - transform.position.y; // Height difference
+                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0)); // Boost upwards based on height difference
+                }
             }
         }
     }
@@ -338,8 +328,6 @@ public class Player : MovingEntity
                 playerAnimator.SetBool("Walking", true);
             }
             movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
-
-            Debug.Log(movementAmount);
 
             transform.Translate(movementAmount, Space.World);
             Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing

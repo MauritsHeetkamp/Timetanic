@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1668026492132426683}
   - component: {fileID: 5346847298021047328}
   - component: {fileID: 6708389412461317213}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: BertyNPC
   m_TagString: Passenger
   m_Icon: {fileID: 0}

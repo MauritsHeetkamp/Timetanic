@@ -50,7 +50,6 @@ public class CameraHandler : MonoBehaviour
     // Resets the camera location
     public void ResetCamera()
     {
-        Debug.Log("RESETTO");
         CameraMovement(true);
     }
 

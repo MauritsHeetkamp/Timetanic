@@ -11,9 +11,6 @@ public class CameraRelocator : MonoBehaviour
 
     [SerializeField] bool resetCamera = true;
 
-    [SerializeField] bool forceSplit;
-    [SerializeField] TriggerEffect trigger; // Should a trigger be triggering the relocate
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,26 +18,6 @@ public class CameraRelocator : MonoBehaviour
         if(targetObject != null)
         {
             cameraHandler = targetObject.GetComponent<CameraHandler>();
-        }
-        if (trigger != null && cameraHandler != null)
-        {
-            trigger.onTriggerEnter.AddListener(() => cameraHandler.ForceSplit(forceSplit));
-        }
-    }
-
-    private void OnEnable()
-    {
-        if (trigger != null)
-        {
-            trigger.onTriggerEnterCollider += ChangeCamera;
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (trigger != null)
-        {
-            trigger.onTriggerEnterCollider -= ChangeCamera;
         }
     }
 
