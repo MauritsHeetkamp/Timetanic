@@ -238,9 +238,24 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b8599f3d-77ed-4cef-ae53-c453e906ff9e
     m_ActionName: UI/Select[/XInputControllerWindows/buttonEast,/XInputControllerWindows/rightTrigger,/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9166431627977747533}
+        m_MethodName: OnScrolled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 77b5c699-49aa-4a3a-a16b-b3dd64488724
+    m_ActionName: UI/Scroll
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: c65a73b7-a930-4cb7-bafe-94dd9fffed8b
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &-9166431627977747533

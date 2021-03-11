@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class CameraHandler : MonoBehaviour
 {
+    int forceSplit;
+
     [SerializeField] SpawnManager playerHandler; // The spawner keeps track of players
     public Transform globalCamera; // The global camera for all-in-one screen
 
@@ -32,20 +34,44 @@ public class CameraHandler : MonoBehaviour
         targetLocation = globalCamera.position;
     }
 
+    public void ForceSplit(bool split)
+    {
+        if (split)
+        {
+            forceSplit++;
+        }
+        else
+        {
+            forceSplit--;
+        }
+        CheckSplit();
+    }
+
     // Resets the camera location
     public void ResetCamera()
     {
+        Debug.Log("RESETTO");
         CameraMovement(true);
     }
 
     // Checks if the screen should be split
     public void CheckSplit(bool instant = false)
     {
-        if (GetGreatestDistance() < maxPlayerDistance) // Checks if everyone is in the maximum distance from eachother
+        if(forceSplit <= 0)
         {
-            if (isSplit)
+            if (GetGreatestDistance() < maxPlayerDistance) // Checks if everyone is in the maximum distance from eachother
             {
-                SetSplit(false, instant);
+                if (isSplit)
+                {
+                    SetSplit(false, instant);
+                }
+            }
+            else
+            {
+                if (!isSplit)
+                {
+                    SetSplit(true, instant);
+                }
             }
         }
         else

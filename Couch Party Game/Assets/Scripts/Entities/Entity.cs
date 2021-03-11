@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : Damagable
 {
+    [HideInInspector] public int disables;
     public Rigidbody thisRigid;
     bool canMove = true;
 
@@ -11,5 +12,22 @@ public class Entity : Damagable
     public virtual void ToggleMovement()
     {
         canMove = !canMove;
+    }
+
+    public virtual void Seat(bool seat)
+    {
+
+    }
+
+    public virtual void Disable(bool disable)
+    {
+        if (disable)
+        {
+            disables++;
+        }
+        else
+        {
+            disables--;
+        }
     }
 }

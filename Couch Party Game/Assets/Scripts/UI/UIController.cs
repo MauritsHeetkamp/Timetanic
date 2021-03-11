@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
@@ -14,29 +15,39 @@ public class UIController : MonoBehaviour
 
     float lastMoveAmount; // Last amount that has been moved in the horizontal axis
 
-
+    [SerializeField] ScrollRect scroller;
+    [SerializeField] float scrollSensitivity = 1;
+    float scrollAmount;
 
     private void OnEnable()
     {
-        Debug.Log("ADDED");
         PlayerManager.instance.onNewPlayerConnected += OnNewPlayerConnected;
         foreach(PlayerData data in PlayerManager.instance.connectedToPCPlayers)
         {
             data.onHorizontalAxis += MoveHorizontal;
             data.onVerticalAxis += MoveVertical;
             data.onSelect += Select;
+            data.onScroll += Scroll;
+        }
+    }
+
+    void Scroll(InputAction.CallbackContext context, PlayerData owner)
+    {
+        if(scroller != null)
+        {
+            scrollAmount = context.ReadValue<float>();
         }
     }
 
     private void OnDisable()
     {
-        Debug.Log("REMOVED");
         PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerConnected;
         foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
         {
             data.onHorizontalAxis -= MoveHorizontal;
             data.onVerticalAxis -= MoveVertical;
             data.onSelect -= Select;
+            data.onScroll -= Scroll;
         }
     }
 
@@ -45,12 +56,13 @@ public class UIController : MonoBehaviour
         target.onHorizontalAxis += MoveHorizontal;
         target.onVerticalAxis += MoveVertical;
         target.onSelect += Select;
+        target.onScroll += Scroll;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach(UIOption option in allOptions)
+        foreach (UIOption option in allOptions)
         {
             option.ownerController = this; // Initializes option
         }
@@ -69,7 +81,6 @@ public class UIController : MonoBehaviour
     // Moves the selection vertically by requested amount
     public void MoveVertical(InputAction.CallbackContext context, PlayerData owner)
     {
-        Debug.Log("VER");
         float direction = context.ReadValue<float>(); // Checks the direction the button is pressed
         if (verticalRecentered) // Can the selection be moved vertically
         {
@@ -145,19 +156,13 @@ public class UIController : MonoBehaviour
                 if (currentSelectedOption >= 0) // Was there an option already selected?
                 {
                     option = allOptions[currentSelectedOption]; // Gets the current selected option
-                    if (option.onLeaveHover != null)
-                    {
-                        option.onLeaveHover.Invoke(); // Tells the current selected option that it is being deselected
-                    }
+                    option.OnLeaveHover(); // Tells the current selected option that it is being deselected
                 }
 
                 currentSelectedOption = index; // Sets the new current selected option
                 option = allOptions[currentSelectedOption];
 
-                if (option.onHover != null)
-                {
-                    option.onHover.Invoke(); // Tells the new selected option that it has been selected
-                }
+                option.OnHover(); // Tells the new selected option that it has been selected
             }
         }
     }
@@ -177,19 +182,13 @@ public class UIController : MonoBehaviour
                     if (currentSelectedOption >= 0) // Was there an option already selected?
                     {
                         option = allOptions[currentSelectedOption]; // Gets the current selected option
-                        if (option.onLeaveHover != null)
-                        {
-                            option.onLeaveHover.Invoke(); // Tells the current selected option that it is being deselected
-                        }
+                        option.OnLeaveHover(); // Tells the current selected option that it is being deselected
                     }
 
                     currentSelectedOption = i; // Sets the new current selected option
                     option = allOptions[currentSelectedOption];
 
-                    if (option.onHover != null)
-                    {
-                        option.onHover.Invoke(); // Tells the new selected option that it has been selected
-                    }
+                    option.OnHover(); // Tells the new selected option that it has been selected
                     break;
                 }
             }
@@ -203,6 +202,11 @@ public class UIController : MonoBehaviour
         {
             UIOption option = allOptions[currentSelectedOption];
             option.OnMovedHorizontalStay(lastMoveAmount); // Tells the current option that it moved horizontally
+        }
+
+        if(scroller != null)
+        {
+            scroller.verticalNormalizedPosition += scrollAmount * Time.deltaTime * scrollSensitivity;
         }
     }
 }

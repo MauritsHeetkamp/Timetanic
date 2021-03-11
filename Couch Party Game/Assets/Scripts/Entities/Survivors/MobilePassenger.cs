@@ -17,9 +17,28 @@ public class MobilePassenger : Passenger
         navmeshAgent.speed = movementSpeed;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void Disable(bool disable)
     {
-        if(followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
+        if(disables > 0)
+        {
+            if (followRoutine != null)
+            {
+                StopCoroutine(followRoutine);
+                followRoutine = null;
+            }
+
+            navmeshAgent.enabled = false;
+        }
+        else
+        {
+            navmeshAgent.enabled = true;
+        }
+        base.Disable(disable);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
         {
             FollowTarget(other.GetComponent<Player>());
         }
@@ -28,9 +47,12 @@ public class MobilePassenger : Passenger
     // Make the npc follow a player
     public void FollowTarget(Player target)
     {
-        ownerPlayer = target; // Sets its target
-        ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
-        StartCoroutine(FollowTarget());
+        if(disables <= 0)
+        {
+            ownerPlayer = target; // Sets its target
+            ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
+            StartCoroutine(FollowTarget());
+        }
     }
 
     // Make the npc stop following a player
