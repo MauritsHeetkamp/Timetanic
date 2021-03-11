@@ -106,8 +106,15 @@ public class CameraHandler : MonoBehaviour
     {
         int playerAmount = playerHandler.localPlayers.Count;
 
-        int requiredScreenAmount = 2;
-        int powerOf = 2;
+        int requiredScreenAmount = 1;
+        int powerOf = 1;
+
+        if (playerAmount == 2)
+        {
+            requiredScreenAmount = playerAmount;
+            powerOf = playerAmount;
+        }
+
 
         if(playerAmount > 2) // Checks if there should be more then 2 screens
         {

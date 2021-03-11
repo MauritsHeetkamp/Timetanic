@@ -17,7 +17,7 @@ public class Player : MovingEntity
     [Header("Movement")]
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
 
-    public bool canMove = true;
+    public int moveBlocks;
     public int decellerationBlocks; //System that blocks decelleration when higher then 0
     [SerializeField] float rotateSpeed = 1;
 
@@ -319,25 +319,28 @@ public class Player : MovingEntity
     // Handles player movement
     void Movement()
     {
-        Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
-
-        if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
+        if(moveBlocks <= 0)
         {
-            if(playerAnimator != null)
+            Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
+
+            if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
             {
-                playerAnimator.SetBool("Walking", true);
+                if (playerAnimator != null)
+                {
+                    playerAnimator.SetBool("Walking", true);
+                }
+                movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
+
+                transform.Translate(movementAmount, Space.World);
+                Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
             }
-            movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
-
-            transform.Translate(movementAmount, Space.World);
-            Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
-        }
-        else
-        {
-            if (playerAnimator != null)
+            else
             {
-                playerAnimator.SetBool("Walking", false);
+                if (playerAnimator != null)
+                {
+                    playerAnimator.SetBool("Walking", false);
+                }
             }
         }
     }
@@ -347,7 +350,7 @@ public class Player : MovingEntity
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
-            canMove = false;
+            moveBlocks++;
             canDash = false;
             StartCoroutine(DashRoutine()); // Performs dash
         }
@@ -384,7 +387,7 @@ public class Player : MovingEntity
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
-        canMove = true;
+        moveBlocks--;
     }
 
     // Checks if the player is near something that they can interact with

@@ -12,8 +12,10 @@ public class PlayerManager : MonoBehaviour
     public List<PlayerData> connectedToLobbyPlayers = new List<PlayerData>();
 
     public UnityAction<PlayerData> onNewPlayerConnected;
-    
-    
+
+
+    [SerializeField] string[] bannedDevices;
+
     void Awake()
     {
         instance = this;
@@ -23,6 +25,18 @@ public class PlayerManager : MonoBehaviour
     // Gets called when a new player connected
     public void NewPlayerConnected(PlayerInput input)
     {
+        foreach(InputDevice device in input.devices)
+        {
+            foreach(string bannedDevice in bannedDevices)
+            {
+                if(device.name.Contains(bannedDevice))
+                {
+                    Destroy(input.gameObject);
+                    return;
+                }
+            }
+        }
+
         connectedToPCPlayers.Add(input.GetComponent<PlayerData>());
         if(onNewPlayerConnected != null)
         {
