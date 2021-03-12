@@ -19,7 +19,8 @@ public class MobilePassenger : Passenger
 
     public override void Disable(bool disable)
     {
-        if(disables > 0)
+        base.Disable(disable);
+        if (disables > 0)
         {
             if (followRoutine != null)
             {
@@ -33,7 +34,6 @@ public class MobilePassenger : Passenger
         {
             navmeshAgent.enabled = true;
         }
-        base.Disable(disable);
     }
 
     private void OnTriggerStay(Collider other)
@@ -51,7 +51,7 @@ public class MobilePassenger : Passenger
         {
             ownerPlayer = target; // Sets its target
             ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
-            StartCoroutine(FollowTarget());
+            followRoutine = StartCoroutine(FollowTarget());
         }
     }
 

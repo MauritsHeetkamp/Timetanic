@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 7356186324155280608}
   - component: {fileID: 2379193980547537414}
   - component: {fileID: 6489058870025747388}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: NewBertPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -795,6 +795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  disables: 0
   thisRigid: {fileID: 3051016953458959810}
   movementSpeed: 5
   owner: {fileID: 0}
@@ -808,15 +809,15 @@ MonoBehaviour:
   rotateSpeed: 300
   jumpVelocity: 300
   canJump: 1
-  jumpDetectionRange: 1
+  jumpDetectionRange: 0.05
   jumpableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 22327
   maxAngle: 60
   slopeBoosterModifier: 3
   slopeCheckOrigin: {fileID: 1348129864231219857}
-  forwardRayRange: 0.12
-  downwardRayRange: 0.12
+  forwardRayRange: 1
+  downwardRayRange: 1
   slopeMask:
     serializedVersion: 2
     m_Bits: 256

@@ -36,6 +36,16 @@ PrefabInstance:
       propertyPath: playerAnimator
       value: 
       objectReference: {fileID: 5745474925487977719}
+    - target: {fileID: 2379193980547537414, guid: 76bb0f8dbf5621e4a9388cbebd451280,
+        type: 3}
+      propertyPath: jumpDetectionRange
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2379193980547537414, guid: 76bb0f8dbf5621e4a9388cbebd451280,
+        type: 3}
+      propertyPath: jumpableLayers.m_Bits
+      value: 22327
+      objectReference: {fileID: 0}
     - target: {fileID: 2446156218242447020, guid: 76bb0f8dbf5621e4a9388cbebd451280,
         type: 3}
       propertyPath: m_Name

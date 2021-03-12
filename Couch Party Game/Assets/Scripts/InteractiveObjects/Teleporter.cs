@@ -93,7 +93,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject)) // Checks if target can be teleported
+        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target can be teleported
         {
             Teleport(other.gameObject);
         }
@@ -101,7 +101,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (attachedTargets.Contains(other.gameObject)) // Checks if target was attached
+        if (attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target was attached
         {
             attachedTargets.Remove(other.gameObject);
         }
