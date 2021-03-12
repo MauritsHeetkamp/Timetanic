@@ -51,12 +51,18 @@ MonoBehaviour:
   role: 1
   followingPassengers: []
   playerAnimator: {fileID: 8503430068137528046}
+  movementParam: Movement
+  jumpParam: Jump
+  useParam: StartUsing
+  stopUseParam: StopUsing
+  throwingParam: 
   rawMovement: {x: 0, y: 0}
-  canMove: 1
+  moveBlocks: 0
   decellerationBlocks: 0
   rotateSpeed: 300
   jumpVelocity: 300
   canJump: 1
+  jumpCheckHeightOffset: 0.1
   jumpDetectionRange: 0.05
   jumpableLayers:
     serializedVersion: 2
@@ -95,11 +101,11 @@ MonoBehaviour:
   dashVelocity: 15
   dashCooldown: 0.1
   stopOnCollision: 1
-  checkRange: 0.01
+  checkRange: 0.3
   dashDuration: 0.6
   hittableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32311
 --- !u!1 &1539183050538390293
 GameObject:
   m_ObjectHideFlags: 0

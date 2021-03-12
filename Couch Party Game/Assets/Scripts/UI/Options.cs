@@ -204,21 +204,27 @@ public class Options : MonoBehaviour
     // Sets the master volume
     public void SetMasterVolume(float volume)
     {
-        audioMixer.SetFloat(masterAudioString, volume);
+        float actualVolume = Mathf.Log10(volume) * 20;
+
+        audioMixer.SetFloat(masterAudioString, actualVolume);
         PlayerPrefs.SetFloat(masterAudioString, volume);
     }
 
     // Sets the sfx volume
     public void SetSFXVolume(float volume)
     {
-        audioMixer.SetFloat(sfxAudioString, volume);
+        float actualVolume = Mathf.Log10(volume) * 20;
+
+        audioMixer.SetFloat(sfxAudioString, actualVolume);
         PlayerPrefs.SetFloat(sfxAudioString, volume);
     }
 
     // Sets the background volume
     public void SetBackgroundVolume(float volume)
     {
-        audioMixer.SetFloat(backgroundAudioString, volume);
+        float actualVolume = Mathf.Log10(volume) * 20;
+
+        audioMixer.SetFloat(backgroundAudioString, actualVolume);
         PlayerPrefs.SetFloat(backgroundAudioString, volume);
     }
 

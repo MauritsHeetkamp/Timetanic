@@ -9,6 +9,8 @@ public class Interactable : MonoBehaviour
     [SerializeField] float interactDelay;
     public Player currentInteractingPlayer;
 
+    [SerializeField] string grabParam = "Grab";
+
 
     // Checks if this item can be interacted with
     public virtual bool CanInteract(Player askingPlayer)
@@ -34,6 +36,12 @@ public class Interactable : MonoBehaviour
         canInteract = false;
         currentInteractingPlayer = target;
         currentInteractingPlayer.currentUsingInteractable = this;
+
+        if(target.playerAnimator != null)
+        {
+            target.playerAnimator.SetTrigger(grabParam);
+        }
+
         CompleteInteract();
     }
 
