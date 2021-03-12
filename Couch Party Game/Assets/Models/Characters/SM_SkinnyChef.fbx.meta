@@ -46,6 +46,12 @@ ModelImporter:
       74: 5718927661010343571
     second: bertRig|A_Jumping
   - first:
+      74: 1427267615006672517
+    second: bertRig|A_JumpingLand
+  - first:
+      74: 2220179045808415320
+    second: bertRig|A_JumpingMidAir
+  - first:
       74: 2768270387395763528
     second: bertRig|A_Running
   - first:
@@ -63,9 +69,6 @@ ModelImporter:
   - first:
       74: 5282885455863401144
     second: bertRig|A_UsingFireExtinguisher(Object)
-  - first:
-      74: -3902529713952011211
-    second: bertRig|A_UsingFireExtinguisher(Object2)
   - first:
       74: -7533753847779612856
     second: bertRig|A_UsingFireExtinguisher(Player)
@@ -156,7 +159,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
