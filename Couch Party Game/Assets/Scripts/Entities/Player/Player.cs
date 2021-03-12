@@ -74,7 +74,6 @@ public class Player : MovingEntity
     // Handles camera following and interaction checks
     private void Update()
     {
-        CameraFollow();
         if(disables <= 0)
         {
             CheckInteract();
@@ -89,6 +88,7 @@ public class Player : MovingEntity
             Movement();
             CheckSlope();
         }
+        CameraFollow();
     }
 
     public void TogglePlayer()
