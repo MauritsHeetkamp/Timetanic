@@ -30,6 +30,7 @@ public class Options : MonoBehaviour
     [SerializeField] UIDropdown fullscreenSettings;
     private void Start()
     {
+        Debug.Log("INIT");
         Initialize();
     }
 

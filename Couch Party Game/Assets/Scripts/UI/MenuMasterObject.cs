@@ -9,7 +9,8 @@ public class MenuMasterObject : Menu
     [SerializeField] bool specificPlayerOnly;
     [SerializeField] bool lobbyPlayersOnly;
     [SerializeField] bool resetOnOpen;
-    string previousControlScheme;
+    string previousControlScheme = "Player";
+    PlayerData previousPlayer;
     [SerializeField] string newControlScheme = "UI";
 
     [SerializeField] GameObject[] allHolders;
@@ -79,7 +80,8 @@ public class MenuMasterObject : Menu
                     target.SetActive(false);
                 }
             }
-            previousControlScheme = owner.playerInput.currentControlScheme;
+            previousPlayer = owner;
+            Debug.Log(owner.playerInput.currentControlScheme);
             if (lobbyPlayersOnly && PlayerManager.instance.connectedToLobbyPlayers.Contains(owner))
             {
                 if (specificPlayerOnly)
@@ -116,13 +118,55 @@ public class MenuMasterObject : Menu
         }
     }
 
+    public void CloseMenu()
+    {
+        if (closable && targetMenu.activeSelf)
+        {
+            PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerJoined;
+
+            if (lobbyPlayersOnly && PlayerManager.instance.connectedToLobbyPlayers.Contains(previousPlayer))
+            {
+                if (specificPlayerOnly)
+                {
+                    previousPlayer.SwapInputScheme(previousControlScheme);
+                }
+                else
+                {
+                    foreach (PlayerData data in PlayerManager.instance.connectedToLobbyPlayers)
+                    {
+                        if (data != null)
+                        {
+                            data.SwapInputScheme(previousControlScheme);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (specificPlayerOnly)
+                {
+                    previousPlayer.SwapInputScheme(previousControlScheme);
+                }
+                else
+                {
+                    foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+                    {
+                        data.SwapInputScheme(previousControlScheme);
+                    }
+                }
+            }
+
+            previousPlayer = null;
+            targetMenu.SetActive(false);
+        }
+    }
+
     public void CloseMenu(InputAction.CallbackContext context, PlayerData owner)
     {
         if (closable && context.started && targetMenu.activeSelf)
         {
             PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerJoined;
 
-            previousControlScheme = owner.playerInput.currentControlScheme;
             if (lobbyPlayersOnly && PlayerManager.instance.connectedToLobbyPlayers.Contains(owner))
             {
                 if (specificPlayerOnly)
@@ -155,6 +199,7 @@ public class MenuMasterObject : Menu
                 }
             }
 
+            previousPlayer = null;
             targetMenu.SetActive(false);
         }
     }
