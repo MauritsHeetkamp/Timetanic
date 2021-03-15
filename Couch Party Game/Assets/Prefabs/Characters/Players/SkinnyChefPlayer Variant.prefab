@@ -327,7 +327,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4064183986407848807}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8ddf8537aba631646842bd16ce098257, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 32a399379cc42d34f909a69ad4281a77, type: 3}
   m_Controller: {fileID: 9100000, guid: acb94f08e3b7dbc4faf522fb8fe64d64, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -434,6 +434,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8741016783939916838, guid: 65a83fe879dd9004b81daae4d64d3c45,
+        type: 3}
+      propertyPath: m_Name
+      value: bertRig
       objectReference: {fileID: 0}
     - target: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,
         type: 3}

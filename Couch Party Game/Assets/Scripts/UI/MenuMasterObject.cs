@@ -9,7 +9,7 @@ public class MenuMasterObject : Menu
     [SerializeField] bool specificPlayerOnly;
     [SerializeField] bool lobbyPlayersOnly;
     [SerializeField] bool resetOnOpen;
-    string previousControlScheme = "Player";
+    [SerializeField] string previousControlScheme = "Player";
     PlayerData previousPlayer;
     [SerializeField] string newControlScheme = "UI";
 
@@ -41,11 +41,22 @@ public class MenuMasterObject : Menu
 
     private void OnEnable()
     {
-        if (targetMenu.activeSelf)
+        if (targetMenu.activeSelf && !specificPlayerOnly)
         {
-            foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+            if (!lobbyPlayersOnly)
             {
-                data.SwapInputScheme(newControlScheme);
+                PlayerManager.instance.onNewPlayerConnected += OnNewPlayerJoined;
+                foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+                {
+                    data.SwapInputScheme(newControlScheme);
+                }
+            }
+            else
+            {
+                foreach (PlayerData data in PlayerManager.instance.connectedToLobbyPlayers)
+                {
+                    data.SwapInputScheme(newControlScheme);
+                }
             }
         }
     }
@@ -86,6 +97,7 @@ public class MenuMasterObject : Menu
             {
                 if (specificPlayerOnly)
                 {
+                    Debug.Log("Swapped");
                     owner.SwapInputScheme(newControlScheme);
                 }
                 else
@@ -94,6 +106,7 @@ public class MenuMasterObject : Menu
                     {
                         if(data != null)
                         {
+                            Debug.Log("Swapped1");
                             data.SwapInputScheme(newControlScheme);
                         }
                     }
@@ -103,12 +116,14 @@ public class MenuMasterObject : Menu
             {
                 if (specificPlayerOnly)
                 {
+                    Debug.Log("Swapped2");
                     owner.SwapInputScheme(newControlScheme);
                 }
                 else
                 {
                     foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
                     {
+                        Debug.Log("Swapped3");
                         data.SwapInputScheme(newControlScheme);
                     }
                 }
