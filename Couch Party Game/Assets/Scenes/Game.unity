@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closable: 1
-  specificPlayerOnly: 1
+  specificPlayerOnly: 0
   lobbyPlayersOnly: 1
   resetOnOpen: 0
   newControlScheme: UI
@@ -16474,8 +16474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allCharacters:
-  - {fileID: 2446156218242447020, guid: 76bb0f8dbf5621e4a9388cbebd451280, type: 3}
-  - {fileID: 908356760983652812, guid: eee0244eb4de4ee409c689acd682669b, type: 3}
+  - {fileID: 4064183986407848807, guid: a7d491509153ea747ba16b34698d268f, type: 3}
   allSpawnLocations:
   - requiredRole: 0
     locations:

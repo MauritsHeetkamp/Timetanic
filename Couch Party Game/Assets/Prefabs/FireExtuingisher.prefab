@@ -4887,7 +4887,7 @@ MonoBehaviour:
   itemLocalEulers: {x: 0, y: -117.24, z: 90}
   leftHandle: {fileID: 0}
   rightHandle: {fileID: 0}
-  holdingParam: 
+  holdingParam: FireExtuingisher
   canUse: 1
   useDelay: 0
   extuingishAmount: 1

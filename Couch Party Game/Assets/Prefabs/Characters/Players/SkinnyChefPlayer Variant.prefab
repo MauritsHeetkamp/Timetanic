@@ -327,8 +327,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4064183986407848807}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5169073d895b8b643b271c205996d03e, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 8ddf8537aba631646842bd16ce098257, type: 3}
+  m_Controller: {fileID: 9100000, guid: acb94f08e3b7dbc4faf522fb8fe64d64, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -351,18 +351,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   disables: 0
-  thisRigid: {fileID: 0}
+  thisRigid: {fileID: 1560182758}
   movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player
   role: 1
   followingPassengers: []
-  playerAnimator: {fileID: 0}
+  playerAnimator: {fileID: 1560182755}
   movementParam: Movement
   jumpParam: Jump
   useParam: StartUsing
   stopUseParam: StopUsing
-  throwingParam: 
+  throwingParam: Throw
   rawMovement: {x: 0, y: 0}
   moveBlocks: 0
   decellerationBlocks: 0
@@ -370,10 +370,10 @@ MonoBehaviour:
   jumpVelocity: 300
   canJump: 1
   jumpCheckHeightOffset: 0.1
-  jumpDetectionRange: 0.05
+  jumpDetectionRange: 0.15
   jumpableLayers:
     serializedVersion: 2
-    m_Bits: 22327
+    m_Bits: 5943
   maxAngle: 60
   slopeBoosterModifier: 3
   slopeCheckOrigin: {fileID: 1128770941}
@@ -399,7 +399,7 @@ MonoBehaviour:
   canInteract: 1
   currentUsingInteractable: {fileID: 0}
   currentHoldingItem: {fileID: 0}
-  throwVelocity: 500
+  throwVelocity: 200
   throwHeight: 300
   minForwardRotationVelocity: 100
   maxForwardRotationVelocity: 1000
@@ -443,7 +443,7 @@ PrefabInstance:
     - target: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 66.175
+      value: 59.299397
       objectReference: {fileID: 0}
     - target: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,
         type: 3}
@@ -453,7 +453,7 @@ PrefabInstance:
     - target: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.280602
+      value: 18.347076
       objectReference: {fileID: 0}
     - target: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,
         type: 3}
