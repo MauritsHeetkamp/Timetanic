@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1021714494084748080, guid: 2542de37c3424b64c8780eb4ac0a2eee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.size

@@ -24,7 +24,6 @@ public class SaveSystem : MonoBehaviour
         
     }
 
-
     public void Save()
     {
 

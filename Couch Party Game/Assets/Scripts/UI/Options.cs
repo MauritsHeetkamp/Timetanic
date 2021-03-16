@@ -43,42 +43,19 @@ public class Options : MonoBehaviour
 
     void LoadSliders()
     {
-        if (PlayerPrefs.HasKey(masterAudioString))
-        {
-            masterVolumeSlider.value = PlayerPrefs.GetFloat(masterAudioString);
-        }
-        else
-        {
-            if (masterVolumeSlider.minValue != 0 && masterVolumeSlider.maxValue != 0)
-            {
-                masterVolumeSlider.value = masterVolumeSlider.minValue + (masterVolumeSlider.maxValue - masterVolumeSlider.minValue) / 2;
-            }
-        }
+        float val = 0;
 
-        if (PlayerPrefs.HasKey(backgroundAudioString))
-        {
-            Debug.Log(PlayerPrefs.GetFloat(backgroundAudioString));
-            backgroundMusicSlider.value = PlayerPrefs.GetFloat(backgroundAudioString);
-        }
-        else
-        {
-            if (backgroundMusicSlider.minValue != 0 && backgroundMusicSlider.maxValue != 0)
-            {
-                backgroundMusicSlider.value = backgroundMusicSlider.minValue + (backgroundMusicSlider.maxValue - backgroundMusicSlider.minValue) / 2;
-            }
-        }
+        audioMixer.GetFloat(masterAudioString, out val);
+        val = Mathf.Pow(10.0f, val / 20.0f);
+        masterVolumeSlider.value = val;
 
-        if (PlayerPrefs.HasKey(sfxAudioString))
-        {
-            sfxSlider.value = PlayerPrefs.GetFloat(sfxAudioString);
-        }
-        else
-        {
-            if (sfxSlider.minValue != 0 && sfxSlider.maxValue != 0)
-            {
-                sfxSlider.value = sfxSlider.minValue + (sfxSlider.maxValue - sfxSlider.minValue) / 2;
-            }
-        }
+        audioMixer.GetFloat(backgroundAudioString, out val);
+        val = Mathf.Pow(10.0f, val / 20.0f);
+        backgroundMusicSlider.value = val;
+
+        audioMixer.GetFloat(sfxAudioString, out val);
+        val = Mathf.Pow(10.0f, val / 20.0f);
+        sfxSlider.value = val;
     }
     
     void LoadDropdowns()
