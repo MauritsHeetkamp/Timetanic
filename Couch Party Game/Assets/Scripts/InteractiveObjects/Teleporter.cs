@@ -44,7 +44,7 @@ public class Teleporter : MonoBehaviour
 
             if(cameraRelocator != null)
             {
-                cameraRelocator.ChangeCamera(player);
+                cameraRelocator.ChangeCameraInstant(targetToTeleport);
             }
 
             if (resetCamera) // Should the camera be reset

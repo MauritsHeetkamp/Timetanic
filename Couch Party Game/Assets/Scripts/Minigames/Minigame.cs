@@ -8,7 +8,22 @@ public class Minigame : MonoBehaviour
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
     bool active;
     public bool finished;
+    [SerializeField] TaskData task;
+    [HideInInspector] MinigameHandler owner;
 
+    List<Task> trackingTasks = new List<Task>();
+
+
+    public void Initialize(MinigameHandler handler)
+    {
+        owner = handler;
+
+        Task[] tasks = owner.taskHandler.AddTask(task);
+        foreach(Task thisTask in tasks)
+        {
+            trackingTasks.Add(thisTask);
+        }
+    }
 
     // Checks if the minigame can be started
     public void CheckStart()
@@ -80,5 +95,10 @@ public class Minigame : MonoBehaviour
         {
             counter.gameObject.SetActive(false);
         }
+        foreach (Task task in trackingTasks)
+        {
+            task.Complete();
+        }
+        trackingTasks = new List<Task>();
     }
 }

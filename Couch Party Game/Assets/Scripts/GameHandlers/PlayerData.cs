@@ -21,6 +21,7 @@ public class PlayerData : MonoBehaviour
     public UnityAction<InputAction.CallbackContext, PlayerData> onUse;
     public UnityAction<InputAction.CallbackContext, PlayerData> onJump;
     public UnityAction<InputAction.CallbackContext, PlayerData> onMenuStart;
+    public UnityAction<InputAction.CallbackContext, PlayerData> onTaskMenu;
 
     // This allows for easy usability with swapping controls (UI Controls)
     public UnityAction<InputAction.CallbackContext, PlayerData> onHorizontalAxis;
@@ -139,6 +140,15 @@ public class PlayerData : MonoBehaviour
         if (onJump != null)
         {
             onJump.Invoke(context, this);
+        }
+    }
+
+    public void OnTaskMenu(InputAction.CallbackContext context)
+    {
+        Debug.Log("TASK MENU");
+        if(onTaskMenu != null)
+        {
+            onTaskMenu.Invoke(context, this);
         }
     }
 

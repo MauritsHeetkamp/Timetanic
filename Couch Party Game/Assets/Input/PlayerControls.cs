@@ -81,6 +81,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""TaskMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b9b3f72-169b-4d2b-a31d-1e7f7fba0081"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -356,6 +364,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15a26b07-4ac5-4c7a-9a4f-6a4dafbd322f"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TaskMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0541519-c9a4-413c-a34f-3a10e9c777df"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TaskMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -768,6 +798,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_TaskMenu = m_Player.FindAction("TaskMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Horizontal = m_UI.FindAction("Horizontal", throwIfNotFound: true);
@@ -835,6 +866,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Use;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_TaskMenu;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -847,6 +879,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Use => m_Wrapper.m_Player_Use;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @TaskMenu => m_Wrapper.m_Player_TaskMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -880,6 +913,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @TaskMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
+                @TaskMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
+                @TaskMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -908,6 +944,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @TaskMenu.started += instance.OnTaskMenu;
+                @TaskMenu.performed += instance.OnTaskMenu;
+                @TaskMenu.canceled += instance.OnTaskMenu;
             }
         }
     }
@@ -1020,6 +1059,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnUse(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnTaskMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

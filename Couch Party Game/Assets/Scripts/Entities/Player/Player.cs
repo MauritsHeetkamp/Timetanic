@@ -51,7 +51,7 @@ public class Player : MovingEntity
 
     CameraHandler cameraHandler; // Object that manages the cameras
 
-    public GameObject attachedSplitscreen; //Split screen owned by this player
+    public Splitscreen attachedSplitscreen; //Split screen owned by this player
 
     [Header("Interaction")]
     [SerializeField] Transform interactionBox; //Box that checks if an interactable is inside

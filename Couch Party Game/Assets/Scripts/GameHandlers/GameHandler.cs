@@ -23,6 +23,7 @@ public class GameHandler : MonoBehaviour
 
     [Header("Spawning")]
     [SerializeField] SpawnManager spawnHandler;
+    [SerializeField] MinigameHandler minigameHandler;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class GameHandler : MonoBehaviour
     {      
         StartStopCountdown(true, true); // Starts and resets timer
         spawnHandler.GetSpawnData(); // Spawns players
+        minigameHandler.Initialize();
     }
 
     // Starts or stops the countdown
