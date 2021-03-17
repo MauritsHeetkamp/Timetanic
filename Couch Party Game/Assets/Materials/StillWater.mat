@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Water
+  m_Name: StillWater
   m_Shader: {fileID: 4800000, guid: bb2874fb220db004b906404d1b614b73, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -63,11 +63,11 @@ Material:
     - _BumpScale: 1
     - _CellSize: 5.89
     - _Cutoff: 0.5
-    - _DepthColor: 0.34
-    - _DepthMultiplier: 0.19
+    - _DepthColor: 0
+    - _DepthMultiplier: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FoamMultiplier: 1.5
+    - _FoamMultiplier: 28.89
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -77,15 +77,15 @@ Material:
     - _Noise: 1.3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Size: 0.2
+    - _Size: -12.27
     - _Smoothness: 0.203
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WaterOpacity: 1
-    - _WaveHeight: 9.87
+    - _WaterOpacity: 0.485
+    - _WaveHeight: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.36903453, b: 0.7075472, a: 1}

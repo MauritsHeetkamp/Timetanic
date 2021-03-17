@@ -232,6 +232,13 @@ public class Player : MovingEntity
     {
         if(context.started && canInteract && currentHoldingItem != null) //Checks input, if you can interact and if you are holding an item
         {
+            UsableGrabbable usable = currentHoldingItem.GetComponent<UsableGrabbable>();
+
+            if(usable != null && !usable.CheckUse())
+            {
+                return;
+            }
+
             if(playerAnimator != null)
             {
                 playerAnimator.SetTrigger(throwingParam);
@@ -254,6 +261,12 @@ public class Player : MovingEntity
     {
         if (context.started && currentHoldingItem != null) // Checks input and if you are holding an item
         {
+            UsableGrabbable usable = currentHoldingItem.GetComponent<UsableGrabbable>();
+
+            if (usable != null && !usable.CheckUse())
+            {
+                return;
+            }
             currentHoldingItem.Disattach();
         }
     }

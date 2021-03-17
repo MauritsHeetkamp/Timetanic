@@ -7,6 +7,7 @@ TagManager:
   - Interactable
   - Passenger
   - GlobalFader
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - PostProcessing
   - Passenger
   - Player
-  - 
+  - PenetratableSurface
   - 
   - 
   - 
