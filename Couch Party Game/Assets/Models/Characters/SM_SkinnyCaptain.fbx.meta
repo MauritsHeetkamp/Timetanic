@@ -1,0 +1,172 @@
+fileFormatVersion: 2
+guid: cf184a57a479abd4ea8692a308ec48ac
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: -1000468433546402778
+    second: A_CrouchingLookLeft
+  - first:
+      74: 7472731964304015388
+    second: A_Walking
+  - first:
+      74: 8364942207196030035
+    second: A_Startled
+  - first:
+      74: 5869551971299048615
+    second: A_ScaredShake
+  - first:
+      74: 2996267046330670247
+    second: A_ScaredRunning
+  - first:
+      74: -5228412949560919391
+    second: A_Scared
+  - first:
+      74: -854868010144493292
+    second: A_CrouchingScared
+  - first:
+      74: -6730566300151397415
+    second: A_Idle
+  - first:
+      74: -7348383508443711546
+    second: A_FillingBucket(Player)
+  - first:
+      74: 4878580643202877497
+    second: A_JumpingMidAir
+  - first:
+      74: -8746924790334924817
+    second: A_Running
+  - first:
+      74: 5183672208529309186
+    second: A_ThrowingFireExtinguisher(Player)
+  - first:
+      74: -5351998942168844725
+    second: A_ThrowingBucket
+  - first:
+      74: 8968929638814363406
+    second: captainRig|A_EmptyingBucket(Player)
+  - first:
+      74: -8095486461262263041
+    second: captainRig|A_FillingBucket(Player)
+  - first:
+      74: -7986608866781533250
+    second: captainRig|A_Grabbing
+  - first:
+      74: -7474962476707174593
+    second: captainRig|A_Idle
+  - first:
+      74: 2447820634990240813
+    second: captainRig|A_Jumping
+  - first:
+      74: -8177237665034058027
+    second: captainRig|A_JumpingLand
+  - first:
+      74: 3706923408576825980
+    second: captainRig|A_JumpingMidAir
+  - first:
+      74: -5872565763944807283
+    second: captainRig|A_Running
+  - first:
+      74: -7986496441702519
+    second: captainRig|A_Startled
+  - first:
+      74: 5022467729613300300
+    second: captainRig|A_ThrowingBucket
+  - first:
+      74: -560858797543086863
+    second: captainRig|A_ThrowingFireExtinguisher(Player)
+  - first:
+      74: 884922529002168058
+    second: captainRig|A_UsingFireExtinguisher(Player)
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
