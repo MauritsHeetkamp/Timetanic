@@ -253,9 +253,28 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 77b5c699-49aa-4a3a-a16b-b3dd64488724
     m_ActionName: UI/Scroll
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb47c97b-8c1f-4b07-96b7-6b33f032d93c
+    m_ActionName: Default/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9166431627977747533}
+        m_MethodName: OnTaskMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8b9b3f72-169b-4d2b-a31d-1e7f7fba0081
+    m_ActionName: Player/TaskMenu[/Keyboard/t,/XInputControllerWindows/dpad/right]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
+  m_DefaultActionMap: Default
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &-9166431627977747533

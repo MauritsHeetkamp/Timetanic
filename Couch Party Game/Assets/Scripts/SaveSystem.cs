@@ -24,7 +24,6 @@ public class SaveSystem : MonoBehaviour
         
     }
 
-
     public void Save()
     {
 
@@ -34,15 +33,21 @@ public class SaveSystem : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(masterAudioName))
         {
-            audio.SetFloat(masterAudioName, PlayerPrefs.GetFloat(masterAudioName));
+            float actualVolume = Mathf.Log10(PlayerPrefs.GetFloat(masterAudioName)) * 20;
+
+            audio.SetFloat(masterAudioName, actualVolume);
         }
         if (PlayerPrefs.HasKey(backgroundMusicName))
         {
-            audio.SetFloat(backgroundMusicName, PlayerPrefs.GetFloat(backgroundMusicName));
+            float actualVolume = Mathf.Log10(PlayerPrefs.GetFloat(backgroundMusicName)) * 20;
+
+            audio.SetFloat(backgroundMusicName, actualVolume);
         }
         if (PlayerPrefs.HasKey(sfxName))
         {
-            audio.SetFloat(sfxName, PlayerPrefs.GetFloat(sfxName));
+            float actualVolume = Mathf.Log10(PlayerPrefs.GetFloat(sfxName)) * 20;
+
+            audio.SetFloat(sfxName, actualVolume);
         }
 
         if (PlayerPrefs.HasKey("QualityLevel"))

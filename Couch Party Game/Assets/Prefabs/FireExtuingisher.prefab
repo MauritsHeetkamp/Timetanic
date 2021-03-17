@@ -4880,12 +4880,14 @@ MonoBehaviour:
   interactDuration: 0
   interactDelay: 1
   currentInteractingPlayer: {fileID: 0}
+  grabParam: Grab
   rigid: {fileID: 5102792967842815808}
   itemName: Fire Extuingisher
-  itemLocalPosition: {x: 0.29, y: 0.706, z: 0.415}
-  itemLocalEulers: {x: 0, y: -90, z: 90}
+  itemLocalPosition: {x: 0.169, y: 0.849, z: 0.122}
+  itemLocalEulers: {x: 0, y: -117.24, z: 90}
   leftHandle: {fileID: 0}
   rightHandle: {fileID: 0}
+  holdingParam: FireExtuingisher
   canUse: 1
   useDelay: 0
   extuingishAmount: 1

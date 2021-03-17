@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class CameraHandler : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class CameraHandler : MonoBehaviour
     Vector3 targetLocation;
     public bool isSplit;
     [SerializeField] float splitFadeDuration = 1; // Duration of the fade when swapping between all-in-one and split screen (fade in and out combined)
+    public UnityAction<bool> onSplitStateChanged;
 
     public bool handleTheCameras = true; // Should the cameras be handled automatically?
     bool singlePlayer;
@@ -155,9 +157,10 @@ public class CameraHandler : MonoBehaviour
             {
                 RenderTexture texture = new RenderTexture((int)splitscreenSizeX, (int)splitscreenSizeY, 0); // Creates new rendertexture with appropriate size
                 playerHandler.localPlayers[i].playerCamera.GetComponent<Camera>().targetTexture = texture; // Assigns the players local camera to the rendertexture
-                playerHandler.localPlayers[i].attachedSplitscreen = newSplitscreen; // Lets the player know what splitscreen it is connected to
-                newSplitscreen.GetComponent<RawImage>().color = Color.white; // Makes sure the splitscreen isn't black
-                newSplitscreen.GetComponent<RawImage>().texture = texture; // Assigns the rendertexture to the splitscreen
+                playerHandler.localPlayers[i].attachedSplitscreen = newSplitscreen.GetComponent<Splitscreen>(); // Lets the player know what splitscreen it is connected to
+                newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.color = Color.white; // Makes sure the splitscreen isn't black
+                newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.texture = texture; // Assigns the rendertexture to the splitscreen
+                newSplitscreen.GetComponent<Splitscreen>().owner = playerHandler.localPlayers[i];
             }
         }
 
@@ -166,8 +169,8 @@ public class CameraHandler : MonoBehaviour
         {
             singlePlayer = true;
             handleTheCameras = false;
-            SetSplit(true, true);
         }
+        SetSplit(true, true);
     }
 
     // FixedUpdate is called once per Time.deltaTime
@@ -279,6 +282,10 @@ public class CameraHandler : MonoBehaviour
     // Splits screen
     void Split()
     {
+        if(onSplitStateChanged != null)
+        {
+            onSplitStateChanged.Invoke(true);
+        }
         splitscreenImageHolder.gameObject.SetActive(true); // Enables split screens
         foreach(Player player in playerHandler.localPlayers)
         {
@@ -335,6 +342,11 @@ public class CameraHandler : MonoBehaviour
 
     void Unsplit()
     {
+        if (onSplitStateChanged != null)
+        {
+            onSplitStateChanged.Invoke(false);
+        }
+
         splitscreenImageHolder.gameObject.SetActive(false); // Disables split screens
 
         List<GenericCounter<Vector3>> cameraEulers = new List<GenericCounter<Vector3>>();

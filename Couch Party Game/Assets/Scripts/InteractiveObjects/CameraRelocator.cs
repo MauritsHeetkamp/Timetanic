@@ -11,6 +11,8 @@ public class CameraRelocator : MonoBehaviour
 
     [SerializeField] bool resetCamera = true;
 
+    [SerializeField] float defaultFadeDuration = 0.4f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,11 +29,11 @@ public class CameraRelocator : MonoBehaviour
         
     }
 
-    public void ChangeCamera(Collider target)
+    public void ChangeCameraInstant(GameObject target)
     {
         Player player = target.GetComponent<Player>();
 
-        if(player != null)
+        if (player != null)
         {
             if (newCameraDirection != null)
             {
@@ -58,30 +60,29 @@ public class CameraRelocator : MonoBehaviour
         }
     }
 
-    public void ChangeCamera(Player player)
+    public void ChangeCamera(Collider target)
     {
-        if (player != null)
+        Player player = target.GetComponent<Player>();
+
+        if(player != null)
         {
-            if (newCameraDirection != null)
+            if (defaultFadeDuration > 0)
             {
-                player.SetCameraRotationXZ(newCameraDirection.eulerAngles);
-                player.SetCameraRotationY(newCameraDirection.eulerAngles);
-            }
+                FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>(); // Finds fade handler
 
-            if (newYDistance != 0)
-            {
-                player.yDistance = newYDistance;
+                if (fadeManager != null)
+                {
+                    FadePanel fader = fadeManager.FadeInOut(defaultFadeDuration, player);
+                    fader.onFadedInSpecificPlayer += ChangeCameraInstant; // Makes sure the player gets teleported after the fade is complete
+                }
+                else
+                {
+                    ChangeCameraInstant(target.gameObject);
+                }
             }
-
-            if (newZDistance != 0)
+            else
             {
-                player.zDistance = newZDistance;
-            }
-
-            if (resetCamera) // Should the camera be reset
-            {
-                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera(); // Resets single screen camera
-                player.ResetCameraLocation(); // Resets split screen camera
+                ChangeCameraInstant(target.gameObject);
             }
         }
     }

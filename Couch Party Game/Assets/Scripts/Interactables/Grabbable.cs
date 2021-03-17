@@ -8,7 +8,7 @@ public class Grabbable : Interactable
     public string itemName;
     [SerializeField] Vector3 itemLocalPosition, itemLocalEulers; // Position and Rotation data
     [SerializeField] Transform leftHandle, rightHandle; // Handles for Inverse Kinematics (IK) rigs
-
+    public string holdingParam;
 
     // Override on completed interaction
     public override void CompleteInteract()
@@ -27,11 +27,20 @@ public class Grabbable : Interactable
         transform.parent = currentInteractingPlayer.transform;
         transform.localPosition = itemLocalPosition;
         transform.localEulerAngles = itemLocalEulers;
+
+        if (currentInteractingPlayer.playerAnimator != null && !string.IsNullOrEmpty(holdingParam))
+        {
+            currentInteractingPlayer.playerAnimator.SetBool(holdingParam, true);
+        }
     }
 
     // Disattached grabbable from player
     public virtual void Disattach()
     {
+        if (currentInteractingPlayer.playerAnimator != null && !string.IsNullOrEmpty(holdingParam))
+        {
+            currentInteractingPlayer.playerAnimator.SetBool(holdingParam, false);
+        }
         transform.parent = null;
         rigid.isKinematic = false; // Enables physics
         currentInteractingPlayer.currentHoldingItem = null; // Lets player know its not holding an item

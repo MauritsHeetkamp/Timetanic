@@ -13,6 +13,10 @@ public class Player : MovingEntity
 
     [Header("Animation")]
     public Animator playerAnimator;
+    [SerializeField] string movementParam = "Movement";
+    [SerializeField] string jumpParam = "Jump";
+    [SerializeField] string useParam = "StartUsing", stopUseParam = "StopUsing";
+    [SerializeField] string throwingParam;
 
     [Header("Movement")]
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
@@ -24,6 +28,7 @@ public class Player : MovingEntity
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 1;
     [SerializeField] bool canJump = true;
+    [SerializeField] float jumpCheckHeightOffset = 0.1f;
 
     [SerializeField] float jumpDetectionRange = 1; //The range downwards to see if the player is grounded
     [SerializeField] LayerMask jumpableLayers; //The layers that the player can jump on
@@ -46,7 +51,7 @@ public class Player : MovingEntity
 
     CameraHandler cameraHandler; // Object that manages the cameras
 
-    public GameObject attachedSplitscreen; //Split screen owned by this player
+    public Splitscreen attachedSplitscreen; //Split screen owned by this player
 
     [Header("Interaction")]
     [SerializeField] Transform interactionBox; //Box that checks if an interactable is inside
@@ -85,9 +90,9 @@ public class Player : MovingEntity
     {
         if (disables <= 0)
         {
-            Movement();
             CheckSlope();
         }
+        Movement();
         CameraFollow();
     }
 
@@ -203,10 +208,18 @@ public class Player : MovingEntity
             {
                 if (context.started && grabbable.CheckUse()) //Checks input and if the grabbable can be used
                 {
+                    if(playerAnimator != null)
+                    {
+                        playerAnimator.SetTrigger(useParam);
+                    }
                     grabbable.Use(); // Uses the item
                 }
                 if (context.canceled) //Checks input
                 {
+                    if (playerAnimator != null)
+                    {
+                        playerAnimator.SetTrigger(stopUseParam);
+                    }
                     grabbable.StopUse(); // Stops using the item
                 }
             }
@@ -219,6 +232,11 @@ public class Player : MovingEntity
     {
         if(context.started && canInteract && currentHoldingItem != null) //Checks input, if you can interact and if you are holding an item
         {
+            if(playerAnimator != null)
+            {
+                playerAnimator.SetTrigger(throwingParam);
+            }
+
             Grabbable lastItem = currentHoldingItem; // The item you were holding
             currentHoldingItem.Disattach();
             Vector3 throwDirection = transform.forward; // The direction the item will be thrown towards
@@ -245,9 +263,25 @@ public class Player : MovingEntity
     {
         if(context.started && canJump && thisRigid.velocity.y <= 0) // Checks input and if player can jump
         {
-            if (Physics.Raycast(transform.position, -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
+            if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
             {
+                if(playerAnimator != null)
+                {
+                    playerAnimator.SetBool(jumpParam, true);
+                }
                 thisRigid.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse); // Adds jump force
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
+        {
+            canJump = true;
+            if (playerAnimator != null)
+            {
+                playerAnimator.SetBool(jumpParam, false);
             }
         }
     }
@@ -319,28 +353,30 @@ public class Player : MovingEntity
     // Handles player movement
     void Movement()
     {
-        if(moveBlocks <= 0)
+        if(moveBlocks <= 0 && disables <= 0)
         {
+            if(playerAnimator != null)
+            {
+                Vector2 absRawMovement = new Vector2(Mathf.Abs(rawMovement.x), Mathf.Abs(rawMovement.y));
+                playerAnimator.SetFloat(movementParam, absRawMovement.x > absRawMovement.y ? absRawMovement.x : absRawMovement.y);
+            }
+
             Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
 
             if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
             {
-                if (playerAnimator != null)
-                {
-                    playerAnimator.SetBool("Walking", true);
-                }
                 movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
 
                 transform.Translate(movementAmount, Space.World);
                 Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
             }
-            else
+        }
+        else
+        {
+            if (playerAnimator != null)
             {
-                if (playerAnimator != null)
-                {
-                    playerAnimator.SetBool("Walking", false);
-                }
+                playerAnimator.SetFloat(movementParam, 0);
             }
         }
     }
@@ -350,9 +386,12 @@ public class Player : MovingEntity
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
-            moveBlocks++;
-            canDash = false;
-            StartCoroutine(DashRoutine()); // Performs dash
+            if (!Physics.Raycast(transform.position, transform.forward, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            {
+                moveBlocks++;
+                canDash = false;
+                StartCoroutine(DashRoutine()); // Performs dash
+            }
         }
     }
 
