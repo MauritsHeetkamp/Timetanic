@@ -14,7 +14,6 @@ public class Splitscreen : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(owner);
         if(owner != null && !initialized)
         {
             initialized = true;
@@ -34,7 +33,6 @@ public class Splitscreen : MonoBehaviour
     private void OnDisable()
     {
         initialized = false;
-        Debug.Log("DISABLED");
         if (taskUI.activeSelf)
         {
             taskUI.SetActive(false);
@@ -47,7 +45,6 @@ public class Splitscreen : MonoBehaviour
     {
         if (context.started)
         {
-            Debug.Log("TOGGLED");
             taskUI.SetActive(!taskUI.activeSelf);
         }
     }

@@ -51,7 +51,7 @@ public class Bucket : Extuingisher
         Debug.Log("FILLING");
         Vector3 targetScale = Vector3.zero;
         Vector3 targetLocation = Vector3.zero;
-        currentInteractingPlayer.playerAnimator.SetTrigger(fillAnim);
+        currentInteractingPlayer.animator.SetTrigger(fillAnim);
 
         RaycastHit hitData;
 
@@ -68,7 +68,7 @@ public class Bucket : Extuingisher
             if (hitData.transform.GetComponent<RemoveableWater>() != null)
             {
                 RemoveableWater thisWater = hitData.transform.GetComponent<RemoveableWater>();
-                if (thisWater.waterAmount > 0)
+                if (thisWater.waterAmount > 0 && !thisWater.removed)
                 {
                     removeableWater = thisWater;
                 }
@@ -144,7 +144,7 @@ public class Bucket : Extuingisher
         Debug.Log("EMPTYING");
         Vector3 targetScale = Vector3.zero;
         Vector3 targetLocation = Vector3.zero;
-        currentInteractingPlayer.playerAnimator.SetTrigger(emptyAnim);
+        currentInteractingPlayer.animator.SetTrigger(emptyAnim);
 
         RaycastHit hitData;
 

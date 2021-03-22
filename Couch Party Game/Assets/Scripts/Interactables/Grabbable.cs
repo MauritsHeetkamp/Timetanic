@@ -28,18 +28,18 @@ public class Grabbable : Interactable
         transform.localPosition = itemLocalPosition;
         transform.localEulerAngles = itemLocalEulers;
 
-        if (currentInteractingPlayer.playerAnimator != null && !string.IsNullOrEmpty(holdingParam))
+        if (currentInteractingPlayer.animator != null && !string.IsNullOrEmpty(holdingParam))
         {
-            currentInteractingPlayer.playerAnimator.SetBool(holdingParam, true);
+            currentInteractingPlayer.animator.SetBool(holdingParam, true);
         }
     }
 
     // Disattached grabbable from player
     public virtual void Disattach()
     {
-        if (currentInteractingPlayer.playerAnimator != null && !string.IsNullOrEmpty(holdingParam))
+        if (currentInteractingPlayer.animator != null && !string.IsNullOrEmpty(holdingParam))
         {
-            currentInteractingPlayer.playerAnimator.SetBool(holdingParam, false);
+            currentInteractingPlayer.animator.SetBool(holdingParam, false);
         }
         transform.parent = null;
         rigid.isKinematic = false; // Enables physics

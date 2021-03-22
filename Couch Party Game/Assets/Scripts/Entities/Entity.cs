@@ -8,6 +8,10 @@ public class Entity : Damagable
     public Rigidbody thisRigid;
     bool canMove = true;
 
+    public Animator animator;
+    [SerializeField] ParticleSystem electrifiedParticles;
+    [SerializeField] string shockAnimation;
+
     // Toggles movement
     public virtual void ToggleMovement()
     {
@@ -28,6 +32,38 @@ public class Entity : Damagable
         else
         {
             disables--;
+        }
+    }
+
+    public virtual void SetShock(bool value)
+    {
+        Debug.Log(value);
+        Disable(value);
+        if(electrifiedParticles != null)
+        {
+            if (value)
+            {
+                electrifiedParticles.Play();
+            }
+            else
+            {
+                electrifiedParticles.Stop();
+            }
+        }
+
+        if(animator != null)
+        {
+            animator.SetBool(shockAnimation, value);
+        }
+
+        if (value)
+        {
+            BecomePermanentInvulnerable();
+        }
+        else
+        {
+            RemoveInvulnerability();
+            BecomeInvulnerable();
         }
     }
 }

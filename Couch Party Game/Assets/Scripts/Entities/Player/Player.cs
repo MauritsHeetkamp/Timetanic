@@ -12,7 +12,6 @@ public class Player : MovingEntity
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
     [Header("Animation")]
-    public Animator playerAnimator;
     [SerializeField] string movementParam = "Movement";
     [SerializeField] string jumpParam = "Jump";
     [SerializeField] string useParam = "StartUsing", stopUseParam = "StopUsing";
@@ -74,6 +73,7 @@ public class Player : MovingEntity
     [SerializeField] bool stopOnCollision = true; //Player can't move until he is in no motion anymore
     [SerializeField] float checkRange; // The range that the ray checks for collision
     [SerializeField] float dashDuration;
+    [SerializeField] bool decreaseSpeedOverTime;
     [SerializeField] LayerMask hittableLayers; // Layers that cancels the dash
 
     // Handles camera following and interaction checks
@@ -91,8 +91,8 @@ public class Player : MovingEntity
         if (disables <= 0)
         {
             CheckSlope();
+            Movement();
         }
-        Movement();
         CameraFollow();
     }
 
@@ -110,7 +110,6 @@ public class Player : MovingEntity
             if (owner != null) // Is this owner by a player?
             {
                 // Assigns buttons their functionality
-                owner.onMove -= SetMoveAmount;
                 owner.onUse -= UseCurrentItem;
                 owner.onThrow -= ThrowCurrentItem;
                 owner.onDrop -= DropCurrentItem;
@@ -124,7 +123,6 @@ public class Player : MovingEntity
             if (owner != null) // Is this owner by a player?
             {
                 // Assigns buttons their functionality
-                owner.onMove += SetMoveAmount;
                 owner.onUse += UseCurrentItem;
                 owner.onThrow += ThrowCurrentItem;
                 owner.onDrop += DropCurrentItem;
@@ -208,17 +206,17 @@ public class Player : MovingEntity
             {
                 if (context.started && grabbable.CheckUse()) //Checks input and if the grabbable can be used
                 {
-                    if(playerAnimator != null)
+                    if(animator != null)
                     {
-                        playerAnimator.SetTrigger(useParam);
+                        animator.SetTrigger(useParam);
                     }
                     grabbable.Use(); // Uses the item
                 }
                 if (context.canceled) //Checks input
                 {
-                    if (playerAnimator != null)
+                    if (animator != null)
                     {
-                        playerAnimator.SetTrigger(stopUseParam);
+                        animator.SetTrigger(stopUseParam);
                     }
                     grabbable.StopUse(); // Stops using the item
                 }
@@ -239,9 +237,9 @@ public class Player : MovingEntity
                 return;
             }
 
-            if(playerAnimator != null)
+            if(animator != null)
             {
-                playerAnimator.SetTrigger(throwingParam);
+                animator.SetTrigger(throwingParam);
             }
 
             Grabbable lastItem = currentHoldingItem; // The item you were holding
@@ -278,9 +276,9 @@ public class Player : MovingEntity
         {
             if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
             {
-                if(playerAnimator != null)
+                if(animator != null)
                 {
-                    playerAnimator.SetBool(jumpParam, true);
+                    animator.SetBool(jumpParam, true);
                 }
                 thisRigid.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse); // Adds jump force
             }
@@ -292,9 +290,9 @@ public class Player : MovingEntity
         if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
         {
             canJump = true;
-            if (playerAnimator != null)
+            if (animator != null)
             {
-                playerAnimator.SetBool(jumpParam, false);
+                animator.SetBool(jumpParam, false);
             }
         }
     }
@@ -368,10 +366,10 @@ public class Player : MovingEntity
     {
         if(moveBlocks <= 0 && disables <= 0)
         {
-            if(playerAnimator != null)
+            if(animator != null)
             {
                 Vector2 absRawMovement = new Vector2(Mathf.Abs(rawMovement.x), Mathf.Abs(rawMovement.y));
-                playerAnimator.SetFloat(movementParam, absRawMovement.x > absRawMovement.y ? absRawMovement.x : absRawMovement.y);
+                animator.SetFloat(movementParam, absRawMovement.x > absRawMovement.y ? absRawMovement.x : absRawMovement.y);
             }
 
             Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
@@ -387,9 +385,9 @@ public class Player : MovingEntity
         }
         else
         {
-            if (playerAnimator != null)
+            if (animator != null)
             {
-                playerAnimator.SetFloat(movementParam, 0);
+                animator.SetFloat(movementParam, 0);
             }
         }
     }
@@ -399,7 +397,7 @@ public class Player : MovingEntity
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
-            if (!Physics.Raycast(transform.position, transform.forward, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            if (!Physics.Raycast(transform.position + new Vector3(0, 1, 0), rawMovement, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
             {
                 moveBlocks++;
                 canDash = false;
@@ -412,20 +410,35 @@ public class Player : MovingEntity
     IEnumerator DashRoutine()
     {
         float duration = 0; // duration passed since start of dash
+        Vector3 dashDirection = transform.forward;
+
+
+        if(rawMovement != Vector2.zero)
+        {
+            dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+        }
+
+        transform.LookAt(new Vector3(transform.position.x + dashDirection.x, transform.position.y, transform.position.z + dashDirection.z));
 
         while (duration < dashDuration)
         {
             float decreaseOverDuration = (dashDuration - duration) / dashDuration; // How much of the duration is left (range from 0 to 1)
             RaycastHit hitData;
 
-            if(Physics.Raycast(transform.position, transform.forward, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            if(Physics.Raycast(transform.position + new Vector3(0, 1, 0), dashDirection, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
             {
                 if (stopOnCollision) // Should the dash stop whenever the player collides
                 {
                     break;
                 }
             }
-            transform.Translate(Vector3.forward * dashVelocity * Time.deltaTime * decreaseOverDuration); // Moves the player
+            Vector3 moveAmount = dashDirection * dashVelocity * Time.deltaTime;
+            if (decreaseSpeedOverTime)
+            {
+                moveAmount *= decreaseOverDuration;
+            }
+
+            transform.position += moveAmount; // Moves the player
             yield return null;
             duration += Time.deltaTime;
         }
@@ -569,6 +582,19 @@ public class Player : MovingEntity
         {
             ResetCameraLocation();
         }
+    }
+
+    public override void SetShock(bool value)
+    {
+        if (value)
+        {
+            if(currentHoldingItem != null)
+            {
+                currentHoldingItem.Disattach();
+            }
+        }
+
+        base.SetShock(value);
     }
 
     public enum Role { TestRole, OtherTestRole} // Roles for spawn locations

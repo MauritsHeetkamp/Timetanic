@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RemoveableWater : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class RemoveableWater : MonoBehaviour
 
     Coroutine moveWaterRoutine;
 
+    public UnityAction onRemovedWater;
+
+    public bool removed;
+
     private void Start()
     {
         targetHeight = minWaterHeight + ((waterAmount / maxWaterAmount) * maxWaterHeight - minWaterHeight);
@@ -21,20 +26,41 @@ public class RemoveableWater : MonoBehaviour
 
     public void ChangeWaterAmount(float amount)
     {
-        Debug.Log("MODIFIED WITH " + amount.ToString());
-        waterAmount += amount;
-        
-        if(waterAmount > maxWaterAmount)
+        if (!removed)
         {
-            waterAmount = maxWaterAmount;
-        }
+            Debug.Log("MODIFIED WITH " + amount.ToString());
+            waterAmount += amount;
 
-        targetHeight = minWaterHeight + ((waterAmount / maxWaterAmount) * (maxWaterHeight - minWaterHeight));
+            if (waterAmount > maxWaterAmount)
+            {
+                waterAmount = maxWaterAmount;
+            }
 
-        if(moveWaterRoutine == null)
-        {
-            moveWaterRoutine = StartCoroutine(MoveWaterHeight());
+            targetHeight = minWaterHeight + ((waterAmount / maxWaterAmount) * (maxWaterHeight - minWaterHeight));
+
+            if (moveWaterRoutine == null)
+            {
+                moveWaterRoutine = StartCoroutine(MoveWaterHeight());
+            }
+
+            if (waterAmount <= 0)
+            {
+                waterAmount = 0;
+                removed = true;
+                if(onRemovedWater != null)
+                {
+                    onRemovedWater.Invoke();
+                }
+            }
         }
+    }
+
+    public void Reset()
+    {
+        removed = false;
+        waterAmount = maxWaterAmount;
+        targetHeight = maxWaterHeight;
+        moveWaterRoutine = StartCoroutine(MoveWaterHeight());
     }
 
     IEnumerator MoveWaterHeight()

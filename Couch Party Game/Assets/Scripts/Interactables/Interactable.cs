@@ -37,9 +37,9 @@ public class Interactable : MonoBehaviour
         currentInteractingPlayer = target;
         currentInteractingPlayer.currentUsingInteractable = this;
 
-        if(target.playerAnimator != null)
+        if(target.animator != null)
         {
-            target.playerAnimator.SetTrigger(grabParam);
+            target.animator.SetTrigger(grabParam);
         }
 
         CompleteInteract();
