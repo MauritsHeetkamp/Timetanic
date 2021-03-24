@@ -9,7 +9,7 @@ public class Teleporter : MonoBehaviour
     [SerializeField] bool teleportOnTrigger;
 
 
-    [SerializeField] Transform target; // Target to teleport to
+    public Transform target; // Target to teleport to
     [SerializeField] Teleporter connectedTeleporter; // Teleporter that this is possibly teleporting to
 
     [SerializeField] float fadeDuration = 0.5f; // Fade duration in teleports
