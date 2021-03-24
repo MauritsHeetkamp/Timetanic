@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Minigame : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class Minigame : MonoBehaviour
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
     bool active;
     public bool finished;
+
+    [Header("Event Callbacks")]
+    [SerializeField] UnityEvent onStarted, onFinished, onReset, onStopped; 
+
+    [Header("Tasks")]
     [SerializeField] TaskData task;
     [HideInInspector] MinigameHandler owner;
 
@@ -65,6 +71,10 @@ public class Minigame : MonoBehaviour
     // Starts the minigame
     public virtual void StartMinigame()
     {
+        if(onStarted != null)
+        {
+            onStarted.Invoke();
+        }
         active = true;
         foreach (PlayerCounter counter in playerCounters)
         {
@@ -79,6 +89,10 @@ public class Minigame : MonoBehaviour
     // Stops the minigame
     public virtual void StopMinigame()
     {
+        if(onStopped != null)
+        {
+            onStopped.Invoke();
+        }
         active = false;
         foreach (PlayerCounter counter in playerCounters)
         {
@@ -91,6 +105,12 @@ public class Minigame : MonoBehaviour
     {
         finished = false;
         active = false;
+
+        if(onReset != null)
+        {
+            onReset.Invoke();
+        }
+
         foreach (PlayerCounter counter in playerCounters) // Resets the player counters
         {
             counter.Reset();
@@ -136,6 +156,12 @@ public class Minigame : MonoBehaviour
         Debug.Log("FINISHED MINIGAME");
         active = false;
         finished = true;
+
+        if(onFinished != null)
+        {
+            onFinished.Invoke();
+        }
+
         foreach (PlayerCounter counter in playerCounters) // Disables player counter
         {
             counter.gameObject.SetActive(false);

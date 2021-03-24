@@ -15,6 +15,7 @@ public class RemoveableWater : MonoBehaviour
     Coroutine moveWaterRoutine;
 
     public UnityAction onRemovedWater;
+    [SerializeField] UnityEvent onRemovedWaterEvent;
 
     public bool removed;
 

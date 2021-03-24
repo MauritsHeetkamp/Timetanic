@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Task : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] Image locationIcon;
 
 
     // Start is called before the first frame update
@@ -25,6 +27,7 @@ public class Task : MonoBehaviour
         if(nameText != null)
         {
             nameText.text = data.taskName;
+            locationIcon.sprite = data.taskLocationIcon;
         }
     }
 
@@ -39,9 +42,10 @@ public class Task : MonoBehaviour
 public struct TaskData
 {
     public string taskName;
-
-    public TaskData(string _taskName)
+    public Sprite taskLocationIcon;
+    public TaskData(string _taskName, Sprite _taskLocationIcon)
     {
         taskName = _taskName;
+        taskLocationIcon = _taskLocationIcon;
     }
 }
