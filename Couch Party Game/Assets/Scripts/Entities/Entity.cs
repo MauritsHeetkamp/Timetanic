@@ -12,6 +12,8 @@ public class Entity : Damagable
     [SerializeField] ParticleSystem electrifiedParticles;
     [SerializeField] string shockAnimation;
 
+    Coroutine knockbackRoutine;
+
     // Toggles movement
     public virtual void ToggleMovement()
     {
@@ -65,5 +67,33 @@ public class Entity : Damagable
             RemoveInvulnerability();
             BecomeInvulnerable();
         }
+    }
+
+    public virtual void Knockback(Vector3 localKnockbackVelocity)
+    {
+        if(knockbackRoutine == null && thisRigid != null && localKnockbackVelocity != Vector3.zero)
+        {
+            Disable(true);
+            Vector3 knockbackVelocity = localKnockbackVelocity.z * transform.forward;
+            knockbackVelocity += localKnockbackVelocity.x * transform.right;
+            knockbackVelocity.y += localKnockbackVelocity.y;
+            thisRigid.AddForce(knockbackVelocity);
+            knockbackRoutine = StartCoroutine(CheckStopKnockback());
+        }
+    }
+
+    IEnumerator CheckStopKnockback()
+    {
+        while (true)
+        {
+            yield return null;
+            if (Vector3.Equals(thisRigid.velocity, Vector3.zero))
+            {
+                Disable(false);
+                break;
+                //Player is not moving anymore
+            }
+        }
+        knockbackRoutine = null;
     }
 }

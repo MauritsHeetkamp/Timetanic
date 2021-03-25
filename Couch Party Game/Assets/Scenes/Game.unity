@@ -25766,6 +25766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1840023600}
   - component: {fileID: 1840023599}
+  - component: {fileID: 1840023598}
   m_Layer: 0
   m_Name: DebugCamera
   m_TagString: Untagged
@@ -25773,6 +25774,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1840023598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840023597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b038b6720cfbfc45885a84b208e91c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentShakes: []
+  data:
+    remainingDuration: 0
+    duration: 0
+    intensity: 0.57
+    shakeInterval: 0.01
+  smoothShake: 1
+  smoothSpeed: 0.09
 --- !u!20 &1840023599
 Camera:
   m_ObjectHideFlags: 0

@@ -75,6 +75,9 @@ public class Player : MovingEntity
     [SerializeField] float dashDuration;
     [SerializeField] bool decreaseSpeedOverTime;
     [SerializeField] LayerMask hittableLayers; // Layers that cancels the dash
+    [SerializeField] Transform dashCheckLocation;
+
+    [SerializeField] Vector3 localKnockback;
 
     // Handles camera following and interaction checks
     private void Update()
@@ -397,7 +400,14 @@ public class Player : MovingEntity
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
-            if (!Physics.Raycast(transform.position + new Vector3(0, 1, 0), rawMovement, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            Vector3 dashDirection = transform.forward;
+
+
+            if (rawMovement != Vector2.zero)
+            {
+                dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+            }
+            if (!Physics.Raycast(dashCheckLocation.position, dashDirection, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
             {
                 moveBlocks++;
                 canDash = false;
@@ -425,10 +435,12 @@ public class Player : MovingEntity
             float decreaseOverDuration = (dashDuration - duration) / dashDuration; // How much of the duration is left (range from 0 to 1)
             RaycastHit hitData;
 
-            if(Physics.Raycast(transform.position + new Vector3(0, 1, 0), dashDirection, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            if(Physics.Raycast(dashCheckLocation.position, dashDirection, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
             {
                 if (stopOnCollision) // Should the dash stop whenever the player collides
                 {
+                    Knockback(localKnockback);
+                    Debug.Log("STUNNED");
                     break;
                 }
             }
@@ -598,4 +610,17 @@ public class Player : MovingEntity
     }
 
     public enum Role { TestRole, OtherTestRole} // Roles for spawn locations
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 dashDirection = transform.forward;
+
+
+        if (rawMovement != Vector2.zero)
+        {
+            dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+        }
+        Gizmos.DrawRay(dashCheckLocation.position, dashDirection * checkRange);
+    }
 }

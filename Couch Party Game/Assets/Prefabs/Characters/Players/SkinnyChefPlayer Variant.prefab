@@ -418,6 +418,8 @@ MonoBehaviour:
   hittableLayers:
     serializedVersion: 2
     m_Bits: 32311
+  dashCheckLocation: {fileID: 1128770941}
+  localKnockback: {x: 0, y: 10000, z: -10000}
 --- !u!1001 &3543693627453767693
 PrefabInstance:
   m_ObjectHideFlags: 0
