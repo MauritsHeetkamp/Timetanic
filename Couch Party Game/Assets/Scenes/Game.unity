@@ -25773,7 +25773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1840023598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25790,10 +25790,10 @@ MonoBehaviour:
   data:
     remainingDuration: 0
     duration: 0
-    intensity: 0.57
+    intensity: 0.06
     shakeInterval: 0.01
-  smoothShake: 1
-  smoothSpeed: 0.09
+    smoothShake: 0
+    smoothSpeed: 0
 --- !u!20 &1840023599
 Camera:
   m_ObjectHideFlags: 0

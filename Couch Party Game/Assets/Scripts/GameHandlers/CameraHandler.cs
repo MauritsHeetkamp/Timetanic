@@ -156,7 +156,7 @@ public class CameraHandler : MonoBehaviour
             if(i < playerAmount) // Checks if this splitscreen should be assigned to a player
             {
                 RenderTexture texture = new RenderTexture((int)splitscreenSizeX, (int)splitscreenSizeY, 0); // Creates new rendertexture with appropriate size
-                playerHandler.localPlayers[i].playerCamera.GetComponent<Camera>().targetTexture = texture; // Assigns the players local camera to the rendertexture
+                playerHandler.localPlayers[i].actualCameraTransform.GetComponent<Camera>().targetTexture = texture; // Assigns the players local camera to the rendertexture
                 playerHandler.localPlayers[i].attachedSplitscreen = newSplitscreen.GetComponent<Splitscreen>(); // Lets the player know what splitscreen it is connected to
                 newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.color = Color.white; // Makes sure the splitscreen isn't black
                 newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.texture = texture; // Assigns the rendertexture to the splitscreen
@@ -289,7 +289,7 @@ public class CameraHandler : MonoBehaviour
         splitscreenImageHolder.gameObject.SetActive(true); // Enables split screens
         foreach(Player player in playerHandler.localPlayers)
         {
-            player.playerCamera.GetComponent<Camera>().enabled = true; // Enables all players their cameras
+            player.actualCameraTransform.GetComponent<Camera>().enabled = true; // Enables all players their cameras
         }
         globalCamera.GetComponent<Camera>().enabled = false; // Disables global camera
     }
@@ -304,7 +304,7 @@ public class CameraHandler : MonoBehaviour
             bool found = false;
             foreach (GenericCounter<Vector3> counter in cameraEulers)
             {
-                if (counter.data == player.playerCamera.eulerAngles)
+                if (counter.data == player.playerCameraHolder.eulerAngles)
                 {
                     counter.Change(1); // increments counter with 1
                     found = true;
@@ -314,7 +314,7 @@ public class CameraHandler : MonoBehaviour
 
             if (!found)
             {
-                cameraEulers.Add(new GenericCounter<Vector3>(player.playerCamera.eulerAngles)); // Adds new counterdata
+                cameraEulers.Add(new GenericCounter<Vector3>(player.playerCameraHolder.eulerAngles)); // Adds new counterdata
             }
 
         }
@@ -353,7 +353,7 @@ public class CameraHandler : MonoBehaviour
 
         foreach (Player player in playerHandler.localPlayers)
         {
-            player.playerCamera.GetComponent<Camera>().enabled = false; // Disables all players their cameras
+            player.actualCameraTransform.GetComponent<Camera>().enabled = false; // Disables all players their cameras
         }
 
         globalCamera.GetComponent<Camera>().enabled = true; // Enables global camera

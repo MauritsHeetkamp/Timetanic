@@ -42,7 +42,8 @@ public class Player : MovingEntity
     public bool onSlope;
 
     [Header("Camera")]
-    public Transform playerCamera;
+    public Transform playerCameraHolder;
+    public Transform actualCameraTransform;
     [SerializeField] bool followXY = true, followY = true; //Directions the camera should be following
     public float zDistance, yDistance; //Camera distance from the player away
     [SerializeField] float followSpeed;
@@ -180,11 +181,11 @@ public class Player : MovingEntity
         OnEnable();
         owner.SwapInputScheme(characterControlScheme); // Sets the control scheme to player controls
 
-        zDistance = zDistance == 0 ? playerCamera.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
-        yDistance = yDistance == 0 ? playerCamera.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
-        if(playerCamera != null)
+        zDistance = zDistance == 0 ? playerCameraHolder.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
+        yDistance = yDistance == 0 ? playerCameraHolder.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
+        if(playerCameraHolder != null)
         {
-            playerCamera.parent = null; //Disattaches the players camera for free movement
+            playerCameraHolder.parent = null; //Disattaches the players camera for free movement
         }
 
         if(cameraHandler == null)
@@ -305,7 +306,7 @@ public class Player : MovingEntity
     {
         if(context.performed || context.started) // Checks input
         {
-            Transform selectedCamera = playerCamera;
+            Transform selectedCamera = playerCameraHolder;
 
             if(cameraHandler != null && !cameraHandler.isSplit && cameraHandler.globalCamera != null)
             {
@@ -529,7 +530,7 @@ public class Player : MovingEntity
     // Resets the local camera location
     public void ResetCameraLocation()
     {
-        Vector3 targetPosition = playerCamera.transform.position;
+        Vector3 targetPosition = playerCameraHolder.transform.position;
         if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
@@ -542,16 +543,16 @@ public class Player : MovingEntity
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance; // Calculates how much the camera should be moved upwards
+            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance; // Calculates how much the camera should be moved upwards
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
-        playerCamera.transform.position = targetPosition; // Sets camera location
+        playerCameraHolder.transform.position = targetPosition; // Sets camera location
     }
 
     // Handles the camera movement
     void CameraFollow()
     {
-        Vector3 targetPosition = playerCamera.transform.position;
+        Vector3 targetPosition = playerCameraHolder.transform.position;
         if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
@@ -564,19 +565,19 @@ public class Player : MovingEntity
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
 
-        playerCamera.transform.position = Vector3.Lerp(playerCamera.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
+        playerCameraHolder.transform.position = Vector3.Lerp(playerCameraHolder.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
     }
 
     // Sets the cameras direction on the Y axis
     public void SetCameraRotationY(Vector3 targetEulers, bool instant = true)
     {
-        Vector3 newEulers = new Vector3(playerCamera.eulerAngles.x, targetEulers.y, playerCamera.eulerAngles.z); // Calculates new eulers
+        Vector3 newEulers = new Vector3(playerCameraHolder.eulerAngles.x, targetEulers.y, playerCameraHolder.eulerAngles.z); // Calculates new eulers
         cameraDirection.eulerAngles = new Vector3(0, newEulers.y, 0); // Lets camera know which direction is forward
-        playerCamera.eulerAngles = newEulers; // Sets the camera rotation to the new angle
+        playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
 
         if (instant) // Should the camera be instantly reset?
         {
@@ -587,8 +588,8 @@ public class Player : MovingEntity
     //Sets the cameras direction in the x and z axis
     public void SetCameraRotationXZ(Vector3 targetEulers, bool instant = true)
     {
-        Vector3 newEulers = new Vector3(targetEulers.x, playerCamera.eulerAngles.y, targetEulers.z); // Calculates new eulers
-        playerCamera.eulerAngles = newEulers; // Sets the camera rotation to the new angle
+        Vector3 newEulers = new Vector3(targetEulers.x, playerCameraHolder.eulerAngles.y, targetEulers.z); // Calculates new eulers
+        playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
 
         if (instant) // Should the camera be instantly reset?
         {
