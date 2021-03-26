@@ -25,7 +25,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] SpawnManager spawnHandler;
     [SerializeField] MinigameHandler minigameHandler;
 
-    private void Start()
+    private void Awake()
     {
         if (scoreText != null)
         {

@@ -6060,6 +6060,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438783852}
   m_CullTransparentMesh: 0
+--- !u!1 &442343139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 442343141}
+  - component: {fileID: 442343140}
+  m_Layer: 0
+  m_Name: ScreenshakeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &442343140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442343139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ab84e47d02fd047b924edfcbe1d147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraHandler: {fileID: 1977166114}
+  useDefaultShake: 1
+  defaultGlobalShake:
+    remainingDuration: 0
+    duration: 0
+    intensity: 1
+    shakeInterval: 0.11
+    smoothShake: 1
+    smoothSpeed: 0.1
+    cameraSwayRotations:
+    - {x: 0.1, y: 0, z: 0}
+    - {x: -0.1, y: 0, z: 0}
+    cameraSwaySpeed: 0.1
+--- !u!4 &442343141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442343139}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -162.91353, y: 47.821957, z: 28.13547}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &443844098
 GameObject:
   m_ObjectHideFlags: 0
@@ -7236,6 +7292,165 @@ Transform:
   - {fileID: 1458647924}
   m_Father: {fileID: 0}
   m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &558458654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 558458658}
+  - component: {fileID: 558458657}
+  - component: {fileID: 558458656}
+  - component: {fileID: 558458655}
+  m_Layer: 0
+  m_Name: GlobalCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &558458655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558458654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b038b6720cfbfc45885a84b208e91c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resetCameraSpeed: 0
+  currentUsingShake:
+    remainingDuration: 0
+    duration: 0
+    intensity: 0
+    shakeInterval: 0
+    smoothShake: 0
+    smoothSpeed: 0
+    cameraSwayRotations: []
+    cameraSwaySpeed: 0
+  currentShakes: []
+--- !u!114 &558458656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558458654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 6689657899913764793}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  stopNaNPropagation: 1
+  finalBlitToCameraTarget: 0
+  antialiasingMode: 3
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpness: 0.5
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  subpixelMorphologicalAntialiasing:
+    quality: 2
+  fastApproximateAntialiasing:
+    fastMode: 0
+    keepAlpha: 0
+  fog:
+    enabled: 1
+    excludeSkybox: 1
+  debugLayer:
+    lightMeter:
+      width: 512
+      height: 256
+      showCurves: 1
+    histogram:
+      width: 512
+      height: 256
+      channel: 3
+    waveform:
+      exposure: 0.12
+      height: 256
+    vectorscope:
+      size: 256
+      exposure: 0.12
+    overlaySettings:
+      linearDepth: 0
+      motionColorIntensity: 4
+      motionGridSize: 64
+      colorBlindnessType: 0
+      colorBlindnessStrength: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  m_ShowToolkit: 0
+  m_ShowCustomSorter: 0
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
+--- !u!20 &558458657
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558458654}
+  m_Enabled: 0
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &558458658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558458654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6689657899913764793}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &560038769
 GameObject:
@@ -25786,14 +26001,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b038b6720cfbfc45885a84b208e91c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentShakes: []
-  data:
+  resetCameraSpeed: 0
+  currentUsingShake:
     remainingDuration: 0
     duration: 0
-    intensity: 0.06
-    shakeInterval: 0.01
+    intensity: 0
+    shakeInterval: 0
     smoothShake: 0
     smoothSpeed: 0
+    cameraSwayRotations: []
+    cameraSwaySpeed: 0
+  currentShakes: []
 --- !u!20 &1840023599
 Camera:
   m_ObjectHideFlags: 0
@@ -30948,9 +31166,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6689657900780484250, guid: 91211ec1cdda85a4e8036f4d45f3b907,
         type: 3}
+      propertyPath: globalCamera
+      value: 
+      objectReference: {fileID: 558458658}
+    - target: {fileID: 6689657900780484250, guid: 91211ec1cdda85a4e8036f4d45f3b907,
+        type: 3}
       propertyPath: playerHandler
       value: 
       objectReference: {fileID: 1366242599}
+    - target: {fileID: 6689657900780484250, guid: 91211ec1cdda85a4e8036f4d45f3b907,
+        type: 3}
+      propertyPath: globalScreenshake
+      value: 
+      objectReference: {fileID: 558458655}
     - target: {fileID: 6689657900780484250, guid: 91211ec1cdda85a4e8036f4d45f3b907,
         type: 3}
       propertyPath: splitFadeDuration
@@ -31016,8 +31244,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6689657900780484254, guid: 91211ec1cdda85a4e8036f4d45f3b907, type: 3}
+    - {fileID: 6689657900780484252, guid: 91211ec1cdda85a4e8036f4d45f3b907, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91211ec1cdda85a4e8036f4d45f3b907, type: 3}
+--- !u!4 &6689657899913764793 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6689657900780484253, guid: 91211ec1cdda85a4e8036f4d45f3b907,
+    type: 3}
+  m_PrefabInstance: {fileID: 6689657899913764792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7674422935605059383
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ public class Player : MovingEntity
     [Header("Camera")]
     public Transform playerCameraHolder;
     public Transform actualCameraTransform;
+    public ObjectShaker screenShake;
     [SerializeField] bool followXY = true, followY = true; //Directions the camera should be following
     public float zDistance, yDistance; //Camera distance from the player away
     [SerializeField] float followSpeed;
@@ -173,6 +174,21 @@ public class Player : MovingEntity
     private void Awake()
     {
         cameraDirection.parent = null;
+
+        if (cameraHandler == null)
+        {
+            GameObject cameraHandlerObject = GameObject.FindGameObjectWithTag("MainCamera");
+
+            if (cameraHandlerObject != null)
+            {
+                cameraHandler = cameraHandlerObject.GetComponent<CameraHandler>();
+            }
+        }
+
+        if (cameraHandler != null)
+        {
+            cameraHandler.allPlayerCameras.Add(actualCameraTransform);
+        }
     }
 
     // Start is called before the first frame update
@@ -187,17 +203,6 @@ public class Player : MovingEntity
         {
             playerCameraHolder.parent = null; //Disattaches the players camera for free movement
         }
-
-        if(cameraHandler == null)
-        {
-            GameObject cameraHandlerObject = GameObject.FindGameObjectWithTag("MainCamera");
-
-            if(cameraHandlerObject != null)
-            {
-                cameraHandler = cameraHandlerObject.GetComponent<CameraHandler>();
-            }
-        }
-
     }
 
     // Uses holding item if possible

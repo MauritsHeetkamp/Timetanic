@@ -6,10 +6,14 @@ using UnityEngine.Events;
 
 public class CameraHandler : MonoBehaviour
 {
+    public List<Transform> allPlayerCameras;
+
+
     int forceSplit;
 
     [SerializeField] SpawnManager playerHandler; // The spawner keeps track of players
     public Transform globalCamera; // The global camera for all-in-one screen
+    public ObjectShaker globalScreenshake;
 
     [SerializeField] float cameraDistancePerUnit, defaultDistance; // Camera distance to zoom per unit of distance between players, distance to add standard
     [SerializeField] float minCameraDistance, maxCameraDistance; // Minimal and maximal camera distance

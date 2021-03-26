@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b038b6720cfbfc45885a84b208e91c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetCameraSpeed: 0
   currentShakes: []
   data:
     remainingDuration: 0
@@ -279,10 +280,17 @@ MonoBehaviour:
     shakeInterval: 0.11
     smoothShake: 1
     smoothSpeed: 0.05
-  useSway: 0
-  swayLeft: {x: 0, y: 0, z: 0}
-  swayRight: {x: 0, y: 0, z: 0}
-  swaySmooth: 0
+    cameraSwayRotations: []
+    cameraSwaySpeed: 0
+  data2:
+    remainingDuration: 5
+    duration: 5
+    intensity: 1
+    shakeInterval: 0.11
+    smoothShake: 0
+    smoothSpeed: 0
+    cameraSwayRotations: []
+    cameraSwaySpeed: 0
 --- !u!1 &1128771326
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +453,7 @@ MonoBehaviour:
   onSlope: 0
   playerCameraHolder: {fileID: 4543259678148651136}
   actualCameraTransform: {fileID: 1128770816}
+  screenShake: {fileID: 8030445578846341781}
   followXY: 1
   followY: 1
   zDistance: 16.31493
