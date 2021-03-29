@@ -13,7 +13,10 @@ public class Grabbable : Interactable
     // Override on completed interaction
     public override void CompleteInteract()
     {
-        itemPopup.SetPopup(false);
+        if(itemPopup != null)
+        {
+            itemPopup.SetPopup(false);
+        }
         currentInteractingPlayer.currentUsingInteractable = null;
         Attach();
         currentInteractingPlayer.FinishedInteract();

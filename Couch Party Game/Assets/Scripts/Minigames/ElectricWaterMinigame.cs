@@ -6,6 +6,16 @@ public class ElectricWaterMinigame : Minigame
 {
     [SerializeField] List<RemoveableWater> waterToRemove;
 
+
+    private void Start()
+    {
+        Reset();
+        if (startOnStart)
+        {
+            StartMinigame();
+        }
+    }
+
     public void CheckWater()
     {
         foreach(RemoveableWater water in waterToRemove)
@@ -21,13 +31,13 @@ public class ElectricWaterMinigame : Minigame
 
     public override void Reset()
     {
-        /*
+        
         base.Reset();
         foreach (RemoveableWater water in waterToRemove)
         {
             water.Reset();
         }
-        */
+        
     }
 
     public override void StartMinigame()

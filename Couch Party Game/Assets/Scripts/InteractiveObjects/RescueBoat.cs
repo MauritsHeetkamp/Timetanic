@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RescueBoat : MonoBehaviour
 {
+    GameHandler gameHandler;
     [SerializeField] Seat[] seats;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,17 @@ public class RescueBoat : MonoBehaviour
                 seat.seatOwner = target;
                 target.transform.position = seat.seatLocation.position;
                 target.transform.parent = seat.seatLocation;
+
+                if(gameHandler == null)
+                {
+                    gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>();
+                }
+
+                if(gameHandler != null)
+                {
+                    gameHandler.ChangeScore(1);
+                }
+
                 break;
             }
         }
