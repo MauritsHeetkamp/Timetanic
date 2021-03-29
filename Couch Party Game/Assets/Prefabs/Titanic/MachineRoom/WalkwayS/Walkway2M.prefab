@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5422488785373726724}
   - component: {fileID: 3445893805754264426}
   - component: {fileID: 3568000095873909187}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Walkway2M
   m_TagString: Untagged
   m_Icon: {fileID: 0}

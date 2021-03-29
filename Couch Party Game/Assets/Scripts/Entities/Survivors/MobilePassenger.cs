@@ -28,6 +28,12 @@ public class MobilePassenger : Passenger
                 followRoutine = null;
             }
 
+            if(ownerPlayer != null)
+            {
+                ownerPlayer.followingPassengers.Remove(this);
+                ownerPlayer = null;
+            }
+
             navmeshAgent.enabled = false;
         }
         else

@@ -7,7 +7,7 @@ using Custom.Types;
 public class UIButtonArray : UIOption
 {
     public int selectedButton;
-    [SerializeField] DropdownData[] arrayData;
+    DropdownData[] arrayData;
     [SerializeField] UISubOptionButton[] buttons;
     public Transform buttonHolderTransform;
     [SerializeField] HorizontalLayoutGroup holderLayoutGroup;
@@ -41,7 +41,6 @@ public class UIButtonArray : UIOption
 
     void Initialize()
     {
-        LoadData();
         SetInteractable(interactable);
     }
 
