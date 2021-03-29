@@ -135,7 +135,6 @@ public class ObjectShaker : MonoBehaviour
                                 }
                             }
 
-                            Debug.Log(targetEulers + " IS TARGET EULERS");
 
                             transform.localEulerAngles = targetEulers;
 

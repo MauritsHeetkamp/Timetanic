@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Minigame : MonoBehaviour
 {
-    [SerializeField] bool startOnStart;
+    public bool startOnStart;
     [SerializeField] PlayerCounter[] playerCounters;
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
     bool active;
@@ -139,7 +139,7 @@ public class Minigame : MonoBehaviour
                 npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
 
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
-
+                Debug.Log("RESPAWNED");
                 availableLocations.RemoveAt(selectedSpawn);
             }
         }

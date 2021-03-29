@@ -7,11 +7,7 @@ using Custom.Types;
 public class UIButtonArray : UIOption
 {
     public int selectedButton;
-    DropdownData[] arrayData;
     [SerializeField] UISubOptionButton[] buttons;
-    public Transform buttonHolderTransform;
-    [SerializeField] HorizontalLayoutGroup holderLayoutGroup;
-    public GameObject optionButton;
 
     [SerializeField] bool initializeOnStart;
 
@@ -33,59 +29,10 @@ public class UIButtonArray : UIOption
         }
     }
 
-    public void Initialize(DropdownData[] _data)
-    {
-        arrayData = _data;
-        LoadData();
-    }
-
     void Initialize()
     {
         SetInteractable(interactable);
-    }
-
-    void LoadData()
-    {
-        for (int i = buttons.Length - 1; i >= 0; i--)
-        {
-            Destroy(buttons[i].gameObject);
-        }
-
-        if(arrayData.Length > 0)
-        {
-            List<UISubOptionButton> newButtons = new List<UISubOptionButton>();
-
-            foreach (DropdownData data in arrayData)
-            {
-                UISubOptionButton newButton = Instantiate(optionButton, buttonHolderTransform).GetComponent<UISubOptionButton>();
-                newButton.buttonText.text = data.name;
-                newButton.thisButton.onClick.AddListener(data.onSelected);
-                newButtons.Add(newButton);
-            }
-
-            buttons = newButtons.ToArray();
-            RectTransform buttonHolder = buttonHolderTransform.GetComponent<RectTransform>();
-            float widthToRemove = (holderLayoutGroup.spacing * buttons.Length - 1) + holderLayoutGroup.padding.left + holderLayoutGroup.padding.right;
-            widthToRemove /= buttons.Length;
-            Vector2 newButtonSize = new Vector2((buttonHolder.rect.width / buttons.Length) - widthToRemove, buttonHolder.rect.height);
-
-            foreach (UISubOptionButton button in buttons)
-            {
-                button.GetComponent<RectTransform>().sizeDelta = newButtonSize;
-            }
-
-            if (buttons.Length > selectedButton)
-            {
-                if (buttons[selectedButton].onHover != null)
-                {
-                    buttons[selectedButton].onHover.Invoke();
-                }
-            }
-        }
-        else
-        {
-            buttons = new UISubOptionButton[0];
-        }
+        SetSelected(selectedButton);
     }
 
     public override void Interact()

@@ -13,7 +13,12 @@ public class ExtuingishMinigame : Minigame
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Extuingishable extuingishable in extuingishableFires)
+        Reset();
+        if (startOnStart)
+        {
+            StartMinigame();
+        }
+        foreach (Extuingishable extuingishable in extuingishableFires)
         {
             extuingishable.onExtuingished += CheckExtuingishables; // Makes sure the minigame checks the state of the minigame after a fire has been extuingished
         }
@@ -70,7 +75,7 @@ public class ExtuingishMinigame : Minigame
     // Resets the entire minigame
     public override void Reset()
     {
-        finisher = null;
         base.Reset();
+        finisher = null;
     }
 }
