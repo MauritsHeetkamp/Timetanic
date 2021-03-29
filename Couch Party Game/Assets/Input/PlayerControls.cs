@@ -81,6 +81,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""TaskMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b9b3f72-169b-4d2b-a31d-1e7f7fba0081"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -219,7 +227,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1172eec4-fd17-4a11-9a0d-090dcf8e68a0"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -241,7 +249,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ba16d14d-e021-43ec-ac86-e2467ac0d4ab"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -358,6 +366,28 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15a26b07-4ac5-4c7a-9a4f-6a4dafbd322f"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TaskMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0541519-c9a4-413c-a34f-3a10e9c777df"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TaskMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -396,6 +426,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Button"",
+                    ""id"": ""77b5c699-49aa-4a3a-a16b-b3dd64488724"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -425,39 +463,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""positive"",
                     ""id"": ""bf179bb1-b653-44be-bec2-662bfcf0c635"",
                     ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Right Thumbstick"",
-                    ""id"": ""b801df91-055b-45a5-bca3-a6c676484ee4"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""6ca0ed00-adb0-45dd-9c26-b247ad95fefb"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""c5a75006-b2ad-442e-8d3a-66d53389f1ba"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -532,39 +537,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Keypad"",
-                    ""id"": ""88d6d6d8-6f40-47e5-b9e0-3a3e03e74189"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""d4592124-ba0e-4534-9cbc-78d305963c11"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""32a668d2-84f8-4c09-8e95-9082e2f557c8"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Vertical"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""Left Thumbstick"",
                     ""id"": ""602502df-74cd-47de-89ab-0a19239c24c0"",
                     ""path"": ""1DAxis"",
@@ -590,39 +562,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""name"": ""positive"",
                     ""id"": ""f191aab3-88d4-4d2c-935f-86193b2437f8"",
                     ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Right Thumbstick"",
-                    ""id"": ""f77cd3fe-2055-4fdb-8a84-6c31912049d9"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""a93d0ad8-a495-4564-ace1-484790cb1fdb"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""d26d7e70-bdb6-4d91-9715-ccd75344c34b"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -697,39 +636,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""Keypad"",
-                    ""id"": ""16b0ccf8-1f49-41bf-8474-82947c3345f8"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""1b83bab7-28c5-4e3e-bb3c-bf66f7db5b6a"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""b70998d9-0df2-479d-b0e7-569ec1aa258b"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Horizontal"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""cbcac25d-15f4-4da0-af38-e7a83509d095"",
                     ""path"": ""<Gamepad>/start"",
@@ -783,6 +689,99 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keypad"",
+                    ""id"": ""88d6d6d8-6f40-47e5-b9e0-3a3e03e74189"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d4592124-ba0e-4534-9cbc-78d305963c11"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""32a668d2-84f8-4c09-8e95-9082e2f557c8"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right Thumbstick"",
+                    ""id"": ""b801df91-055b-45a5-bca3-a6c676484ee4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6ca0ed00-adb0-45dd-9c26-b247ad95fefb"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c5a75006-b2ad-442e-8d3a-66d53389f1ba"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""Default"",
+            ""id"": ""f3278d30-20f9-4e1a-986a-6a85f2d856ca"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""bb47c97b-8c1f-4b07-96b7-6b33f032d93c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7a27618f-a1fe-4e1d-a989-4a841c82af73"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -799,12 +798,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
+        m_Player_TaskMenu = m_Player.FindAction("TaskMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Horizontal = m_UI.FindAction("Horizontal", throwIfNotFound: true);
         m_UI_Vertical = m_UI.FindAction("Vertical", throwIfNotFound: true);
         m_UI_Menu = m_UI.FindAction("Menu", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Scroll = m_UI.FindAction("Scroll", throwIfNotFound: true);
+        // Default
+        m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
+        m_Default_Newaction = m_Default.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -862,6 +866,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Use;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Menu;
+    private readonly InputAction m_Player_TaskMenu;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -874,6 +879,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Use => m_Wrapper.m_Player_Use;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Menu => m_Wrapper.m_Player_Menu;
+        public InputAction @TaskMenu => m_Wrapper.m_Player_TaskMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -907,6 +913,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenu;
+                @TaskMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
+                @TaskMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
+                @TaskMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTaskMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -935,6 +944,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @TaskMenu.started += instance.OnTaskMenu;
+                @TaskMenu.performed += instance.OnTaskMenu;
+                @TaskMenu.canceled += instance.OnTaskMenu;
             }
         }
     }
@@ -947,6 +959,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Vertical;
     private readonly InputAction m_UI_Menu;
     private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Scroll;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -955,6 +968,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Vertical => m_Wrapper.m_UI_Vertical;
         public InputAction @Menu => m_Wrapper.m_UI_Menu;
         public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @Scroll => m_Wrapper.m_UI_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -976,6 +990,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
                 @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
                 @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Scroll.started -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
+                @Scroll.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
+                @Scroll.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -992,10 +1009,46 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Select.started += instance.OnSelect;
                 @Select.performed += instance.OnSelect;
                 @Select.canceled += instance.OnSelect;
+                @Scroll.started += instance.OnScroll;
+                @Scroll.performed += instance.OnScroll;
+                @Scroll.canceled += instance.OnScroll;
             }
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Default
+    private readonly InputActionMap m_Default;
+    private IDefaultActions m_DefaultActionsCallbackInterface;
+    private readonly InputAction m_Default_Newaction;
+    public struct DefaultActions
+    {
+        private @PlayerControls m_Wrapper;
+        public DefaultActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_Default_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_Default; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DefaultActions set) { return set.Get(); }
+        public void SetCallbacks(IDefaultActions instance)
+        {
+            if (m_Wrapper.m_DefaultActionsCallbackInterface != null)
+            {
+                @Newaction.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnNewaction;
+                @Newaction.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnNewaction;
+                @Newaction.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnNewaction;
+            }
+            m_Wrapper.m_DefaultActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Newaction.started += instance.OnNewaction;
+                @Newaction.performed += instance.OnNewaction;
+                @Newaction.canceled += instance.OnNewaction;
+            }
+        }
+    }
+    public DefaultActions @Default => new DefaultActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -1006,6 +1059,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnUse(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnTaskMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -1013,5 +1067,10 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnVertical(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
+    }
+    public interface IDefaultActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

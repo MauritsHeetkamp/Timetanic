@@ -9,18 +9,14 @@ public class Teleporter : MonoBehaviour
     [SerializeField] bool teleportOnTrigger;
 
 
-    [SerializeField] Transform target; // Target to teleport to
+    public Transform target; // Target to teleport to
     [SerializeField] Teleporter connectedTeleporter; // Teleporter that this is possibly teleporting to
-
-    [Header("Local Camera Properties")]
-    [SerializeField] bool newEulers; // If the camera should be updating its eulers
-    [SerializeField] Vector3 newEulerAngles; // New camera rotation
-    [SerializeField] float newYDistance, newZDistance; // New camera location
 
     [SerializeField] float fadeDuration = 0.5f; // Fade duration in teleports
 
     [HideInInspector] public List<GameObject> attachedTargets; // Targets that should be ignored from teleportation
 
+    [SerializeField] CameraRelocator cameraRelocator;
 
     // Performs teleport
     void PerformTeleport(GameObject targetToTeleport)
@@ -46,25 +42,15 @@ public class Teleporter : MonoBehaviour
                 passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
             }
 
+            if(cameraRelocator != null)
+            {
+                cameraRelocator.ChangeCameraInstant(targetToTeleport);
+            }
+
             if (resetCamera) // Should the camera be reset
             {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraHandler>().ResetCamera(); // Resets single screen camera
                 player.ResetCameraLocation(); // Resets split screen camera
-            }
-
-            if (newEulers)
-            {
-                player.playerCamera.eulerAngles = newEulerAngles;
-            }
-
-            if (newYDistance != 0)
-            {
-                player.yDistance = newYDistance;
-            }
-
-            if (newZDistance != 0)
-            {
-                player.zDistance = newZDistance;
             }
         }
 
@@ -107,7 +93,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject)) // Checks if target can be teleported
+        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target can be teleported
         {
             Teleport(other.gameObject);
         }
@@ -115,7 +101,7 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (attachedTargets.Contains(other.gameObject)) // Checks if target was attached
+        if (attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target was attached
         {
             attachedTargets.Remove(other.gameObject);
         }

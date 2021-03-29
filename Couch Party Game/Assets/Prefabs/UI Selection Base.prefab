@@ -51,3 +51,5 @@ MonoBehaviour:
   currentSelectedOption: -1
   allOptions: []
   recenterThreshold: 0.8
+  scroller: {fileID: 0}
+  scrollSensitivity: 5

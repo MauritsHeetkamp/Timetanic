@@ -2,40 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Custom.Types.Events;
 
-public class TriggerEffect : MonoBehaviour
+public class TriggerEffect : TriggerEffectBase
 {
-    [SerializeField] bool onlyPlayers = true; // Should only players be able to trigger this effect
-    [SerializeField] UnityEvent onTriggerEnter, onTriggerExit;
+    public TimedColliderEventArray onTriggerEnter, onTriggerExit;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (onlyPlayers)
+        if (ValidTarget(other))
         {
-            if(other.GetComponent<Player>() != null)
-            {
-                onTriggerEnter.Invoke();
-            }
-        }
-        else
-        {
-            onTriggerEnter.Invoke();
+            StartCoroutine(onTriggerEnter.InvokeEvents(other));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (onlyPlayers)
+        if (ValidTarget(other))
         {
-            if (other.GetComponent<Player>() != null)
-            {
-                onTriggerExit.Invoke();
-            }
-        }
-        else
-        {
-            onTriggerExit.Invoke();
+            StartCoroutine(onTriggerExit.InvokeEvents(other));
         }
     }
 }

@@ -1,0 +1,2 @@
+OnTriggerEnter : Knows something entered
+OnTriggerExit : Check with boxcast on both sides of the collider to see where the player went out

@@ -1,14 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Minigame : MonoBehaviour
 {
+    [SerializeField] bool startOnStart;
     [SerializeField] PlayerCounter[] playerCounters;
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
     bool active;
     public bool finished;
 
+    [Header("Event Callbacks")]
+    [SerializeField] UnityEvent onStarted, onFinished, onReset, onStopped; 
+
+    [Header("Tasks")]
+    [SerializeField] TaskData task;
+    [HideInInspector] MinigameHandler owner;
+
+    List<Task> trackingTasks = new List<Task>();
+
+    [Header("NPC Spawn")]
+    public GameObject[] npcObjects; // NPC's that can spawn here
+    public Transform[] spawnLocations; // Spawn locations for the NPC's
+    public int minSpawns, maxSpawns;
+    public List<GameObject> trappedNPCS = new List<GameObject>(); // List of all the NPC's that can be rescued
+
+
+    private void Start()
+    {
+        Reset();
+        if (startOnStart)
+        {
+            StartMinigame();
+        }
+    }
+
+    public void Initialize(MinigameHandler handler)
+    {
+        owner = handler;
+
+        Task[] tasks = owner.taskHandler.AddTask(task);
+        foreach(Task thisTask in tasks)
+        {
+            trackingTasks.Add(thisTask);
+        }
+    }
 
     // Checks if the minigame can be started
     public void CheckStart()
@@ -34,6 +71,10 @@ public class Minigame : MonoBehaviour
     // Starts the minigame
     public virtual void StartMinigame()
     {
+        if(onStarted != null)
+        {
+            onStarted.Invoke();
+        }
         active = true;
         foreach (PlayerCounter counter in playerCounters)
         {
@@ -48,6 +89,10 @@ public class Minigame : MonoBehaviour
     // Stops the minigame
     public virtual void StopMinigame()
     {
+        if(onStopped != null)
+        {
+            onStopped.Invoke();
+        }
         active = false;
         foreach (PlayerCounter counter in playerCounters)
         {
@@ -60,6 +105,12 @@ public class Minigame : MonoBehaviour
     {
         finished = false;
         active = false;
+
+        if(onReset != null)
+        {
+            onReset.Invoke();
+        }
+
         foreach (PlayerCounter counter in playerCounters) // Resets the player counters
         {
             counter.Reset();
@@ -69,16 +120,58 @@ public class Minigame : MonoBehaviour
         {
             triggerZone.SetActive(true);
         }
+
+        if (trappedNPCS.Count == 0)
+        {
+            int spawnAmount = Random.Range(minSpawns, maxSpawns + 1); // How many npc's should be spawned
+            if (spawnAmount > spawnLocations.Length)
+            {
+                spawnAmount = spawnLocations.Length;
+            }
+
+            List<Transform> availableLocations = new List<Transform>(spawnLocations);
+
+            for (int i = 0; i < spawnAmount; i++)
+            {
+                int selectedSpawn = Random.Range(0, availableLocations.Count); // Selects spawn location
+
+                GameObject npc = Instantiate(npcObjects[Random.Range(0, npcObjects.Length)], availableLocations[selectedSpawn].position, availableLocations[selectedSpawn].rotation); // Spawns npc
+                npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
+
+                trappedNPCS.Add(npc); // Adds npc to the trapped npc list
+
+                availableLocations.RemoveAt(selectedSpawn);
+            }
+        }
+
+        if (startOnStart)
+        {
+            StartMinigame();
+        }
     }
 
     // Finishes the minigame
     public virtual void FinishMinigame()
     {
+        Debug.Log("FINISHED MINIGAME");
         active = false;
         finished = true;
+
+        if(onFinished != null)
+        {
+            onFinished.Invoke();
+        }
+
         foreach (PlayerCounter counter in playerCounters) // Disables player counter
         {
             counter.gameObject.SetActive(false);
         }
+        foreach (Task task in trackingTasks)
+        {
+            task.Complete();
+        }
+        trackingTasks = new List<Task>();
+
+        trappedNPCS = new List<GameObject>();
     }
 }

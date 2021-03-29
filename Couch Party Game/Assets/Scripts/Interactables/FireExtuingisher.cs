@@ -32,20 +32,27 @@ public class FireExtuingisher : Extuingisher
             StopCoroutine(extuingishRoutine); // Stops the extuingish coroutine if active
         }
         extuingishRoutine = StartCoroutine(Extuinguish()); // Starts new extuingish coroutine
-        GameObject startSprayObject = SoundManager.instance.SpawnAudio(startSpray, false); // Spawns start spray audio
-        Destroy(startSprayObject, startSprayObject.GetComponent<AudioSource>().clip.length); // Removes start spray audio when complete
-        sprayAudio = SoundManager.instance.SpawnAudio(staySpray, true); // Creates spray audio object
+
+        if(SoundManager.instance != null)
+        {
+            GameObject startSprayObject = SoundManager.instance.SpawnAudio(startSpray, false); // Spawns start spray audio
+            Destroy(startSprayObject, startSprayObject.GetComponent<AudioSource>().clip.length); // Removes start spray audio when complete
+            sprayAudio = SoundManager.instance.SpawnAudio(staySpray, true); // Creates spray audio object
+        }
     }
 
     // Stops using item
     public override void StopUse()
     {
-        if(sprayAudio != null)
+        if (SoundManager.instance != null)
         {
-            Destroy(sprayAudio); // Removes spray audio object
+            if (sprayAudio != null)
+            {
+                Destroy(sprayAudio); // Removes spray audio object
+            }
+            GameObject stopSprayObject = SoundManager.instance.SpawnAudio(endSpray, false); // Spawns end spray audio
+            Destroy(stopSprayObject, stopSprayObject.GetComponent<AudioSource>().clip.length); // Removes end spray audio when complete
         }
-        GameObject stopSprayObject = SoundManager.instance.SpawnAudio(endSpray, false); // Spawns end spray audio
-        Destroy(stopSprayObject, stopSprayObject.GetComponent<AudioSource>().clip.length); // Removes end spray audio when complete
         extuingishParticles.Stop(); 
         if (extuingishRoutine != null)
         {

@@ -9,7 +9,7 @@ public class Lobby : Menu
     [SerializeField] int maxPlayers = 2;
     [SerializeField] int minPlayers = 1;
 
-    [SerializeField] Button startButton;
+    [SerializeField] UIButton startButton;
 
     [SerializeField] bool keepSpecificSpot = true; // If players disconnect should everyone slide next to eachother
 
@@ -135,16 +135,7 @@ public class Lobby : Menu
             }
         }
 
-        if(connectedAmount > 0)
-        {
-            controller.enabled = true;
-        }
-        else
-        {
-            controller.enabled = false;
-        }
-
-        startButton.interactable = connectedAmount >= minPlayers ? true : false; // can the game start? enables button on result
+        startButton.SetInteractable(connectedAmount >= minPlayers ? true : false); // can the game start? enables button on result
     }
 
     // Try to add player to lobby

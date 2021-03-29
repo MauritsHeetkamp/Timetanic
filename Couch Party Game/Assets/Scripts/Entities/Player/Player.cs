@@ -11,18 +11,23 @@ public class Player : MovingEntity
     public Role role; //The role of the player, this is used for where the player needs to be spawned
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
+    [Header("Animation")]
+    [SerializeField] string movementParam = "Movement";
+    [SerializeField] string jumpParam = "Jump";
+    [SerializeField] string useParam = "StartUsing", stopUseParam = "StopUsing";
+    [SerializeField] string throwingParam;
+
     [Header("Movement")]
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
 
-    public bool canMove = true;
-    [SerializeField] float maxVelocity = 1; //The maximum velocity while moving
+    public int moveBlocks;
     public int decellerationBlocks; //System that blocks decelleration when higher then 0
-    [SerializeField] float decellerationSpeed = 1;
     [SerializeField] float rotateSpeed = 1;
 
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 1;
     [SerializeField] bool canJump = true;
+    [SerializeField] float jumpCheckHeightOffset = 0.1f;
 
     [SerializeField] float jumpDetectionRange = 1; //The range downwards to see if the player is grounded
     [SerializeField] LayerMask jumpableLayers; //The layers that the player can jump on
@@ -37,12 +42,17 @@ public class Player : MovingEntity
     public bool onSlope;
 
     [Header("Camera")]
-    public Transform playerCamera;
-    [SerializeField] bool followX = true, followY = true, followZ = true; //Directions the camera should be following
+    public Transform playerCameraHolder;
+    public Transform actualCameraTransform;
+    public ObjectShaker screenShake;
+    [SerializeField] bool followXY = true, followY = true; //Directions the camera should be following
     public float zDistance, yDistance; //Camera distance from the player away
     [SerializeField] float followSpeed;
+    [SerializeField] Transform cameraDirection; // Handles the camera its direction
 
-    public GameObject attachedSplitscreen; //Split screen owned by this player
+    CameraHandler cameraHandler; // Object that manages the cameras
+
+    public Splitscreen attachedSplitscreen; //Split screen owned by this player
 
     [Header("Interaction")]
     [SerializeField] Transform interactionBox; //Box that checks if an interactable is inside
@@ -65,24 +75,75 @@ public class Player : MovingEntity
     [SerializeField] bool stopOnCollision = true; //Player can't move until he is in no motion anymore
     [SerializeField] float checkRange; // The range that the ray checks for collision
     [SerializeField] float dashDuration;
+    [SerializeField] bool decreaseSpeedOverTime;
     [SerializeField] LayerMask hittableLayers; // Layers that cancels the dash
+    [SerializeField] Transform dashCheckLocation;
 
+    [SerializeField] Vector3 localKnockback;
+
+    // Handles camera following and interaction checks
     private void Update()
     {
-        CameraFollow();
-        CheckInteract();
+        if(disables <= 0)
+        {
+            CheckInteract();
+        }
     }
 
+    // Handles movement and slope checks
     private void FixedUpdate()
     {
-        Movement();
-        CheckSlope();
+        if (disables <= 0)
+        {
+            CheckSlope();
+            Movement();
+        }
+        CameraFollow();
     }
 
+    public void TogglePlayer()
+    {
+
+    }
+
+    public override void Disable(bool disable)
+    {
+        base.Disable(disable);
+
+        if(disables > 0)
+        {
+            if (owner != null) // Is this owner by a player?
+            {
+                // Assigns buttons their functionality
+                owner.onUse -= UseCurrentItem;
+                owner.onThrow -= ThrowCurrentItem;
+                owner.onDrop -= DropCurrentItem;
+                owner.onJump -= Jump;
+                owner.onDash -= Dash;
+                owner.onInteract -= Interact;
+            }
+        }
+        else
+        {
+            if (owner != null) // Is this owner by a player?
+            {
+                // Assigns buttons their functionality
+                owner.onUse += UseCurrentItem;
+                owner.onThrow += ThrowCurrentItem;
+                owner.onDrop += DropCurrentItem;
+                owner.onJump += Jump;
+                owner.onDash += Dash;
+                owner.onInteract += Interact;
+            }
+        }
+    }
+
+    // Sets input events
     private void OnEnable()
     {
-        if(owner != null)
+        if(owner != null) // Is this owner by a player?
         {
+            // Assigns buttons their functionality
             owner.onMove += SetMoveAmount;
             owner.onUse += UseCurrentItem;
             owner.onThrow += ThrowCurrentItem;
@@ -93,10 +154,12 @@ public class Player : MovingEntity
         }
     }
 
+    // Removes input events
     private void OnDisable()
     {
-        if (owner != null)
+        if (owner != null) // Is this owner by a player?
         {
+            // Assigns buttons their functionality
             owner.onMove -= SetMoveAmount;
             owner.onUse -= UseCurrentItem;
             owner.onThrow -= ThrowCurrentItem;
@@ -107,16 +170,38 @@ public class Player : MovingEntity
         }
     }
 
+    // Unparents the camera for free movement
+    private void Awake()
+    {
+        cameraDirection.parent = null;
+
+        if (cameraHandler == null)
+        {
+            GameObject cameraHandlerObject = GameObject.FindGameObjectWithTag("MainCamera");
+
+            if (cameraHandlerObject != null)
+            {
+                cameraHandler = cameraHandlerObject.GetComponent<CameraHandler>();
+            }
+        }
+
+        if (cameraHandler != null)
+        {
+            cameraHandler.allPlayerCameras.Add(actualCameraTransform);
+        }
+    }
+
+    // Start is called before the first frame update
     private void Start()
     {
         OnEnable();
-        owner.SwapInputScheme(characterControlScheme);
+        owner.SwapInputScheme(characterControlScheme); // Sets the control scheme to player controls
 
-        zDistance = zDistance == 0 ? playerCamera.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
-        yDistance = yDistance == 0 ? playerCamera.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
-        if(playerCamera != null)
+        zDistance = zDistance == 0 ? playerCameraHolder.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
+        yDistance = yDistance == 0 ? playerCameraHolder.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0
+        if(playerCameraHolder != null)
         {
-            playerCamera.parent = null; //Disattaches the players camera for free movement
+            playerCameraHolder.parent = null; //Disattaches the players camera for free movement
         }
     }
 
@@ -130,10 +215,18 @@ public class Player : MovingEntity
             {
                 if (context.started && grabbable.CheckUse()) //Checks input and if the grabbable can be used
                 {
+                    if(animator != null)
+                    {
+                        animator.SetTrigger(useParam);
+                    }
                     grabbable.Use(); // Uses the item
                 }
                 if (context.canceled) //Checks input
                 {
+                    if (animator != null)
+                    {
+                        animator.SetTrigger(stopUseParam);
+                    }
                     grabbable.StopUse(); // Stops using the item
                 }
             }
@@ -146,6 +239,18 @@ public class Player : MovingEntity
     {
         if(context.started && canInteract && currentHoldingItem != null) //Checks input, if you can interact and if you are holding an item
         {
+            UsableGrabbable usable = currentHoldingItem.GetComponent<UsableGrabbable>();
+
+            if(usable != null && !usable.CheckUse())
+            {
+                return;
+            }
+
+            if(animator != null)
+            {
+                animator.SetTrigger(throwingParam);
+            }
+
             Grabbable lastItem = currentHoldingItem; // The item you were holding
             currentHoldingItem.Disattach();
             Vector3 throwDirection = transform.forward; // The direction the item will be thrown towards
@@ -163,6 +268,12 @@ public class Player : MovingEntity
     {
         if (context.started && currentHoldingItem != null) // Checks input and if you are holding an item
         {
+            UsableGrabbable usable = currentHoldingItem.GetComponent<UsableGrabbable>();
+
+            if (usable != null && !usable.CheckUse())
+            {
+                return;
+            }
             currentHoldingItem.Disattach();
         }
     }
@@ -170,11 +281,27 @@ public class Player : MovingEntity
     // Handles jumping
     public void Jump(InputAction.CallbackContext context, PlayerData owner)
     {
-        if(context.started && canJump) // Checks input and if player can jump
+        if(context.started && canJump && thisRigid.velocity.y <= 0) // Checks input and if player can jump
         {
-            if (Physics.Raycast(transform.position, -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
+            if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
             {
+                if(animator != null)
+                {
+                    animator.SetBool(jumpParam, true);
+                }
                 thisRigid.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse); // Adds jump force
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
+        {
+            canJump = true;
+            if (animator != null)
+            {
+                animator.SetBool(jumpParam, false);
             }
         }
     }
@@ -184,11 +311,24 @@ public class Player : MovingEntity
     {
         if(context.performed || context.started) // Checks input
         {
-            rawMovement = context.ReadValue<Vector2>(); // Sets raw movement vector
+            Transform selectedCamera = playerCameraHolder;
+
+            if(cameraHandler != null && !cameraHandler.isSplit && cameraHandler.globalCamera != null)
+            {
+                selectedCamera = cameraHandler.globalCamera;
+            }
+
+            Vector2 axisValue = context.ReadValue<Vector2>();
+            Vector3 movementDirection = axisValue.x * selectedCamera.right;
+            movementDirection += axisValue.y * selectedCamera.forward;
+            movementDirection.y = 0;
+
+            rawMovement = new Vector2(movementDirection.normalized.x, movementDirection.normalized.z); // Sets raw movement vector
+
         }
         else // Stopped moving
         {
-            rawMovement = Vector3.zero; // Resets raw movement vector
+            rawMovement = Vector2.zero; // Resets raw movement vector
         }
     }
 
@@ -197,45 +337,35 @@ public class Player : MovingEntity
     {
         RaycastHit forwardHitdata, downwardHitdata; // Hit data for the forward and downward ray
 
-        if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out forwardHitdata, forwardRayRange, slopeMask)) // Checks if a slope is in front of your check origin
+        if (Physics.Raycast(slopeCheckOrigin.position, -slopeCheckOrigin.up, out downwardHitdata, downwardRayRange, slopeMask, QueryTriggerInteraction.Ignore) || Physics.Raycast(slopeCheckOrigin.position, -slopeCheckOrigin.up, out downwardHitdata, downwardRayRange, slopeMask, QueryTriggerInteraction.Ignore)) //Checks if a slope is underneath your check origin
         {
-            if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out downwardHitdata, downwardRayRange, slopeMask)) //Checks if a slope is underneath your check origin
+            if (!onSlope)
             {
-                float angle = Vector3.Angle(transform.up, forwardHitdata.transform.up); // The angle of the slope
-                if (angle <= maxAngle)
-                {
-                    if (!onSlope)
-                    {
-                        onSlope = true;
-                        thisRigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; // Sets constraints to ignore gravity
-                    }
-                    float yDifference = forwardHitdata.point.y - transform.position.y; // Height difference
-                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0)); // Boost upwards based on height difference
-                }
-                else // Slope angle is too high
-                {
-                    if (onSlope)
-                    {
-                        onSlope = false;
-                        thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
-                    }
-                }
-            }
-            else // No slope underneath check origin
-            {
-                if (onSlope)
-                {
-                    onSlope = false;
-                    thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
-                }
+                onSlope = true;
+                thisRigid.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation; // Sets constraints to ignore gravity
+                thisRigid.isKinematic = true;
             }
         }
-        else // No slope in front of check origin
+        else
         {
             if (onSlope)
             {
                 onSlope = false;
                 thisRigid.constraints = RigidbodyConstraints.FreezeRotation; // Sets constraints to use gravity
+                thisRigid.isKinematic = false;
+            }
+        }
+
+        if (Physics.Raycast(slopeCheckOrigin.position, new Vector3(rawMovement.x, 0, rawMovement.y), out forwardHitdata, forwardRayRange, slopeMask, QueryTriggerInteraction.Ignore)) // Checks if a slope is in front of your check origin
+        {
+            if (onSlope)
+            {
+                float angle = Vector3.Angle(transform.up, forwardHitdata.transform.up); // The angle of the slope
+                if (angle <= maxAngle)
+                {
+                    float yDifference = forwardHitdata.point.y - transform.position.y; // Height difference
+                    transform.Translate(new Vector3(0, yDifference * slopeBoosterModifier, 0)); // Boost upwards based on height difference
+                }
             }
         }
     }
@@ -243,74 +373,30 @@ public class Player : MovingEntity
     // Handles player movement
     void Movement()
     {
-        Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
-
-        movementAmount = movementAmount.normalized;
-
-        if (rawMovement.x != 0 || rawMovement.y != 0) // If not standing still
+        if(moveBlocks <= 0 && disables <= 0)
         {
-
-            movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
-
-            Vector3 newVelocity = thisRigid.velocity + movementAmount; // Calculates new velocity
-
-            Vector3 actualMaxVelocity = new Vector3(maxVelocity, maxVelocity, maxVelocity); // Creates the max velocity vector
-
-            if (newVelocity.x < -actualMaxVelocity.x)
+            if(animator != null)
             {
-                newVelocity.x = -actualMaxVelocity.x; // Sets velocity.x if its under the min velocity;
-            }
-            if (newVelocity.x > actualMaxVelocity.x)
-            {
-                newVelocity.x = actualMaxVelocity.x; // Sets velocity.x if its above the max velocity;
+                Vector2 absRawMovement = new Vector2(Mathf.Abs(rawMovement.x), Mathf.Abs(rawMovement.y));
+                animator.SetFloat(movementParam, absRawMovement.x > absRawMovement.y ? absRawMovement.x : absRawMovement.y);
             }
 
-            if (newVelocity.z < -actualMaxVelocity.z)
+            Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
+
+            if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
             {
-                newVelocity.z = -actualMaxVelocity.z; // Sets velocity.z if its under the min velocity;
+                movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
+
+                transform.Translate(movementAmount, Space.World);
+                Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
             }
-            if (newVelocity.z > actualMaxVelocity.z)
-            {
-                newVelocity.z = actualMaxVelocity.z; // Sets velocity.z if its above the max velocity;
-            }
-
-            newVelocity = newVelocity - thisRigid.velocity; // Removes current velocity to get the force to add
-
-            thisRigid.AddForce(newVelocity, ForceMode.Acceleration); // Adds the movement velocity
-
-            Vector3 velocityDirection = thisRigid.velocity;
-            velocityDirection.y = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(movementAmount.normalized); // Calculates the direction the player should be facing
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
         }
-        else // If not moving
+        else
         {
-            if (decellerationBlocks <= 0) // Checks if decelleration should be used
+            if (animator != null)
             {
-                if (thisRigid.velocity.x < -0.1 || thisRigid.velocity.x > 0.1f || thisRigid.velocity.z < -0.1 || thisRigid.velocity.z > 0.1f) // Checks if decelleration is necessary
-                {
-                    Vector3 velocityDecrease = Vector3.zero;
-
-                    if (thisRigid.velocity.x > 0)
-                    {
-                        velocityDecrease.x = decellerationSpeed * Time.fixedDeltaTime > thisRigid.velocity.x ? thisRigid.velocity.x : decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the x axis
-                    }
-                    if (thisRigid.velocity.z > 0)
-                    {
-                        velocityDecrease.z = decellerationSpeed * Time.fixedDeltaTime > thisRigid.velocity.z ? thisRigid.velocity.z : decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the z axis
-                    }
-
-                    if (thisRigid.velocity.x < 0)
-                    {
-                        velocityDecrease.x = -decellerationSpeed * Time.fixedDeltaTime < thisRigid.velocity.x ? thisRigid.velocity.x : -decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the x axis
-                    }
-                    if (thisRigid.velocity.z < 0)
-                    {
-                        velocityDecrease.z = -decellerationSpeed * Time.fixedDeltaTime < thisRigid.velocity.z ? thisRigid.velocity.z : -decellerationSpeed * Time.fixedDeltaTime; // Sets velocity decrease amount of the z axis
-                    }
-
-                    thisRigid.velocity -= velocityDecrease; // Decellerates the player with the set amount
-                }
+                animator.SetFloat(movementParam, 0);
             }
         }
     }
@@ -320,9 +406,19 @@ public class Player : MovingEntity
     {
         if (context.started && canDash) // Checks input and if the player can dash
         {
-            canMove = false;
-            canDash = false;
-            StartCoroutine(DashRoutine()); // Performs dash
+            Vector3 dashDirection = transform.forward;
+
+
+            if (rawMovement != Vector2.zero)
+            {
+                dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+            }
+            if (!Physics.Raycast(dashCheckLocation.position, dashDirection, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            {
+                moveBlocks++;
+                canDash = false;
+                StartCoroutine(DashRoutine()); // Performs dash
+            }
         }
     }
 
@@ -330,20 +426,37 @@ public class Player : MovingEntity
     IEnumerator DashRoutine()
     {
         float duration = 0; // duration passed since start of dash
+        Vector3 dashDirection = transform.forward;
+
+
+        if(rawMovement != Vector2.zero)
+        {
+            dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+        }
+
+        transform.LookAt(new Vector3(transform.position.x + dashDirection.x, transform.position.y, transform.position.z + dashDirection.z));
 
         while (duration < dashDuration)
         {
             float decreaseOverDuration = (dashDuration - duration) / dashDuration; // How much of the duration is left (range from 0 to 1)
             RaycastHit hitData;
 
-            if(Physics.Raycast(transform.position, transform.forward, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
+            if(Physics.Raycast(dashCheckLocation.position, dashDirection, out hitData, checkRange, hittableLayers, QueryTriggerInteraction.Ignore)) // Checks for collision during the dash
             {
                 if (stopOnCollision) // Should the dash stop whenever the player collides
                 {
+                    Knockback(localKnockback);
+                    Debug.Log("STUNNED");
                     break;
                 }
             }
-            transform.Translate(Vector3.forward * dashVelocity * Time.deltaTime * decreaseOverDuration); // Moves the player
+            Vector3 moveAmount = dashDirection * dashVelocity * Time.deltaTime;
+            if (decreaseSpeedOverTime)
+            {
+                moveAmount *= decreaseOverDuration;
+            }
+
+            transform.position += moveAmount; // Moves the player
             yield return null;
             duration += Time.deltaTime;
         }
@@ -357,7 +470,7 @@ public class Player : MovingEntity
         yield return new WaitForSeconds(dashCooldown);
 
         canDash = true;
-        canMove = true;
+        moveBlocks--;
     }
 
     // Checks if the player is near something that they can interact with
@@ -422,44 +535,98 @@ public class Player : MovingEntity
     // Resets the local camera location
     public void ResetCameraLocation()
     {
-        Vector3 targetPosition = playerCamera.transform.position;
-        if (followX)
+        Vector3 targetPosition = playerCameraHolder.transform.position;
+        if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
+            targetPosition.z = transform.position.z; // Calculates the target location on the z axis
+
+            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward; // Calculates how much the camera should be moved backwards (locally)
+            moveBackwardsAmount.y = 0;
+
+            targetPosition += moveBackwardsAmount; // Updates the cameras target position with the backwards amount
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance; // Calculates how much the camera should be moved upwards
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
-        if (followZ)
-        {
-            float distanceToMoveOnZ = playerCamera.transform.position.z - transform.position.z <= 0 ? -1 * zDistance : 1 * zDistance;
-            targetPosition.z = transform.position.z + distanceToMoveOnZ; // Calculates the target location on the z axis
-        }
-        playerCamera.transform.position = targetPosition; // Sets camera location
+        playerCameraHolder.transform.position = targetPosition; // Sets camera location
     }
 
     // Handles the camera movement
     void CameraFollow()
     {
-        Vector3 targetPosition = playerCamera.transform.position;
-        if (followX)
+        Vector3 targetPosition = playerCameraHolder.transform.position;
+        if (followXY)
         {
             targetPosition.x = transform.position.x; // Calculates the target location on the x axis
+            targetPosition.z = transform.position.z; // Calculates the target location on the z axis
+
+            Vector3 moveBackwardsAmount = zDistance * -cameraDirection.forward;
+            moveBackwardsAmount.y = 0;
+
+            targetPosition += moveBackwardsAmount;
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCamera.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
-        if (followZ)
+
+        playerCameraHolder.transform.position = Vector3.Lerp(playerCameraHolder.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
+    }
+
+    // Sets the cameras direction on the Y axis
+    public void SetCameraRotationY(Vector3 targetEulers, bool instant = true)
+    {
+        Vector3 newEulers = new Vector3(playerCameraHolder.eulerAngles.x, targetEulers.y, playerCameraHolder.eulerAngles.z); // Calculates new eulers
+        cameraDirection.eulerAngles = new Vector3(0, newEulers.y, 0); // Lets camera know which direction is forward
+        playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
+
+        if (instant) // Should the camera be instantly reset?
         {
-            float distanceToMoveOnZ = playerCamera.transform.position.z - transform.position.z <= 0 ? -1 * zDistance : 1 * zDistance;
-            targetPosition.z = transform.position.z + distanceToMoveOnZ; // Calculates the target location on the z axis
+            ResetCameraLocation();
         }
-        playerCamera.transform.position = Vector3.Lerp(playerCamera.transform.position, targetPosition, followSpeed * Time.deltaTime); // Smoothly goes to the target location
+    }
+
+    //Sets the cameras direction in the x and z axis
+    public void SetCameraRotationXZ(Vector3 targetEulers, bool instant = true)
+    {
+        Vector3 newEulers = new Vector3(targetEulers.x, playerCameraHolder.eulerAngles.y, targetEulers.z); // Calculates new eulers
+        playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
+
+        if (instant) // Should the camera be instantly reset?
+        {
+            ResetCameraLocation();
+        }
+    }
+
+    public override void SetShock(bool value)
+    {
+        if (value)
+        {
+            if(currentHoldingItem != null)
+            {
+                currentHoldingItem.Disattach();
+            }
+        }
+
+        base.SetShock(value);
     }
 
     public enum Role { TestRole, OtherTestRole} // Roles for spawn locations
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 dashDirection = transform.forward;
+
+
+        if (rawMovement != Vector2.zero)
+        {
+            dashDirection = new Vector3(rawMovement.x, 0, rawMovement.y);
+        }
+        Gizmos.DrawRay(dashCheckLocation.position, dashDirection * checkRange);
+    }
 }

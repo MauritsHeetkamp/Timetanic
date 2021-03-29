@@ -6,9 +6,14 @@ using UnityEngine.EventSystems;
 
 public class UIOption : MonoBehaviour, IPointerEnterHandler
 {
-    [HideInInspector] public UIController ownerController;
+    public UIController ownerController;
     public UnityEvent onHover, onLeaveHover;
+    public bool interactable = true;
 
+    public virtual void SetInteractable(bool _interactable)
+    {
+        interactable = _interactable;
+    }
 
     // What should happen when the horizontal move is pressed
     public virtual void OnMovedHorizontal(int amount)
@@ -19,6 +24,24 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     public virtual void OnMovedHorizontalStay(float amount)
     {
 
+    }
+     
+    // What happens when button is hovered over
+    public virtual void OnHover()
+    {
+        if(onHover != null)
+        {
+            onHover.Invoke();
+        }
+    }
+
+    // What happens when button is no longer being hovered over
+    public virtual void OnLeaveHover()
+    {
+        if(onLeaveHover != null)
+        {
+            onLeaveHover.Invoke();
+        }
     }
 
     //Do this when the cursor enters the rect area of this selectable UI object.

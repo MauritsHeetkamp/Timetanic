@@ -19,6 +19,9 @@ ModelImporter:
       74: -2261635952316694689
     second: bertyRig|A_CrouchingShake
   - first:
+      74: -2972333734241342822
+    second: bertyRig|A_Idle
+  - first:
       74: 8896759616327458018
     second: bertyRig|A_Scared
   - first:

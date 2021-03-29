@@ -9,6 +9,11 @@ public class Interactable : MonoBehaviour
     [SerializeField] float interactDelay;
     public Player currentInteractingPlayer;
 
+    [SerializeField] string grabParam = "Grab";
+
+    public Popup itemPopup;
+    [SerializeField] Transform popupZone;
+    [SerializeField] LayerMask playerLayers;
 
     // Checks if this item can be interacted with
     public virtual bool CanInteract(Player askingPlayer)
@@ -34,6 +39,12 @@ public class Interactable : MonoBehaviour
         canInteract = false;
         currentInteractingPlayer = target;
         currentInteractingPlayer.currentUsingInteractable = this;
+
+        if(target.animator != null)
+        {
+            target.animator.SetTrigger(grabParam);
+        }
+
         CompleteInteract();
     }
 
@@ -75,5 +86,29 @@ public class Interactable : MonoBehaviour
         InteractDelay(); // Starts interaction delay
         currentInteractingPlayer = null;
         currentInteractingPlayer.currentUsingInteractable = null;
+    }
+
+    private void FixedUpdate()
+    {
+        if(itemPopup != null)
+        {
+            if (canInteract)
+            {
+                Collider[] players = Physics.OverlapBox(popupZone.position, popupZone.lossyScale / 2, popupZone.rotation, playerLayers, QueryTriggerInteraction.Ignore);
+
+                if (players.Length > 0)
+                {
+                    itemPopup.SetPopup(true);
+                }
+                else
+                {
+                    itemPopup.SetPopup(false);
+                }
+            }
+            else
+            {
+                itemPopup.SetPopup(false);
+            }
+        }
     }
 }
