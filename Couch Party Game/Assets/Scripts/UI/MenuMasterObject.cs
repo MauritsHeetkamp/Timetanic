@@ -41,7 +41,7 @@ public class MenuMasterObject : Menu
 
     private void OnEnable()
     {
-        if (targetMenu.activeSelf && !specificPlayerOnly)
+        if (targetMenu.activeSelf && !specificPlayerOnly && PlayerManager.instance != null)
         {
             if (!lobbyPlayersOnly)
             {

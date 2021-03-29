@@ -5,12 +5,17 @@ using UnityEngine.UI;
 using TMPro;
 using Custom.Types;
 
-public class UIDropdown : UIOption
+public class UIDropdownApex : UIOption
 {
     public DropdownData[] dropdownData;
     public int selected;
 
     [SerializeField] TextMeshProUGUI selectedText;
+    [SerializeField] RectTransform selectedIconHolder;
+    [SerializeField] GameObject selectedIconPrefab;
+    [SerializeField] HorizontalLayoutGroup iconHolderLayoutGroup;
+    Image[] selectedIcons;
+    [SerializeField] Color selectedColor, defaultColor;
 
 
     public void Initialize(DropdownData[] data)
@@ -23,9 +28,23 @@ public class UIDropdown : UIOption
     {
         if(dropdownData.Length > 0)
         {
+            float widthToRemove = (iconHolderLayoutGroup.spacing * dropdownData.Length - 1) + iconHolderLayoutGroup.padding.left + iconHolderLayoutGroup.padding.right;
+            widthToRemove /= dropdownData.Length;
+            Vector2 newButtonSize = new Vector2((selectedIconHolder.rect.width / dropdownData.Length) - widthToRemove, selectedIconHolder.rect.height);
+            List<Image> newIcons = new List<Image>();
+            foreach (DropdownData data in dropdownData)
+            {
+                Image newIcon = Instantiate(selectedIconPrefab, selectedIconHolder).GetComponent<Image>();
+                newIcon.GetComponent<RectTransform>().sizeDelta = newButtonSize;
+                newIcon.color = defaultColor;
+                newIcons.Add(newIcon);
+            }
+
+            selectedIcons = newIcons.ToArray();
             if(selected < dropdownData.Length)
             {
                 DropdownData selectedData = dropdownData[selected];
+                selectedIcons[selected].color = selectedColor;
                 selectedText.text = selectedData.name;
                 if(selectedData.onSelected != null)
                 {
@@ -40,6 +59,7 @@ public class UIDropdown : UIOption
     {
         if (interactable)
         {
+            selectedIcons[selected].color = defaultColor;
             selected += amount;
 
             if (selected >= dropdownData.Length)
@@ -52,6 +72,7 @@ public class UIDropdown : UIOption
             }
 
             DropdownData selectedData = dropdownData[selected];
+            selectedIcons[selected].color = selectedColor;
             selectedText.text = selectedData.name;
             if (selectedData.onSelected != null)
             {
