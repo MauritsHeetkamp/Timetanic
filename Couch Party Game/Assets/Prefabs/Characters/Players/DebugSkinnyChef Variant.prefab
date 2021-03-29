@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: owner
       value: 
       objectReference: {fileID: 7483027216079815331}
+    - target: {fileID: 1560182756, guid: a7d491509153ea747ba16b34698d268f, type: 3}
+      propertyPath: jumpVelocity
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560182758, guid: a7d491509153ea747ba16b34698d268f, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3687657966344593885, guid: a7d491509153ea747ba16b34698d268f,
         type: 3}
       propertyPath: m_RootOrder
@@ -19,7 +27,7 @@ PrefabInstance:
     - target: {fileID: 3687657966344593885, guid: a7d491509153ea747ba16b34698d268f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 61.19865
+      value: 59.08376
       objectReference: {fileID: 0}
     - target: {fileID: 3687657966344593885, guid: a7d491509153ea747ba16b34698d268f,
         type: 3}
@@ -29,7 +37,7 @@ PrefabInstance:
     - target: {fileID: 3687657966344593885, guid: a7d491509153ea747ba16b34698d268f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.326068
+      value: 14.004567
       objectReference: {fileID: 0}
     - target: {fileID: 3687657966344593885, guid: a7d491509153ea747ba16b34698d268f,
         type: 3}
