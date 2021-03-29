@@ -36,30 +36,51 @@ public class Options : MonoBehaviour
 
     void AssignCallbacks()
     {
-        masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
-        backgroundMusicSlider.onValueChanged.AddListener(SetBackgroundVolume);
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        if(masterVolumeSlider != null)
+        {
+            masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
+        }
+
+        if(backgroundMusicSlider != null)
+        {
+            backgroundMusicSlider.onValueChanged.AddListener(SetBackgroundVolume);
+        }
+
+        if(sfxSlider != null)
+        {
+            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        }
     }
 
     void LoadSliders()
     {
         float val = 0;
 
-        audioMixer.GetFloat(masterAudioString, out val);
-        val = Mathf.Pow(10.0f, val / 20.0f);
-        masterVolumeSlider.value = val;
+        if(masterVolumeSlider != null)
+        {
+            audioMixer.GetFloat(masterAudioString, out val);
+            val = Mathf.Pow(10.0f, val / 20.0f);
+            masterVolumeSlider.value = val;
+        }
 
-        audioMixer.GetFloat(backgroundAudioString, out val);
-        val = Mathf.Pow(10.0f, val / 20.0f);
-        backgroundMusicSlider.value = val;
+        if(backgroundMusicSlider != null)
+        {
+            audioMixer.GetFloat(backgroundAudioString, out val);
+            val = Mathf.Pow(10.0f, val / 20.0f);
+            backgroundMusicSlider.value = val;
+        }
 
-        audioMixer.GetFloat(sfxAudioString, out val);
-        val = Mathf.Pow(10.0f, val / 20.0f);
-        sfxSlider.value = val;
+        if(sfxSlider != null)
+        {
+            audioMixer.GetFloat(sfxAudioString, out val);
+            val = Mathf.Pow(10.0f, val / 20.0f);
+            sfxSlider.value = val;
+        }
     }
     
     void LoadDropdowns()
     {
+        Debug.Log("LOADING DROPDOWNS");
         if (qualitySettings != null)
         {
             List<DropdownData> data = new List<DropdownData>();

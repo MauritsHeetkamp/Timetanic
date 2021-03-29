@@ -21,13 +21,16 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
-        PlayerManager.instance.onNewPlayerConnected += OnNewPlayerConnected;
-        foreach(PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+        if(PlayerManager.instance != null)
         {
-            data.onHorizontalAxis += MoveHorizontal;
-            data.onVerticalAxis += MoveVertical;
-            data.onSelect += Select;
-            data.onScroll += Scroll;
+            PlayerManager.instance.onNewPlayerConnected += OnNewPlayerConnected;
+            foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+            {
+                data.onHorizontalAxis += MoveHorizontal;
+                data.onVerticalAxis += MoveVertical;
+                data.onSelect += Select;
+                data.onScroll += Scroll;
+            }
         }
     }
 
@@ -41,13 +44,16 @@ public class UIController : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerConnected;
-        foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+        if(PlayerManager.instance != null)
         {
-            data.onHorizontalAxis -= MoveHorizontal;
-            data.onVerticalAxis -= MoveVertical;
-            data.onSelect -= Select;
-            data.onScroll -= Scroll;
+            PlayerManager.instance.onNewPlayerConnected -= OnNewPlayerConnected;
+            foreach (PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+            {
+                data.onHorizontalAxis -= MoveHorizontal;
+                data.onVerticalAxis -= MoveVertical;
+                data.onSelect -= Select;
+                data.onScroll -= Scroll;
+            }
         }
     }
 
