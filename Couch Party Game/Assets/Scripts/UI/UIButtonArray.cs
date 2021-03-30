@@ -53,6 +53,11 @@ public class UIButtonArray : UIOption
                 selected.onLeaveHover.Invoke();
             }
 
+            if(selected.onLeaveHoverController != null)
+            {
+                selected.onLeaveHoverController.Invoke();
+            }
+
             if(selected.reset != null)
             {
                 selected.reset.Invoke();
@@ -64,6 +69,11 @@ public class UIButtonArray : UIOption
             if (selected.onHover != null)
             {
                 selected.onHover.Invoke();
+            }
+
+            if(selected.onHoverController != null)
+            {
+                selected.onHoverController.Invoke();
             }
 
             if (selected.autoInteract)

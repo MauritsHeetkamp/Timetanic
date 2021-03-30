@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class UISubOption : MonoBehaviour, IPointerEnterHandler
+public class UISubOption : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public bool canInteract = true;
-    public UnityEvent onHover, onLeaveHover, reset;
+    public UnityEvent onHover, onHoverController, onLeaveHover, onLeaveHoverController, reset;
 
     //Do this when the cursor enters the rect area of this selectable UI object.
     public void OnPointerEnter(PointerEventData eventData)
@@ -15,6 +15,14 @@ public class UISubOption : MonoBehaviour, IPointerEnterHandler
         if(onHover != null && canInteract)
         {
             onHover.Invoke();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (onLeaveHover != null && canInteract)
+        {
+            onLeaveHover.Invoke();
         }
     }
 
