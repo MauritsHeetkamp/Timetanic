@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7092735131129263918}
   - component: {fileID: 6179412099893803147}
   - component: {fileID: 8225079084967480385}
+  - component: {fileID: 6168802631748559033}
   m_Layer: 0
   m_Name: SM_DeckChair
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6168802631748559033
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7576644094501645716}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1906412, y: 1.4239192, z: 0.8628342}
+  m_Center: {x: 0.011324167, y: 0.7119596, z: 0}

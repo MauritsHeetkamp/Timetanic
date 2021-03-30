@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3005024058172167562}
   - component: {fileID: 2169651868007258671}
   - component: {fileID: 4177319178245844709}
+  - component: {fileID: 5800983960536569604}
   m_Layer: 0
   m_Name: SM_LargeCrate_low
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &5800983960536569604
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2519814402390789936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4552325, y: 1.547205, z: 1.4578286}
+  m_Center: {x: 0.0010530949, y: 0.7735863, z: 0.0053298473}
