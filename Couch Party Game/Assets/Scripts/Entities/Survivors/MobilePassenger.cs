@@ -44,6 +44,7 @@ public class MobilePassenger : Passenger
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log(other.tag);
         if(disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
         {
             FollowTarget(other.GetComponent<Player>());

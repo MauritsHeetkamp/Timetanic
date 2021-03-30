@@ -66,7 +66,10 @@ public class UIButtonArray : UIOption
                 selected.onHover.Invoke();
             }
 
-            selected.Interact();
+            if (selected.autoInteract)
+            {
+                selected.Interact();
+            }
         }
     }
 
@@ -99,7 +102,10 @@ public class UIButtonArray : UIOption
                         selected.onHover.Invoke();
                     }
 
-                    selected.Interact();
+                    if (selected.autoInteract)
+                    {
+                        selected.Interact();
+                    }
                     break;
                 }
             }

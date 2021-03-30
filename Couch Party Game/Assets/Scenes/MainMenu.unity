@@ -492,7 +492,11 @@ MonoBehaviour:
       m_Calls: []
   interactable: 1
   selectedButton: 0
-  buttons: []
+  buttons:
+  - {fileID: 1384223333}
+  - {fileID: 278478932}
+  - {fileID: 681274746}
+  - {fileID: 1500962686}
   initializeOnStart: 0
 --- !u!114 &19250715
 MonoBehaviour:
@@ -2040,6 +2044,7 @@ GameObject:
   - component: {fileID: 278478928}
   - component: {fileID: 278478932}
   - component: {fileID: 278478931}
+  - component: {fileID: 278478933}
   m_Layer: 5
   m_Name: AudioTab
   m_TagString: Untagged
@@ -2160,7 +2165,51 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 278478929}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 69687459}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417450920}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 710077096}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1873061211}
+        m_MethodName: SetOptions
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 278478933}
+          m_ObjectArgumentAssemblyTypeName: UIOptionsData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &278478932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2183,8 +2232,25 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  autoInteract: 1
   thisButton: {fileID: 278478931}
   buttonText: {fileID: 1800682887}
+--- !u!114 &278478933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278478926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26aad1e0db8eb54185564c538227b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options:
+  - {fileID: 10198201}
+  - {fileID: 1684445404}
+  - {fileID: 2003190220}
 --- !u!1 &288814756
 GameObject:
   m_ObjectHideFlags: 0
@@ -4206,7 +4272,51 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 681274743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 69687459}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1417450920}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 710077096}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1873061211}
+        m_MethodName: ResetOptions
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &681274746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4229,6 +4339,7 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  autoInteract: 1
   thisButton: {fileID: 681274745}
   buttonText: {fileID: 911123780}
 --- !u!1 &710077096
@@ -8415,7 +8526,7 @@ PrefabInstance:
         type: 3}
       propertyPath: allOptions.Array.data[4]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 639615425}
     - target: {fileID: 788881827410079909, guid: adc562af806531e4b91712e5d14329f7,
         type: 3}
       propertyPath: allOptions.Array.data[5]
@@ -8431,6 +8542,16 @@ PrefabInstance:
       propertyPath: allOptions.Array.data[7]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 788881827410079909, guid: adc562af806531e4b91712e5d14329f7,
+        type: 3}
+      propertyPath: defaultOptions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 788881827410079909, guid: adc562af806531e4b91712e5d14329f7,
+        type: 3}
+      propertyPath: defaultOptions.Array.data[0]
+      value: 
+      objectReference: {fileID: 19250714}
     - target: {fileID: 788881827410079911, guid: adc562af806531e4b91712e5d14329f7,
         type: 3}
       propertyPath: m_Name
@@ -8897,6 +9018,7 @@ GameObject:
   - component: {fileID: 1384223329}
   - component: {fileID: 1384223333}
   - component: {fileID: 1384223332}
+  - component: {fileID: 1384223334}
   m_Layer: 5
   m_Name: VideoTab
   m_TagString: Untagged
@@ -9017,7 +9139,51 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1384223330}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 69687459}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1417450920}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 710077096}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1873061211}
+        m_MethodName: SetOptions
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1384223334}
+          m_ObjectArgumentAssemblyTypeName: UIOptionsData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1384223333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9040,8 +9206,26 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  autoInteract: 1
   thisButton: {fileID: 1384223332}
   buttonText: {fileID: 1733891017}
+--- !u!114 &1384223334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384223327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26aad1e0db8eb54185564c538227b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options:
+  - {fileID: 2110492166}
+  - {fileID: 956315334}
+  - {fileID: 1352612648}
+  - {fileID: 639615425}
 --- !u!1 &1386323388
 GameObject:
   m_ObjectHideFlags: 0
@@ -9877,7 +10061,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1500962683}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1833602206}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 943882397}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1500962686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9900,6 +10106,7 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  autoInteract: 0
   thisButton: {fileID: 1500962685}
   buttonText: {fileID: 2052744145}
 --- !u!1 &1523007303
@@ -11251,6 +11458,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1873061211}
+        m_MethodName: SetOptions
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1384223334}
+          m_ObjectArgumentAssemblyTypeName: UIOptionsData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

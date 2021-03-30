@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class UIController : MonoBehaviour
 {
     public int currentSelectedOption = -1; // Current option index that has been selected
+
+    [SerializeField] UIOption[] defaultOptions;
+
     [SerializeField] UIOption[] allOptions;
 
     [SerializeField] float recenterThreshold = 0.8f; // Treshold before player can move the selection again
@@ -40,6 +43,26 @@ public class UIController : MonoBehaviour
         {
             scrollAmount = context.ReadValue<float>();
         }
+    }
+
+    public void SetOptions(UIOptionsData data)
+    {
+        List<UIOption> newData = new List<UIOption>(defaultOptions);
+
+        if(data != null)
+        {
+            foreach (UIOption optionData in data.options)
+            {
+                newData.Add(optionData);
+            }
+        }
+
+        allOptions = newData.ToArray();
+    }
+
+    public void ResetOptions()
+    {
+        allOptions = defaultOptions;
     }
 
     private void OnDisable()

@@ -6,6 +6,7 @@ using TMPro;
 
 public class UISubOptionButton : UISubOption
 {
+    public bool autoInteract = true;
     public Button thisButton;
     public TextMeshProUGUI buttonText;
 
