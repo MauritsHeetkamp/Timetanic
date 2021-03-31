@@ -13,6 +13,7 @@ public class UISubOptionButton : UISubOption
     public override void Interact()
     {
         base.Interact();
+        Debug.Log("ITTEERR");
         thisButton.onClick.Invoke();
     }
 

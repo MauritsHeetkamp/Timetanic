@@ -10,8 +10,16 @@ public class UIDropdown : UIOption
     public DropdownData[] dropdownData;
     public int selected;
 
-    [SerializeField] TextMeshProUGUI selectedText;
+    [SerializeField] TextMeshProUGUI selectedText, debug;
 
+
+    private void Update()
+    {
+        if(debug != null)
+        {
+            debug.text = Screen.resolutions.Length.ToString();
+        }
+    }
 
     public void Initialize(DropdownData[] data)
     {

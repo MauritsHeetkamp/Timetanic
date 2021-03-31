@@ -37,6 +37,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void SetScroller(ScrollRect scrollRect)
+    {
+        scroller = scrollRect;
+    }
+
     void Scroll(InputAction.CallbackContext context, PlayerData owner)
     {
         if(scroller != null)
@@ -233,7 +238,7 @@ public class UIController : MonoBehaviour
             option.OnMovedHorizontalStay(lastMoveAmount); // Tells the current option that it moved horizontally
         }
 
-        if(scroller != null)
+        if(scroller != null && scroller.isActiveAndEnabled)
         {
             scroller.verticalNormalizedPosition += scrollAmount * Time.deltaTime * scrollSensitivity;
         }

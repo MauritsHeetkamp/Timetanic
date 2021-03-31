@@ -33,6 +33,7 @@ public class CameraHandler : MonoBehaviour
     bool singlePlayer;
     FadeManager globalFader; // The fade handler
 
+    [SerializeField] Options options;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,16 @@ public class CameraHandler : MonoBehaviour
         globalFader = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
 
         targetLocation = globalCamera.position;
+    }
+
+    private void OnEnable()
+    {
+        options.onResolutionChanged += RescaleSplitscreens;
+    }
+
+    private void OnDisable()
+    {
+        options.onResolutionChanged -= RescaleSplitscreens;
     }
 
     public void ForceSplit(bool split)
@@ -111,6 +122,43 @@ public class CameraHandler : MonoBehaviour
                 SetSplit(true, instant);
             }
         }
+    }
+
+    public void RescaleSplitscreens()
+    {
+        int playerAmount = playerHandler.localPlayers.Count;
+
+        int requiredScreenAmount = 1;
+        int powerOf = 1;
+
+        if (playerAmount == 2)
+        {
+            requiredScreenAmount = playerAmount;
+            powerOf = playerAmount;
+        }
+
+
+        if (playerAmount > 2) // Checks if there should be more then 2 screens
+        {
+            for (int i = 2; true; i++)
+            {
+                requiredScreenAmount = i * i; // Screens should be the same size
+
+                if (requiredScreenAmount >= playerAmount) // Enough screens to match the player amount
+                {
+                    powerOf = i;
+                    break;
+                }
+            }
+        }
+
+        float splitscreenSizeX = Screen.width / powerOf; // Calculates the x size of one splitscreen
+        float splitscreenSizeY = playerAmount > 2 ? Screen.height / powerOf : Screen.height; // Calculates the y size of one splitscreen
+
+
+        GridLayoutGroup layout = splitscreenImageHolder.GetComponent<GridLayoutGroup>(); // Gets the grid layout element
+        layout.cellSize = new Vector2(splitscreenSizeX, splitscreenSizeY); // Sets the size of the splitscreens
+        layout.constraintCount = playerAmount > 2 ? powerOf : 2; // Sets the constraint amount
     }
 
     // Creates the split screens and assigns them

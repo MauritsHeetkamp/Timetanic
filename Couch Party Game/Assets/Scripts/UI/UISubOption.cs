@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class UISubOption : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public Animator animator;
     public bool canInteract = true;
     public UnityEvent onHover, onHoverController, onLeaveHover, onLeaveHoverController, reset;
 

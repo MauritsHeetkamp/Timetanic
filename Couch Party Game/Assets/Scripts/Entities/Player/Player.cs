@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Custom.Shake;
 
 public class Player : MovingEntity
 {
@@ -27,9 +28,7 @@ public class Player : MovingEntity
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 1;
     [SerializeField] bool canJump = true;
-    [SerializeField] float jumpCheckHeightOffset = 0.1f;
-
-    [SerializeField] float jumpDetectionRange = 1; //The range downwards to see if the player is grounded
+    [SerializeField] Transform jumpCheckZone, jumpCheckEndZone;
     [SerializeField] LayerMask jumpableLayers; //The layers that the player can jump on
 
     [Header("Slopes")]
@@ -80,6 +79,7 @@ public class Player : MovingEntity
     [SerializeField] Transform dashCheckLocation;
 
     [SerializeField] Vector3 localKnockback;
+    [SerializeField] ShakeData knockbackShake;
 
     // Handles camera following and interaction checks
     private void Update()
@@ -283,25 +283,14 @@ public class Player : MovingEntity
     {
         if(context.started && canJump && thisRigid.velocity.y <= 0) // Checks input and if player can jump
         {
-            if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
+            if (Physics.OverlapBox(jumpCheckZone.position, jumpCheckZone.lossyScale, jumpCheckZone.rotation, jumpableLayers, QueryTriggerInteraction.Ignore).Length > 0)
             {
-                if(animator != null)
+                canJump = false;
+                if (animator != null)
                 {
                     animator.SetBool(jumpParam, true);
                 }
                 thisRigid.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse); // Adds jump force
-            }
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (Physics.Raycast(transform.position + (transform.up * jumpCheckHeightOffset), -transform.up, jumpDetectionRange, jumpableLayers, QueryTriggerInteraction.Ignore)) // Checks if grounded (for jumps)
-        {
-            canJump = true;
-            if (animator != null)
-            {
-                animator.SetBool(jumpParam, false);
             }
         }
     }
@@ -446,6 +435,7 @@ public class Player : MovingEntity
                 if (stopOnCollision) // Should the dash stop whenever the player collides
                 {
                     Knockback(localKnockback);
+                    screenShake.Shake(knockbackShake);
                     Debug.Log("STUNNED");
                     break;
                 }
@@ -613,6 +603,15 @@ public class Player : MovingEntity
         }
 
         base.SetShock(value);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!canJump && Physics.OverlapBox(jumpCheckZone.position, jumpCheckZone.lossyScale, jumpCheckZone.rotation, jumpableLayers, QueryTriggerInteraction.Ignore).Length > 0)
+        {
+            canJump = true;
+            animator.SetBool(jumpParam, false);
+        }
     }
 
     public enum Role { TestRole, OtherTestRole} // Roles for spawn locations

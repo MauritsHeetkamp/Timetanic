@@ -2,20 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomAnimatorFunctions : MonoBehaviour
+public class CustomAnimator : MonoBehaviour
 {
     Animator animator;
+    [SerializeField] bool saveState;
 
+
+    private void OnEnable()
+    {
+        Initialize();
+
+        if (saveState)
+        {
+            if(animator != null)
+            {
+                animator.keepAnimatorControllerStateOnDisable = true;
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        
+    }
 
     public void SetBoolTrue(string boolName)
     {
-        Initialize();
         SetBool(boolName, true);
     }
 
     public void SetBoolFalse(string boolName)
     {
-        Initialize();
         SetBool(boolName, false);
     }
 
