@@ -13,6 +13,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] CountdownTimer gameTime; // the timer
     [SerializeField] TimeDuration almostFinishedTime; // Timestamp when the time is almost over
     [SerializeField] Slider timeIndicator;
+    [SerializeField] TextMeshProUGUI gameTimeText;
     Coroutine countdownRoutine; // Countdown coroutine
 
 
@@ -97,10 +98,15 @@ public class GameHandler : MonoBehaviour
         float remainingSeconds = gameTime.GetRemainingSeconds();
         float totalSeconds = gameTime.duration.GetSeconds();
 
-
-        if(timeIndicator != null)
+        if(gameTimeText != null)
         {
-            timeIndicator.value = remainingSeconds / totalSeconds;
+            string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString("F0") : gameTime.remainingSeconds.ToString("F0"); // Gets the seconds string
+            gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
+        }
+
+        if (timeIndicator != null)
+        {
+            timeIndicator.value =  1 - (remainingSeconds / totalSeconds);
         }
 
         if (almostFinished)
