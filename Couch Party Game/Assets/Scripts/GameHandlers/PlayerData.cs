@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 public class PlayerData : MonoBehaviour
 {
+    public PlayerCharacterData preferredPlayer;
+
+
     public bool isConnected = true;
     public PlayerInput playerInput; // Connected input scheme
 
@@ -30,23 +33,21 @@ public class PlayerData : MonoBehaviour
     public UnityAction<InputAction.CallbackContext, PlayerData> onMenuEnd;
     public UnityAction<InputAction.CallbackContext, PlayerData> onScroll;
 
-    void Awake()
+    private void Awake()
     {
         DontDestroyOnLoad(this); // Prevents object from being destroyed when swapping scenes
-        if(playerInput == null)
+        Debug.Log("Started");
+        if (playerInput == null)
         {
             Debug.LogError("No PlayerInput found");
         }
-        else
-        {
-            playerInput.onDeviceLost += SetConnectionFalse;
-            playerInput.onDeviceRegained += SetConnectionTrue;
-        }
     }
 
+
     // Sets the player connection state to true
-    void SetConnectionTrue(PlayerInput input)
+    public void SetConnectionTrue(PlayerInput input)
     {
+        Debug.Log("DEVICE FOUND");
         isConnected = true;
         if(onPlayerReconnect != null)
         {
@@ -55,8 +56,9 @@ public class PlayerData : MonoBehaviour
     }
 
     // Sets the player connection state to false
-    void SetConnectionFalse(PlayerInput input)
+    public void SetConnectionFalse(PlayerInput input)
     {
+        Debug.Log("DEVICE REMOVED");
         isConnected = false;
         if(onPlayerDisconnect != null)
         {

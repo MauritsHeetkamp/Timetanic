@@ -5,15 +5,27 @@ using UnityEngine.UI;
 
 public class Lobby : Menu
 {
-    [SerializeField] Image[] playerIcons; // Icons for when players are connected
+    [SerializeField] PlayerCharacterData[] allCharacters;
+    List<PlayerCharacterData> availableCharacters;
+    [SerializeField] bool onlyUniqueCharacters = true;
+    [SerializeField] PlayerIcon[] playerIcons; // Icons for when players are connected
     [SerializeField] int maxPlayers = 2;
     [SerializeField] int minPlayers = 1;
 
     [SerializeField] UIButton startButton;
 
-    [SerializeField] bool keepSpecificSpot = true; // If players disconnect should everyone slide next to eachother
-
     [SerializeField] UIController controller; // Controls the ui buttons on screen
+
+    private void Awake()
+    {
+        if(PlayerManager.instance != null)
+        {
+            foreach(PlayerData data in PlayerManager.instance.connectedToPCPlayers)
+            {
+                data.preferredPlayer = null;
+            }
+        }
+    }
 
     private void OnEnable()
     {
@@ -68,6 +80,63 @@ public class Lobby : Menu
         UpdateUI();
     }
 
+
+    void SetPlayerCharacters()
+    {
+        availableCharacters = new List<PlayerCharacterData>(allCharacters);
+
+        foreach (PlayerData player in PlayerManager.instance.connectedToLobbyPlayers)
+        {
+            if(player != null && player.preferredPlayer != null)
+            {
+                availableCharacters.Remove(player.preferredPlayer);
+            }
+        }
+
+        foreach (PlayerData player in PlayerManager.instance.connectedToLobbyPlayers)
+        {
+            SetPlayerCharacter(player);
+        }
+    }
+
+    void SetPlayerCharacter(PlayerData player)
+    {
+        if(player != null)
+        {
+            if (player.preferredPlayer == null || !availableCharacters.Contains(player.preferredPlayer))
+            {
+                if (availableCharacters.Count > 0 && onlyUniqueCharacters)
+                {
+                    int selectedCharacter = Random.Range(0, availableCharacters.Count);
+
+                    player.preferredPlayer = availableCharacters[selectedCharacter];
+                    availableCharacters.RemoveAt(selectedCharacter);
+                }
+                else
+                {
+                    int selectedCharacter = Random.Range(0, allCharacters.Length);
+
+                    player.preferredPlayer = allCharacters[selectedCharacter];
+                }
+
+
+            }
+            else
+            {
+                availableCharacters.Remove(player.preferredPlayer);
+            }
+
+            int playerIndex = PlayerManager.instance.connectedToLobbyPlayers.IndexOf(player);
+
+            PlayerIcon icon = playerIcons[playerIndex];
+
+            icon.previewingObject = Instantiate(player.preferredPlayer.lobbyInstance, icon.previewSpawnLocation.position, icon.previewSpawnLocation.rotation, icon.previewSpawnLocation);
+            LobbyPlayer lobbyPlayer = icon.previewingObject.GetComponent<LobbyPlayer>();
+
+            lobbyPlayer.previewCamera.targetTexture = icon.assignedRendertexture;
+        }
+    }
+
     // Reloads connection data
     void LoadConnectedPlayers()
     {
@@ -98,23 +167,22 @@ public class Lobby : Menu
             }
         }
 
-        if (!keepSpecificSpot)
+        for (int i = maxPlayers - 1; i >= 0; i--)
         {
-            for (int i = maxPlayers - 1; i >= 0; i--)
+            if (PlayerManager.instance.connectedToLobbyPlayers[i] == null)
             {
-                if (PlayerManager.instance.connectedToLobbyPlayers[i] == null)
-                {
-                    PlayerManager.instance.connectedToLobbyPlayers.RemoveAt(i); // Removes all empty spots
-                }
-            }
-
-            // Everyone is now lined up again
-
-            while (PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers)
-            {
-                PlayerManager.instance.connectedToLobbyPlayers.Add(null); // Fill with empty spots
+                PlayerManager.instance.connectedToLobbyPlayers.RemoveAt(i); // Removes all empty spots
             }
         }
+
+        // Everyone is now lined up again
+
+        while (PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers)
+        {
+            PlayerManager.instance.connectedToLobbyPlayers.Add(null); // Fill with empty spots
+        }
+
+        SetPlayerCharacters();
         UpdateUI();
     }
 
@@ -127,11 +195,11 @@ public class Lobby : Menu
             if (PlayerManager.instance.connectedToLobbyPlayers[i] != null && PlayerManager.instance.connectedToLobbyPlayers[i].isConnected) // Checks if this belongs to a player and is connected
             {
                 connectedAmount++;
-                playerIcons[i].gameObject.SetActive(true); // enables that specific player icon
+                playerIcons[i].playerUIObject.SetActive(true); // enables that specific player icon
             }
             else
             {
-                playerIcons[i].gameObject.SetActive(false); // disables that specific player icon
+                playerIcons[i].playerUIObject.SetActive(false); // disables that specific player icon
             }
         }
 
@@ -146,6 +214,7 @@ public class Lobby : Menu
             if (PlayerManager.instance.connectedToLobbyPlayers[i] == null || !PlayerManager.instance.connectedToLobbyPlayers[i].isConnected) // Tries to find a spot that is free
             {
                 PlayerManager.instance.connectedToLobbyPlayers[i] = player; // Connects player to the free spot
+                SetPlayerCharacter(player);
                 UpdateUI();
                 break;
             }
@@ -170,6 +239,27 @@ public class Lobby : Menu
     void PlayerConnectionRemoved(PlayerData data)
     {
         Debug.Log(data.isConnected);
+
+        if(data.preferredPlayer != null)
+        {
+            availableCharacters.Add(data.preferredPlayer);
+        }
+
+        int playerIndex = PlayerManager.instance.connectedToLobbyPlayers.IndexOf(data);
+
+        PlayerIcon playerIcon = playerIcons[playerIndex];
+        Destroy(playerIcon.previewingObject);
+
         LoadConnectedPlayers();
+    }
+
+    [System.Serializable]
+    public class PlayerIcon
+    {
+        public RenderTexture assignedRendertexture;
+        public GameObject playerUIObject;
+
+        public Transform previewSpawnLocation;
+        public GameObject previewingObject;
     }
 }
