@@ -63,6 +63,10 @@ public class UIController : MonoBehaviour
         }
 
         allOptions = newData.ToArray();
+        foreach (UIOption option in allOptions)
+        {
+            option.ownerController = this; // Initializes option
+        }
     }
 
     public void ResetOptions()
