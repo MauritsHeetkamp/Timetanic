@@ -1,17 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class FadeManager : MonoBehaviour
 {
-    [SerializeField] float defaultFadeDuration = 1;
-
     [SerializeField] bool unfadeOnStart;
 
-    [SerializeField] RectTransform globalPanelHolder; // The object that holds the fade panels
+    [SerializeField] Transform targetParent;
     [SerializeField] GameObject fadePanel; // Fade panel prefab
+    [SerializeField] float defaultFadeDuration = 1;
 
 
     // Start is called before the first frame update
@@ -28,9 +25,7 @@ public class FadeManager : MonoBehaviour
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
-
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
         StartCoroutine(FadeInOutRoutine(newPanel, duration, true, specificPlayer));
 
@@ -42,9 +37,7 @@ public class FadeManager : MonoBehaviour
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
-
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
         StartCoroutine(FadeInRoutine(newPanel, duration, true, specificPlayer));
 
@@ -56,9 +49,7 @@ public class FadeManager : MonoBehaviour
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
-
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
         StartCoroutine(FadeOutRoutine(newPanel, duration, true, specificPlayer));
 
@@ -86,11 +77,11 @@ public class FadeManager : MonoBehaviour
             yield return null;
         }
 
-        if(target.onFadedIn != null)
+        if (target.onFadedIn != null)
         {
             target.onFadedIn.Invoke(); // Effect on fade in
         }
-        if(target.onFadedInSpecificPlayer != null && specificPlayer != null)
+        if (target.onFadedInSpecificPlayer != null && specificPlayer != null)
         {
             target.onFadedInSpecificPlayer.Invoke(specificPlayer.gameObject); // Effect on fade in for specific player object
         }
@@ -108,7 +99,7 @@ public class FadeManager : MonoBehaviour
             yield return null;
         }
 
-        if(target.onFadedOut != null)
+        if (target.onFadedOut != null)
         {
             target.onFadedOut.Invoke(); // Effect on fade in
         }
@@ -192,5 +183,4 @@ public class FadeManager : MonoBehaviour
             Destroy(target.gameObject);
         }
     }
-
 }

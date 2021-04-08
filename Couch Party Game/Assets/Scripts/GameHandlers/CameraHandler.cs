@@ -31,14 +31,14 @@ public class CameraHandler : MonoBehaviour
 
     public bool handleTheCameras = true; // Should the cameras be handled automatically?
     bool singlePlayer;
-    FadeManager globalFader; // The fade handler
+    IngameFadeManager globalFader; // The fade handler
 
     [SerializeField] Options options;
 
     // Start is called before the first frame update
     void Start()
     {
-        globalFader = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>();
+        globalFader = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>();
 
         targetLocation = globalCamera.position;
     }

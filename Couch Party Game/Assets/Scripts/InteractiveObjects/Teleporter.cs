@@ -71,7 +71,7 @@ public class Teleporter : MonoBehaviour
             {
                 if(fadeDuration > 0) // Is there a fade required?
                 {
-                    FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>(); // Finds fade handler
+                    IngameFadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>(); // Finds fade handler
 
                     if (fadeManager != null)
                     {
