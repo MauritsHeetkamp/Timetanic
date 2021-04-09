@@ -34357,6 +34357,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 231941124191711141, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: unfadeOnStart
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 231941124191711141, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: defaultFadeDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3460154607576851596, guid: 43dcd9492f3194440af1fa65025590f5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -34466,6 +34476,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SceneSwapManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6891712530838273488, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8975278959283647214, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: unfadeOnStart
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43dcd9492f3194440af1fa65025590f5, type: 3}
@@ -35959,6 +35979,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1919744842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1919744844}
+  - component: {fileID: 1919744843}
+  m_Layer: 0
+  m_Name: StartEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1919744843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919744842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0f806dbda57344fa326d10690aa3ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1864913191}
+        m_MethodName: PreloadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1919744844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919744842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 837.62744, y: 533.85986, z: 158.52942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920811421
 GameObject:
@@ -39105,7 +39182,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1864913191}
-        m_MethodName: ChangeSceneInstant
+        m_MethodName: ChangeSceneAsync
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

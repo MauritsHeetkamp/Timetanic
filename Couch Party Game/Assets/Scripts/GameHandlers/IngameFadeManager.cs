@@ -15,7 +15,7 @@ public class IngameFadeManager : MonoBehaviour
     {
         FadeManager targetFader = specificPlayer != null ? specificPlayer.attachedSplitscreen.fadeManager : globalFader; // Select which panel should be faded
 
-        return targetFader.FadeInOut(duration, specificPlayer);
+        return targetFader.FadeInOut(duration, true, specificPlayer);
     }
 
     // Fade the screen in and out
@@ -23,7 +23,7 @@ public class IngameFadeManager : MonoBehaviour
     {
         FadeManager targetFader = specificPlayer != null ? specificPlayer.attachedSplitscreen.fadeManager : globalFader; // Select which panel should be faded
 
-        return targetFader.FadeIn(duration, specificPlayer);
+        return targetFader.FadeIn(duration, true, specificPlayer);
     }
 
     // Fade the screen out
@@ -31,7 +31,7 @@ public class IngameFadeManager : MonoBehaviour
     {
         FadeManager targetFader = specificPlayer != null ? specificPlayer.attachedSplitscreen.fadeManager : globalFader; // Select which panel should be faded
 
-        return targetFader.FadeOut(duration, specificPlayer);
+        return targetFader.FadeOut(duration, true, specificPlayer);
     }
 
 }
