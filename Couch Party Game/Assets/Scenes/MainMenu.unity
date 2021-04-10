@@ -11346,9 +11346,9 @@ MonoBehaviour:
           m_StringArgument: Hover
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2037649456}
-        m_MethodName: SetBoolFalse
-        m_Mode: 5
+      - m_Target: {fileID: 943882397}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11356,6 +11356,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Options
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1833602206}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1500962686
 MonoBehaviour:
@@ -12650,9 +12661,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2037649456}
-        m_MethodName: SetBoolTrue
-        m_Mode: 5
+      - m_Target: {fileID: 1833602206}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12660,6 +12671,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Options
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 943882397}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1668769272
 MonoBehaviour:
@@ -15899,8 +15921,6 @@ GameObject:
   - component: {fileID: 2037649453}
   - component: {fileID: 2037649452}
   - component: {fileID: 2037649455}
-  - component: {fileID: 2037649454}
-  - component: {fileID: 2037649456}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -15967,25 +15987,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037649450}
   m_CullTransparentMesh: 0
---- !u!95 &2037649454
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037649450}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7e7ced91e50f78449b6a46f9efe7c5e3, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 1
 --- !u!114 &2037649455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15999,19 +16000,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &2037649456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037649450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3357ba4d82ef4c4bbb520a01c21ee96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveState: 1
 --- !u!1 &2048361306
 GameObject:
   m_ObjectHideFlags: 0

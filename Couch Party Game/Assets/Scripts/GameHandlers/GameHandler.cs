@@ -12,6 +12,9 @@ public class GameHandler : MonoBehaviour
     bool almostFinished; // Is the time almost over?
     [SerializeField] CountdownTimer gameTime; // the timer
     [SerializeField] TimeDuration almostFinishedTime; // Timestamp when the time is almost over
+
+    [SerializeField] UnityEvent onAlmostFinished, onNotAlmostFinished;
+
     [SerializeField] Slider timeIndicator;
     [SerializeField] TextMeshProUGUI gameTimeText;
     Coroutine countdownRoutine; // Countdown coroutine
@@ -114,6 +117,11 @@ public class GameHandler : MonoBehaviour
             if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
             {
                 almostFinished = false;
+
+                if(onAlmostFinished != null)
+                {
+                    onAlmostFinished.Invoke();
+                }
             }
         }
         else
@@ -121,6 +129,11 @@ public class GameHandler : MonoBehaviour
             if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
             {
                 almostFinished = true;
+
+                if(onNotAlmostFinished != null)
+                {
+                    onNotAlmostFinished.Invoke();
+                }
             }
         }
     }
