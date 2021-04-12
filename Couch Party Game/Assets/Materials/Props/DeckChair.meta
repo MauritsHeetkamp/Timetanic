@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Couch Party Game/Assets/Materials/Props/DeckChair.meta
 guid: 883b35ec40863f74198e83ab59aaa452
+=======
+guid: 8445bbe7dd13bc242b7d924b652d0873
+>>>>>>> Development/Maurits:Couch Party Game/Assets/UI/NewPlaceholders.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
