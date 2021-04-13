@@ -11,7 +11,7 @@ public class CameraHandler : MonoBehaviour
 
     int forceSplit;
 
-    [SerializeField] SpawnManager playerHandler; // The spawner keeps track of players
+    [SerializeField] PlayerSpawner playerHandler; // The spawner keeps track of players
     public Transform globalCamera; // The global camera for all-in-one screen
     public ObjectShaker globalScreenshake;
 

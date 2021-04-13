@@ -10,6 +10,12 @@ public class Damagable : MonoBehaviour
     float remainingInvulnerability;
     Coroutine invulnerabilityRoutine;
 
+
+    public virtual void Init()
+    {
+
+    }
+
     // Taking damage
     public virtual void TakeDamage(int damage, string damagedBy)
     {

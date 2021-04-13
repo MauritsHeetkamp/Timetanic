@@ -26,8 +26,9 @@ public class GameHandler : MonoBehaviour
     public int score;
 
     [Header("Spawning")]
-    [SerializeField] SpawnManager spawnHandler;
-    [SerializeField] MinigameHandler minigameHandler;
+    [SerializeField] NPCSpawner npcSpawner;
+    [SerializeField] PlayerSpawner playerSpawner;
+    [SerializeField] MinigameHandler minigameSpawner;
 
     private void Awake()
     {
@@ -42,8 +43,14 @@ public class GameHandler : MonoBehaviour
     public void StartGame()
     {      
         StartStopCountdown(true, true); // Starts and resets timer
-        spawnHandler.GetSpawnData(); // Spawns players
-        minigameHandler.Initialize();
+
+        Debug.Log("FSDFSDF");
+
+        npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
+        npcSpawner.SpawnNPC();
+
+        playerSpawner.GetSpawnData(); // Spawns players
+        minigameSpawner.Initialize();
     }
 
     // Starts or stops the countdown

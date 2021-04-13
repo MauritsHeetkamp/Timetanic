@@ -11,10 +11,127 @@ public class MobilePassenger : Passenger
     [SerializeField] float checkFollowDelay = 0.5f; // Delay between location checks
     Coroutine followRoutine; // The coroutine that updates the npc destination
 
+    [SerializeField] float minimalDistanceFromLastPoint;
+    [SerializeField] float delayBeforeNextCheck;
+    [SerializeField] float distanceBeforeNewPoint;
+    [SerializeField] float runAroundDistanceFromOrigin;
+    [SerializeField] string[] scaredAnimations;
+    [SerializeField] string lookLeftString, lookRightString;
+    [SerializeField] float minLookDelay, maxLookDelay;
+    [SerializeField] string runString;
+
+
+    Coroutine currentBehaviourRoutine;
+
     // Start is called before the first frame update
     void Start()
     {
+        SetState(AIState.IdleScared);
+        SetRandomIdleState();
         navmeshAgent.speed = movementSpeed;
+    }
+
+    public override void Init()
+    {
+        base.Init();
+    }
+
+    public override void SetState(AIState state)
+    {
+        if (state != currentState)
+        {
+            currentState = state;
+
+            if(currentBehaviourRoutine != null)
+            {
+                StopCoroutine(currentBehaviourRoutine);
+            }
+
+            switch (state)
+            {
+                case AIState.Idle:
+                    navmeshAgent.isStopped = true;
+                    animator.SetBool(runString, false);
+                    break;
+
+                case AIState.IdleScared:
+                    navmeshAgent.isStopped = true;
+                    animator.SetBool(runString, false);
+                    currentBehaviourRoutine = StartCoroutine(ScaredBehaviourRoutine());
+                    break;
+
+                case AIState.RunningAround:
+                    navmeshAgent.isStopped = false;
+                    animator.SetBool(runString, true);
+                    currentBehaviourRoutine = StartCoroutine(RunAround());
+                    break;
+
+                case AIState.Following:
+                    navmeshAgent.isStopped = false;
+                    animator.SetBool(runString, true);
+                    break;
+            }
+        }
+    }
+
+    IEnumerator RunAround()
+    {
+        Vector3 origin = transform.position;
+
+        Vector3 targetLocation = new Vector3(origin.x + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin), origin.y, origin.z + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin));
+        Vector3 lastLocation = targetLocation;
+
+        while (true)
+        {
+            if(Vector3.Distance(transform.position, targetLocation) <= distanceBeforeNewPoint)
+            {
+                lastLocation = targetLocation;
+                targetLocation = new Vector3(origin.x + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin), origin.y, origin.z + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin));
+
+                while (minimalDistanceFromLastPoint != 0 && Vector3.Distance(lastLocation, targetLocation) < minimalDistanceFromLastPoint)
+                {
+                    targetLocation = new Vector3(origin.x + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin), origin.y, origin.z + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin));
+                    yield return null;
+                }
+            }
+
+            Debug.Log(targetLocation);
+
+            navmeshAgent.SetDestination(targetLocation);
+
+            yield return new WaitForSeconds(delayBeforeNextCheck);
+        }
+    }
+
+    IEnumerator ScaredBehaviourRoutine()
+    {
+        animator.SetBool(scaredAnimations[Random.Range(0, scaredAnimations.Length)], true);
+
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(minLookDelay, maxLookDelay));
+
+            switch(Random.Range(0, 4))
+            {
+                case 0:
+                    animator.SetTrigger(lookLeftString);
+                    break;
+
+                case 1:
+                    animator.SetTrigger(lookRightString);
+                    break;
+
+                case 2:
+                    animator.SetTrigger(lookLeftString);
+                    animator.SetTrigger(lookRightString);
+                    break;
+
+                case 3:
+                    animator.SetTrigger(lookRightString);
+                    animator.SetTrigger(lookLeftString);
+                    break;
+            }
+        }
     }
 
     public override void Disable(bool disable)
@@ -35,6 +152,8 @@ public class MobilePassenger : Passenger
             }
 
             navmeshAgent.enabled = false;
+
+            SetState(AIState.Idle);
         }
         else
         {
@@ -55,6 +174,7 @@ public class MobilePassenger : Passenger
     {
         if(disables <= 0)
         {
+            SetState(AIState.Following);
             ownerPlayer = target; // Sets its target
             ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
             followRoutine = StartCoroutine(FollowTarget());
@@ -72,6 +192,8 @@ public class MobilePassenger : Passenger
             StopCoroutine(followRoutine);
             followRoutine = null;
         }
+
+        SetRandomIdleState();
     }
 
     // Keeps the npc updated on where to go
@@ -84,10 +206,12 @@ public class MobilePassenger : Passenger
             navmeshAgent.SetDestination(ownerPlayer.transform.position); // Set location to target
             if(Vector3.Distance(transform.position, ownerPlayer.transform.position) < followDistance) // Check if the npc is close enough
             {
+                SetState(AIState.Idle);
                 navmeshAgent.isStopped = true;
             }
             else
             {
+                SetState(AIState.Following);
                 navmeshAgent.isStopped = false;
             }
         }
