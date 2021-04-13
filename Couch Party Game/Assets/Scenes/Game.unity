@@ -8041,7 +8041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.13000488, y: 0.17000008}
+  m_AnchoredPosition: {x: -0.13000488, y: 0.17001343}
   m_SizeDelta: {x: -9.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &372414666
@@ -17862,7 +17862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.36999512, y: 0.17000008}
+  m_AnchoredPosition: {x: 0.36999512, y: 0.17001343}
   m_SizeDelta: {x: -8.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &777505231
@@ -24476,7 +24476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.13000488, y: 0.17000008}
+  m_AnchoredPosition: {x: -0.13000488, y: 0.17001343}
   m_SizeDelta: {x: -9.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1076827497
@@ -25277,7 +25277,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.36999512, y: 0.17000008}
+  m_AnchoredPosition: {x: 0.36999512, y: 0.17001343}
   m_SizeDelta: {x: -8.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1118935781
@@ -32502,9 +32502,9 @@ MonoBehaviour:
   scoreName: 'Score: '
   scoreText: {fileID: 709965639}
   score: 0
-  npcSpawner: {fileID: 1622462769}
-  playerSpawner: {fileID: 733831983}
-  minigameSpawner: {fileID: 905036904}
+  npcSpawner: {fileID: 0}
+  playerSpawner: {fileID: 0}
+  minigameSpawner: {fileID: 0}
 --- !u!4 &1366242598
 Transform:
   m_ObjectHideFlags: 0
@@ -37998,84 +37998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac30dbdc01c0bb4d80aeb4c726d456c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCPrefabs:
-  - {fileID: 7780044543371026460, guid: e36532fa7beb76e4db723e8a884f794d, type: 3}
+  NPCPrefabs: []
   minNPC: 20
   maxNPC: 30
-  allSpawnLocations:
-  - {fileID: 606073135}
-  - {fileID: 1600900989}
-  - {fileID: 1308343869}
-  - {fileID: 1516188037}
-  - {fileID: 1498380506}
-  - {fileID: 1286989577}
-  - {fileID: 1596929524}
-  - {fileID: 1052793718}
-  - {fileID: 1494254225}
-  - {fileID: 1849982532}
-  - {fileID: 1124402153}
-  - {fileID: 4312155}
-  - {fileID: 78812241}
-  - {fileID: 397908267}
-  - {fileID: 1209537650}
-  - {fileID: 1700833695}
-  - {fileID: 1266263465}
-  - {fileID: 236496420}
-  - {fileID: 1549073078}
-  - {fileID: 491534164}
-  - {fileID: 1500541232}
-  - {fileID: 1904633049}
-  - {fileID: 114120861}
-  - {fileID: 188025684}
-  - {fileID: 2145194423}
-  - {fileID: 885129621}
-  - {fileID: 1415017626}
-  - {fileID: 1017300593}
-  - {fileID: 1177712261}
-  - {fileID: 100087325}
-  - {fileID: 1739580718}
-  - {fileID: 248974082}
-  - {fileID: 1217284982}
-  - {fileID: 2141661353}
-  - {fileID: 1535042881}
-  - {fileID: 253739270}
-  - {fileID: 1796713919}
-  - {fileID: 1269035833}
-  - {fileID: 1127161126}
-  - {fileID: 1363880918}
-  - {fileID: 1212213827}
-  - {fileID: 1226535766}
-  - {fileID: 1154512823}
-  - {fileID: 196420128}
-  - {fileID: 932483257}
-  - {fileID: 959066076}
-  - {fileID: 1843176338}
-  - {fileID: 100854983}
-  - {fileID: 1273081286}
-  - {fileID: 1916018369}
-  - {fileID: 67394915}
-  - {fileID: 1184600432}
-  - {fileID: 198170214}
-  - {fileID: 1964446654}
-  - {fileID: 1981863620}
-  - {fileID: 931413799}
-  - {fileID: 290220543}
-  - {fileID: 1472680188}
-  - {fileID: 4035735}
-  - {fileID: 1429758217}
-  - {fileID: 1458710203}
-  - {fileID: 1332992085}
-  - {fileID: 1296624936}
-  - {fileID: 466159135}
-  - {fileID: 1176527835}
-  - {fileID: 1726459618}
-  - {fileID: 293340470}
-  - {fileID: 1992239444}
-  - {fileID: 759672371}
-  - {fileID: 473018780}
-  - {fileID: 267215678}
-  - {fileID: 1245265472}
-  - {fileID: 653758224}
+  allSpawnLocations: []
   spawnAroundLocation: 0
   spawnOffset: 1
 --- !u!4 &1622462770
@@ -38199,7 +38125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.13000488, y: 0.17000008}
+  m_AnchoredPosition: {x: -0.13000488, y: 0.17001343}
   m_SizeDelta: {x: -9.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1625533778
@@ -41547,7 +41473,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1840023598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44323,7 +44249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.36999512, y: 0.17000008}
+  m_AnchoredPosition: {x: 0.36999512, y: 0.17001343}
   m_SizeDelta: {x: -8.10437, y: -7.939209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922672701
@@ -44637,6 +44563,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1933344417}
+  - component: {fileID: 1933344418}
   m_Layer: 5
   m_Name: EndResults
   m_TagString: Untagged
@@ -44661,9 +44588,30 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0012817383, y: 0}
+  m_AnchoredPosition: {x: -0.0012207031, y: 0}
   m_SizeDelta: {x: -0.0026855469, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1933344418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933344416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dd8ac6fe267414fb848d3e93e378dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxCountDuration: 3
+  maxCountDelay: 0.2
+  delayBetweenCounts: 0.15
+  scorePerPassenger: 1
+  remainingTimeMultiplier: 1
+  timeLeftText: {fileID: 1625533778}
+  passengersSavedText: {fileID: 1076827497}
+  passengersDiedText: {fileID: 372414666}
+  totalScoreText: {fileID: 367517561}
 --- !u!198 &1937514239 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5399284611124662347, guid: 650f29c03e4d606428092a8626846f07,

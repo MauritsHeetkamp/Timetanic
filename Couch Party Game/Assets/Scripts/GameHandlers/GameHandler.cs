@@ -44,8 +44,6 @@ public class GameHandler : MonoBehaviour
     {      
         StartStopCountdown(true, true); // Starts and resets timer
 
-        Debug.Log("FSDFSDF");
-
         npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
         npcSpawner.SpawnNPC();
 
