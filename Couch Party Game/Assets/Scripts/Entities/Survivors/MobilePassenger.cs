@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class MobilePassenger : Passenger
 {
+    bool init = true;
+
     [SerializeField] bool followOnTrigger;
     [SerializeField] float followDistance; // How far away the npc should stay from the player
     public NavMeshAgent navmeshAgent;
@@ -26,9 +28,13 @@ public class MobilePassenger : Passenger
     // Start is called before the first frame update
     void Start()
     {
-        SetState(AIState.IdleScared);
-        SetRandomIdleState();
         navmeshAgent.speed = movementSpeed;
+
+        if (init)
+        {
+            init = false;
+            SetState(AIState.IdleScared);
+        }
     }
 
     public override void Init()
@@ -38,6 +44,11 @@ public class MobilePassenger : Passenger
 
     public override void SetState(AIState state)
     {
+        if (init)
+        {
+            init = false;
+        }
+
         if (state != currentState)
         {
             currentState = state;

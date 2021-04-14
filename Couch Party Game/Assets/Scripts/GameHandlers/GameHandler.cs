@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
+
     [Header("CountdownTimer")]
     bool almostFinished; // Is the time almost over?
     [SerializeField] CountdownTimer gameTime; // the timer
@@ -21,6 +22,8 @@ public class GameHandler : MonoBehaviour
 
 
     [Header("Score")]
+    [SerializeField] GameObject resultsMenu;
+    [SerializeField] ResultsMenu resultsMenuScript;
     [SerializeField] string scoreName = "Score: ";
     [SerializeField] TextMeshProUGUI scoreText;
     public int score;
@@ -47,7 +50,6 @@ public class GameHandler : MonoBehaviour
         npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
         npcSpawner.SpawnNPC();
 
-        playerSpawner.GetSpawnData(); // Spawns players
         minigameSpawner.Initialize();
     }
 
@@ -69,37 +71,6 @@ public class GameHandler : MonoBehaviour
             countdownRoutine = StartCoroutine(gameTime.Countdown()); // Starts countdown
         }
     }
-
-    /* Old timer (shows actual time)
-    // Updates the timer ui
-    public void UpdateTimer()
-    {
-        string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString() : gameTime.remainingSeconds.ToString(); // Gets the seconds string
-        gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
-
-        if (almostFinished)
-        {
-            if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
-            {
-                almostFinished = false;
-                if(textAnimator != null && defaultTextAnim != null) // Checks if animations should be stopped
-                {
-                    textAnimator.Play(defaultTextAnim.name);
-                }
-            }
-        }
-        else
-        {
-            if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
-            {
-                almostFinished = true;
-                if(textAnimator != null && almostFinishedTextAnim != null) // Checks if animations should be started
-                {
-                    textAnimator.Play(almostFinishedTextAnim.name);
-                }
-            }
-        }
-    }*/
 
     public void UpdateTimer()
     {
@@ -146,7 +117,15 @@ public class GameHandler : MonoBehaviour
     // Finishes the game
     public void FinishGame()
     {
+        StartStopCountdown(false);
 
+        foreach(Player player in playerSpawner.globalPlayers)
+        {
+            player.Disable(true);
+        }
+
+        resultsMenu.SetActive(true);
+        resultsMenuScript.ShowScore(300, 300, gameTime);
     }
 
     // Modifies the final score

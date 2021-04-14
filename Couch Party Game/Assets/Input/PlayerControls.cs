@@ -434,6 +434,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""AnyButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8146a556-e950-4b31-8d1f-14d0e60c7439"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -755,6 +763,171 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf2dc0fb-82e1-46b0-ad17-4958c225da8e"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bff8c4db-9305-4876-839c-4961d35faabb"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9093ccfc-4271-4c02-b6b7-b49af76b9d98"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3ca36db-bb8f-453d-8073-851ce4cbcdb8"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb55381d-609b-42be-9d86-793b1023d590"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02edc39c-4c85-47f3-9737-602745819207"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6e2126a-ad4f-4e54-989e-9d7227a4c780"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a66ab92-815c-4fe6-91bd-4c251ba54920"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c300e0fb-141d-4237-9471-c417ab0ba1d3"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bc8c5608-0fa3-4d87-91f7-f3cbd21c4e10"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fcac922-b2ec-4b78-a4ba-421fdcdf26fd"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff46803a-17e9-43cb-9777-b311ac197b8c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a63cb872-fe91-4d2f-8b46-0f0368f96989"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""29586641-09ee-484c-958a-a4b2f34c3030"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a59cff3-0c90-4bdb-b3ad-62ab4a14b0e0"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -806,6 +979,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_UI_Menu = m_UI.FindAction("Menu", throwIfNotFound: true);
         m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
         m_UI_Scroll = m_UI.FindAction("Scroll", throwIfNotFound: true);
+        m_UI_AnyButton = m_UI.FindAction("AnyButton", throwIfNotFound: true);
         // Default
         m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
         m_Default_Newaction = m_Default.FindAction("New action", throwIfNotFound: true);
@@ -960,6 +1134,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_UI_Menu;
     private readonly InputAction m_UI_Select;
     private readonly InputAction m_UI_Scroll;
+    private readonly InputAction m_UI_AnyButton;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -969,6 +1144,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @Menu => m_Wrapper.m_UI_Menu;
         public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputAction @Scroll => m_Wrapper.m_UI_Scroll;
+        public InputAction @AnyButton => m_Wrapper.m_UI_AnyButton;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -993,6 +1169,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Scroll.started -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
                 @Scroll.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
                 @Scroll.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnScroll;
+                @AnyButton.started -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyButton;
+                @AnyButton.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyButton;
+                @AnyButton.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnAnyButton;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1012,6 +1191,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Scroll.started += instance.OnScroll;
                 @Scroll.performed += instance.OnScroll;
                 @Scroll.canceled += instance.OnScroll;
+                @AnyButton.started += instance.OnAnyButton;
+                @AnyButton.performed += instance.OnAnyButton;
+                @AnyButton.canceled += instance.OnAnyButton;
             }
         }
     }
@@ -1068,6 +1250,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMenu(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnScroll(InputAction.CallbackContext context);
+        void OnAnyButton(InputAction.CallbackContext context);
     }
     public interface IDefaultActions
     {

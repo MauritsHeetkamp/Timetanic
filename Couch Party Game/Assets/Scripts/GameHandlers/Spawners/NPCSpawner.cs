@@ -73,6 +73,7 @@ public class NPCSpawner : MonoBehaviour
 
             Transform selectedSpawn = availableSpawnLocations[Random.Range(0, availableSpawnLocations.Count)];
             GameObject newNPC = Instantiate(NPCPrefabs[Random.Range(0, NPCPrefabs.Length)], selectedSpawn.position, selectedSpawn.rotation);
+            newNPC.GetComponent<Passenger>().SetRandomIdleState();
             newNPC.transform.rotation = Quaternion.LookRotation(new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2)));
             allSpawnedNPCS.Add(newNPC);
 

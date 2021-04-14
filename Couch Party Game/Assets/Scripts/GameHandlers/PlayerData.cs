@@ -34,6 +34,7 @@ public class PlayerData : MonoBehaviour
     public UnityAction<InputAction.CallbackContext, PlayerData> onSelect;
     public UnityAction<InputAction.CallbackContext, PlayerData> onMenuEnd;
     public UnityAction<InputAction.CallbackContext, PlayerData> onScroll;
+    public UnityAction<InputAction.CallbackContext, PlayerData> onAnyInputUI;
 
     private void Awake()
     {
@@ -53,6 +54,14 @@ public class PlayerData : MonoBehaviour
     private void Start()
     {
         canInteract = true;
+    }
+
+    public void AnyButtonPressed(InputAction.CallbackContext context)
+    {
+        if (onAnyInputUI != null)
+        {
+            onAnyInputUI.Invoke(context, this);
+        }
     }
 
     // Sets the player connection state to true
