@@ -488,6 +488,12 @@ MonoBehaviour:
   moveBlocks: 0
   decellerationBlocks: 0
   rotateSpeed: 1000
+  soundSpawnDelay: 0.3
+  walkingSounds:
+  - {fileID: 8300000, guid: a9f13c8f25baf064fad3375a61382d15, type: 3}
+  - {fileID: 8300000, guid: 3f23da8d689ee6843aacc7dbe65be152, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
   jumpVelocity: 300
   canJump: 1
   jumpCheckZone: {fileID: 7425647816289090952}

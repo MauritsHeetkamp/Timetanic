@@ -90,13 +90,14 @@ public class GameHandler : MonoBehaviour
 
         if (almostFinished)
         {
-            if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
+            if (!gameTime.IsEqual(almostFinishedTime) && gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
             {
+                Debug.Log("WAS LOWER M9");
                 almostFinished = false;
 
-                if(onAlmostFinished != null)
+                if (onNotAlmostFinished != null)
                 {
-                    onAlmostFinished.Invoke();
+                    onNotAlmostFinished.Invoke();
                 }
             }
         }
@@ -104,11 +105,12 @@ public class GameHandler : MonoBehaviour
         {
             if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
             {
+                Debug.Log("FINISH IT");
                 almostFinished = true;
 
-                if(onNotAlmostFinished != null)
+                if (onAlmostFinished != null)
                 {
-                    onNotAlmostFinished.Invoke();
+                    onAlmostFinished.Invoke();
                 }
             }
         }
@@ -164,8 +166,9 @@ namespace Custom.Time
         // Countdown routine
         public IEnumerator Countdown()
         {
-            while (remainingMinutes != 0 || remainingSeconds != 0) // Is the time over?
+            while (remainingMinutes > 0 || remainingSeconds > 0) // Is the time over?
             {
+                yield return new WaitForSeconds(UnityEngine.Time.deltaTime);
                 if (remainingSeconds > 0)
                 {
                     remainingSeconds -= UnityEngine.Time.deltaTime * countdownSpeed;
@@ -183,7 +186,6 @@ namespace Custom.Time
                     }
                 }
                 onTimerChanged.Invoke();
-                yield return new WaitForSeconds(UnityEngine.Time.deltaTime);
             }
             onCompleteTimer.Invoke();
         }
@@ -223,7 +225,7 @@ namespace Custom.Time
             }
             else
             {
-                if (time.seconds > remainingSeconds)
+                if (time.minutes == remainingMinutes && time.seconds > remainingSeconds)
                 {
                     return true;
                 }
@@ -241,7 +243,7 @@ namespace Custom.Time
             }
             else
             {
-                if (time.seconds < remainingSeconds)
+                if (time.minutes == remainingMinutes && time.seconds < remainingSeconds)
                 {
                     return true;
                 }
@@ -253,7 +255,7 @@ namespace Custom.Time
         // Checks if a time is equal to the current time
         public bool IsEqual(TimeDuration time)
         {
-            if (time.minutes == remainingMinutes && time.seconds == remainingSeconds)
+            if (time.minutes == remainingMinutes && Mathf.RoundToInt(time.seconds) == Mathf.RoundToInt(remainingSeconds))
             {
                 return true;
             }

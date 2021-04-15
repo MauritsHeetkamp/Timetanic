@@ -25,6 +25,12 @@ public class Player : MovingEntity
     public int decellerationBlocks; //System that blocks decelleration when higher then 0
     [SerializeField] float rotateSpeed = 1;
 
+    float timePassedSinceLastSound = 9999;
+    [SerializeField] float soundSpawnDelay;
+    [SerializeField] AudioClip[] walkingSounds;
+    [SerializeField] float minPitch, maxPitch;
+    int lastWalkingSoundIndex = -1;
+
     [Header("Jumping")]
     [SerializeField] float jumpVelocity = 1;
     [SerializeField] bool canJump = true;
@@ -359,30 +365,82 @@ public class Player : MovingEntity
         }
     }
 
+    public void StepSound()
+    {
+        if(walkingSounds.Length > 0)
+        {
+            List<AudioClip> availableSounds = new List<AudioClip>(walkingSounds);
+            if(lastWalkingSoundIndex >= 0 && walkingSounds.Length > 1)
+            {
+                availableSounds.RemoveAt(lastWalkingSoundIndex);
+            }
+
+            AudioClip selectedSound = availableSounds[Random.Range(0, availableSounds.Count)];
+
+            for(int i = 0; i < walkingSounds.Length; i++)
+            {
+                AudioClip clip = walkingSounds[i];
+                if(clip == selectedSound)
+                {
+                    lastWalkingSoundIndex = i;
+                    break;
+                }
+            }
+
+            if (SoundManager.instance != null)
+            {
+                Destroy(SoundManager.instance.SpawnAudio(selectedSound, false, Random.Range(minPitch, maxPitch)), selectedSound.length);
+            }
+        }
+    }
+
     // Handles player movement
     void Movement()
     {
         if(moveBlocks <= 0 && disables <= 0)
         {
-            if(animator != null)
-            {
-                Vector2 absRawMovement = new Vector2(Mathf.Abs(rawMovement.x), Mathf.Abs(rawMovement.y));
-                animator.SetFloat(movementParam, absRawMovement.x > absRawMovement.y ? absRawMovement.x : absRawMovement.y);
-            }
-
             Vector3 movementAmount = new Vector3(rawMovement.x, 0, rawMovement.y);
 
             if (movementAmount.x != 0 || movementAmount.z != 0) // If not standing still
             {
+                if (animator != null)
+                {
+                    Vector2 absRawMovement = new Vector2(Mathf.Abs(rawMovement.x), Mathf.Abs(rawMovement.y));
+                    animator.SetFloat(movementParam, absRawMovement.x + absRawMovement.y);
+                }
+
+                if(timePassedSinceLastSound >= soundSpawnDelay)
+                {
+                    timePassedSinceLastSound = 0;
+                    StepSound();
+                }
+
+                timePassedSinceLastSound += Time.deltaTime;
                 movementAmount = movementAmount * movementSpeed * Time.fixedDeltaTime;
 
                 transform.Translate(movementAmount, Space.World);
                 Quaternion targetRotation = Quaternion.LookRotation(movementAmount); // Calculates the direction the player should be facing
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.fixedDeltaTime); // Rotates the player towards the target rotation
             }
+            else
+            {
+                if (timePassedSinceLastSound < soundSpawnDelay)
+                {
+                    timePassedSinceLastSound += Time.deltaTime;
+                }
+
+                if (animator != null)
+                {
+                    animator.SetFloat(movementParam, 0);
+                }
+            }
         }
         else
         {
+            if(timePassedSinceLastSound < soundSpawnDelay)
+            {
+                timePassedSinceLastSound += Time.deltaTime;
+            }
             if (animator != null)
             {
                 animator.SetFloat(movementParam, 0);

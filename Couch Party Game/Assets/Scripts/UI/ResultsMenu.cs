@@ -44,17 +44,24 @@ public class ResultsMenu : MonoBehaviour
     [SerializeField] TextMeshProUGUI passengersDiedText;
     [SerializeField] TextMeshProUGUI totalScoreText;
 
-    [SerializeField] TextMeshProUGUI resultGradeText;
+    [SerializeField] Image resultGradeImage;
+    [SerializeField] Vector2 gradeDefaultScale;
     [SerializeField] GameObject passedObject;
     [SerializeField] Image passedImage;
     [SerializeField] Sprite passedSprite, notPassedSprite;
     [SerializeField] Animator passedAnimator;
     [SerializeField] AnimationClip passedAnim;
+    [SerializeField] Sprite defaultGradeSprite;
 
     [SerializeField] GameObject returnTextObject;
 
     [Header("Finalize")]
     [SerializeField] UnityEvent onFinishButtonPressed;
+
+    private void Awake()
+    {
+        gradeDefaultScale = resultGradeImage.rectTransform.sizeDelta;
+    }
 
     private void OnEnable()
     {
@@ -105,7 +112,8 @@ public class ResultsMenu : MonoBehaviour
         passengersSavedText.text = "0";
         passengersDiedText.text = "0";
         totalScoreText.text = "0";
-        resultGradeText.text = "?";
+        resultGradeImage.rectTransform.sizeDelta = gradeDefaultScale;
+        resultGradeImage.sprite = defaultGradeSprite;
 
         passengersSaved = 0;
         passengersDied = 0;
@@ -234,7 +242,8 @@ public class ResultsMenu : MonoBehaviour
                 ScoreRequirements thisResult = possibleResults[i];
                 if(savedPercentage >= thisResult.savedPassengerPercentage)
                 {
-                    resultGradeText.text = thisResult.resultGrade;
+                    resultGradeImage.rectTransform.sizeDelta = thisResult.spriteSize;
+                    resultGradeImage.sprite = thisResult.resultGrade;
                     passedImage.sprite = thisResult.passed ? passedSprite : notPassedSprite;
                     if(passedAnimator != null)
                     {
@@ -462,7 +471,8 @@ public class ResultsMenu : MonoBehaviour
     struct ScoreRequirements
     {
         public float savedPassengerPercentage;
-        public string resultGrade;
+        public Sprite resultGrade;
+        public Vector2 spriteSize;
         public bool passed;
     }
 }
