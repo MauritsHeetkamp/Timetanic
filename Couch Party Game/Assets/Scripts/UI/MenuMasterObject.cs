@@ -15,6 +15,8 @@ public class MenuMasterObject : Menu
 
     [SerializeField] GameObject[] allHolders;
     [SerializeField] GameObject targetMenu;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,10 @@ public class MenuMasterObject : Menu
             {
                 foreach (PlayerData data in PlayerManager.instance.connectedToLobbyPlayers)
                 {
-                    data.SwapInputScheme(newControlScheme);
+                    if(data != null)
+                    {
+                        data.SwapInputScheme(newControlScheme);
+                    }
                 }
             }
         }
@@ -143,7 +148,10 @@ public class MenuMasterObject : Menu
             {
                 if (specificPlayerOnly)
                 {
-                    previousPlayer.SwapInputScheme(previousControlScheme);
+                    if(previousPlayer != null)
+                    {
+                        previousPlayer.SwapInputScheme(previousControlScheme);
+                    }
                 }
                 else
                 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SpawnManager : MonoBehaviour
+public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] GameObject[] allCharacters; // All controllable character prefabs
     [SerializeField] SpawnLocations[] allSpawnLocations; // All spawn locations (role based)

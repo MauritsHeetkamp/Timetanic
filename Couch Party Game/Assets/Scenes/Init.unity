@@ -218,6 +218,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1021714494084748087, guid: 2542de37c3424b64c8780eb4ac0a2eee,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2542de37c3424b64c8780eb4ac0a2eee, type: 3}
 --- !u!1 &913042307
@@ -394,6 +399,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneSwapManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6891712530838273488, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43dcd9492f3194440af1fa65025590f5, type: 3}
 --- !u!114 &1386183177 stripped
@@ -485,7 +495,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerManager
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3197570743478976996, guid: c8af7d187240a5d4785ff403bc18c61b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c8af7d187240a5d4785ff403bc18c61b, type: 3}
 --- !u!1 &1521371042
 GameObject:
@@ -591,6 +602,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SaveSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 4760063037974694775, guid: e4ae780ff48b9d14b95baebb2df24af4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8078194897922891360, guid: e4ae780ff48b9d14b95baebb2df24af4,
         type: 3}

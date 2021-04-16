@@ -68,7 +68,7 @@ public class CameraRelocator : MonoBehaviour
         {
             if (defaultFadeDuration > 0)
             {
-                FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>(); // Finds fade handler
+                IngameFadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>(); // Finds fade handler
 
                 if (fadeManager != null)
                 {

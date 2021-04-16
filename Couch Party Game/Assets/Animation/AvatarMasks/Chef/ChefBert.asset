@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba2e5bbe3c725e04e9d427454d6a23a7, type: 3}
+  m_Name: ChefBert
+  m_EditorClassIdentifier: 
+  lobbyInstance: {fileID: 2905675311483669278, guid: 973dcf65eeffcb54b873ce4c76ead475,
+    type: 3}
+  gameInstance: {fileID: 4064183986407848807, guid: a7d491509153ea747ba16b34698d268f,
+    type: 3}
+  role: 0

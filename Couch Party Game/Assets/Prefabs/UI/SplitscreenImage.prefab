@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 5408014414290309196}
   - component: {fileID: 5635034083820710478}
   - component: {fileID: 498947325496575527}
+  - component: {fileID: 4956967217344808961}
   m_Layer: 5
   m_Name: SplitscreenImage
   m_TagString: Untagged
@@ -163,7 +164,25 @@ MonoBehaviour:
   owner: {fileID: 0}
   splitscreenRenderImage: {fileID: 5635034083820710478}
   taskUI: {fileID: 11104571446245593}
+  fadeManager: {fileID: 4956967217344808961}
   taskHolder: {fileID: 5800778234301230254}
+--- !u!114 &4956967217344808961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3265207828309938022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8e522b05476b9c46a17f49283b67c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetParent: {fileID: 389716733448633426}
+  fadePanel: {fileID: 7599835798424248014, guid: ba7d688f267681d44aa25a7312ff8036,
+    type: 3}
+  defaultFadeDuration: 1
+  permanentFadePanels: []
 --- !u!1 &5612433950893548244
 GameObject:
   m_ObjectHideFlags: 0

@@ -2541,9 +2541,14 @@ GameObject:
   m_Component:
   - component: {fileID: 6968077864267217574}
   - component: {fileID: 1252322285913596734}
-  m_Layer: 0
+  - component: {fileID: 3780482917795627821}
+  - component: {fileID: -5792685251431310758}
+  - component: {fileID: -7405092244722150980}
+  - component: {fileID: 310151305050374320}
+  - component: {fileID: 3879468390142750831}
+  m_Layer: 13
   m_Name: SkinnyBerty
-  m_TagString: Untagged
+  m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2574,7 +2579,7 @@ Animator:
   m_GameObject: {fileID: 7780044543371026460}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5169073d895b8b643b271c205996d03e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 559a21749daeb2a4f96ad38c2819e074, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2583,6 +2588,110 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3780482917795627821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780044543371026460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 927020980a05f6043b435b91a4a87d26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  invulnerable: 0
+  defaultInvulnerabilityDuration: 0
+  disables: 0
+  thisRigid: {fileID: -7405092244722150980}
+  animator: {fileID: 1252322285913596734}
+  electrifiedParticles: {fileID: 0}
+  shockAnimation: 
+  movementSpeed: 5
+  ownerPlayer: {fileID: 0}
+  currentState: 3
+  followOnTrigger: 1
+  followDistance: 3
+  navmeshAgent: {fileID: -5792685251431310758}
+  checkFollowDelay: 0.1
+  minimalDistanceFromLastPoint: 0
+  delayBeforeNextCheck: 0.1
+  distanceBeforeNewPoint: 1
+  runAroundDistanceFromOrigin: 3
+  scaredAnimations:
+  - Crouching
+  - Bowing
+  lookLeftString: LookLeft
+  lookRightString: LookRight
+  minLookDelay: 3
+  maxLookDelay: 6
+  runString: Running
+--- !u!195 &-5792685251431310758
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780044543371026460}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 300
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.64
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!54 &-7405092244722150980
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780044543371026460}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &310151305050374320
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780044543371026460}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.02
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &3879468390142750831
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7780044543371026460}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.27
+  m_Height: 1.6131014
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.80344933, z: 0}
 --- !u!1 &7786863689169651446
 GameObject:
   m_ObjectHideFlags: 0

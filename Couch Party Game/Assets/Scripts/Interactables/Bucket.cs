@@ -16,6 +16,8 @@ public class Bucket : Extuingisher
     [SerializeField] LayerMask fillWaterCollisionCheckLayer;
     [SerializeField] LayerMask dropWaterCollisionCheckLayer;
 
+    [SerializeField] AudioClip fillSFX;
+
     [SerializeField] float filledAmount;
     [SerializeField] float capacity;
     public override bool CheckUse()
@@ -98,6 +100,8 @@ public class Bucket : Extuingisher
 
         }
 
+        GameObject fillAudio = null;
+
         while(timePassed < fillAnimation.length)
         {
             yield return null;
@@ -110,6 +114,11 @@ public class Bucket : Extuingisher
 
             if (removeableWater != null)
             {
+                if(fillAudio == null && SoundManager.instance != null)
+                {
+                    fillAudio = SoundManager.instance.SpawnAudio(fillSFX, false);
+                }
+
                 float progress = timePassed / fillAnimation.length;
 
                 Vector3 modifier = filledScale - emptyScale;
@@ -125,6 +134,11 @@ public class Bucket : Extuingisher
                 bucketFiller.localPosition = Vector3.MoveTowards(bucketFiller.localPosition, targetLocation, fillSpeed);
                 bucketFiller.localScale = Vector3.MoveTowards(bucketFiller.localScale, targetScale, fillSpeed);
             }
+        }
+
+        if(fillAudio != null)
+        {
+            Destroy(fillAudio);
         }
 
         if (removeableWater != null)

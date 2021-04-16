@@ -6,6 +6,11 @@ using UnityEngine.Events;
 
 public class PlayerData : MonoBehaviour
 {
+    public static bool disableFirstFrameInteract;
+    bool canInteract = true;
+    public PlayerCharacterData preferredPlayer;
+
+
     public bool isConnected = true;
     public PlayerInput playerInput; // Connected input scheme
 
@@ -29,24 +34,40 @@ public class PlayerData : MonoBehaviour
     public UnityAction<InputAction.CallbackContext, PlayerData> onSelect;
     public UnityAction<InputAction.CallbackContext, PlayerData> onMenuEnd;
     public UnityAction<InputAction.CallbackContext, PlayerData> onScroll;
+    public UnityAction<InputAction.CallbackContext, PlayerData> onAnyInputUI;
 
-    void Awake()
+    private void Awake()
     {
+        if(disableFirstFrameInteract)
+        {
+            canInteract = false;
+        }
+
         DontDestroyOnLoad(this); // Prevents object from being destroyed when swapping scenes
-        if(playerInput == null)
+        Debug.Log("Started");
+        if (playerInput == null)
         {
             Debug.LogError("No PlayerInput found");
         }
-        else
+    }
+
+    private void Start()
+    {
+        canInteract = true;
+    }
+
+    public void AnyButtonPressed(InputAction.CallbackContext context)
+    {
+        if (onAnyInputUI != null)
         {
-            playerInput.onDeviceLost += SetConnectionFalse;
-            playerInput.onDeviceRegained += SetConnectionTrue;
+            onAnyInputUI.Invoke(context, this);
         }
     }
 
     // Sets the player connection state to true
-    void SetConnectionTrue(PlayerInput input)
+    public void SetConnectionTrue(PlayerInput input)
     {
+        Debug.Log("DEVICE FOUND");
         isConnected = true;
         if(onPlayerReconnect != null)
         {
@@ -55,8 +76,9 @@ public class PlayerData : MonoBehaviour
     }
 
     // Sets the player connection state to false
-    void SetConnectionFalse(PlayerInput input)
+    public void SetConnectionFalse(PlayerInput input)
     {
+        Debug.Log("DEVICE REMOVED");
         isConnected = false;
         if(onPlayerDisconnect != null)
         {
@@ -74,7 +96,7 @@ public class PlayerData : MonoBehaviour
     // Called when the scroll button is used
     public void OnScrolled(InputAction.CallbackContext context)
     {
-        if (onScroll != null)
+        if (onScroll != null && canInteract)
         {
             onScroll.Invoke(context, this);
         }
@@ -83,7 +105,7 @@ public class PlayerData : MonoBehaviour
     // Called when the movement button is used
     public void OnMove(InputAction.CallbackContext context)
     {
-        if(onMove != null)
+        if(onMove != null && canInteract)
         {
             onMove.Invoke(context, this);
         }
@@ -92,7 +114,7 @@ public class PlayerData : MonoBehaviour
     // Called when the dash button is used
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (onDash != null)
+        if (onDash != null && canInteract)
         {
             onDash.Invoke(context, this);
         }
@@ -101,7 +123,7 @@ public class PlayerData : MonoBehaviour
     // Called when the drop button is used
     public void OnDrop(InputAction.CallbackContext context)
     {
-        if (onDrop != null)
+        if (onDrop != null && canInteract)
         {
             onDrop.Invoke(context, this);
         }
@@ -110,7 +132,7 @@ public class PlayerData : MonoBehaviour
     // Called when the throw button is used
     public void OnThrow(InputAction.CallbackContext context)
     {
-        if (onThrow != null)
+        if (onThrow != null && canInteract)
         {
             onThrow.Invoke(context, this);
         }
@@ -119,7 +141,7 @@ public class PlayerData : MonoBehaviour
     // Called when the interact button is used
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (onInteract != null)
+        if (onInteract != null && canInteract)
         {
             onInteract.Invoke(context, this);
         }
@@ -128,7 +150,7 @@ public class PlayerData : MonoBehaviour
     // Called when the use button is used
     public void OnUse(InputAction.CallbackContext context)
     {
-        if (onUse != null)
+        if (onUse != null && canInteract)
         {
             onUse.Invoke(context, this);
         }
@@ -137,7 +159,7 @@ public class PlayerData : MonoBehaviour
     // Called when the jump button is used
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (onJump != null)
+        if (onJump != null && canInteract)
         {
             onJump.Invoke(context, this);
         }
@@ -146,7 +168,7 @@ public class PlayerData : MonoBehaviour
     public void OnTaskMenu(InputAction.CallbackContext context)
     {
         Debug.Log("TASK MENU");
-        if(onTaskMenu != null)
+        if(onTaskMenu != null && canInteract)
         {
             onTaskMenu.Invoke(context, this);
         }
@@ -155,7 +177,7 @@ public class PlayerData : MonoBehaviour
     // Called when the menu button is used
     public void OnMenuStart(InputAction.CallbackContext context)
     {
-        if (onMenuStart != null)
+        if (onMenuStart != null && canInteract)
         {
             onMenuStart.Invoke(context, this);
         }
@@ -164,7 +186,7 @@ public class PlayerData : MonoBehaviour
     // Called when the horizontal button is used
     public void OnHorizontalAxis(InputAction.CallbackContext context)
     {
-        if (onHorizontalAxis != null)
+        if (onHorizontalAxis != null && canInteract)
         {
             onHorizontalAxis.Invoke(context, this);
         }
@@ -173,7 +195,7 @@ public class PlayerData : MonoBehaviour
     // Called when the vertical button is used
     public void OnVerticalAxis(InputAction.CallbackContext context)
     {
-        if (onVerticalAxis != null)
+        if (onVerticalAxis != null && canInteract)
         {
             onVerticalAxis.Invoke(context, this);
         }
@@ -182,7 +204,7 @@ public class PlayerData : MonoBehaviour
     // Called when the select button is used
     public void OnSelect(InputAction.CallbackContext context)
     {
-        if (onSelect != null)
+        if (onSelect != null && canInteract)
         {
             onSelect.Invoke(context, this);
         }
@@ -191,7 +213,7 @@ public class PlayerData : MonoBehaviour
     // Called when the menu button is used
     public void OnMenuEnd(InputAction.CallbackContext context)
     {
-        if (onMenuEnd != null)
+        if (onMenuEnd != null && canInteract)
         {
             onMenuEnd.Invoke(context, this);
         }

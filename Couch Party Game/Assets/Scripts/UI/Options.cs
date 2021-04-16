@@ -20,6 +20,7 @@ public class Options : MonoBehaviour
 
     [Header("Resolution")]
     [SerializeField] UIDropdown resolutionSettings;
+    public UnityAction onResolutionChanged;
 
     [Header("Refresh Rate")]
     [SerializeField] UIDropdown refreshRateSettings;
@@ -97,15 +98,32 @@ public class Options : MonoBehaviour
         if (resolutionSettings != null)
         {
             List<DropdownData> data = new List<DropdownData>();
+            List<Resolution> addedResolutions = new List<Resolution>();
 
             for (int i = 0; i < Screen.resolutions.Length; i++)
             {
                 Resolution resolution = Screen.resolutions[i];
-                data.Add(new DropdownData(resolution.width + " x " + resolution.height, () => SetResolution(resolution)));
+                bool alreadyContains = false;
 
-                if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
+                foreach(Resolution res in addedResolutions)
                 {
-                    resolutionSettings.selected = i;
+                    if(resolution.width == res.width || resolution.height == res.height)
+                    {
+                        alreadyContains = true;
+                        break;
+                    }
+                }
+
+
+                if (!alreadyContains)
+                {
+                    addedResolutions.Add(resolution);
+                    data.Add(new DropdownData(resolution.width + " x " + resolution.height, () => SetResolution(resolution)));
+
+                    if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
+                    {
+                        resolutionSettings.selected = data.Count - 1;
+                    }
                 }
             }
 
@@ -191,6 +209,11 @@ public class Options : MonoBehaviour
         PlayerPrefs.SetInt("ResolutionWidth", resolution.width);
         PlayerPrefs.SetInt("ResolutionHeight", resolution.height);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        if(onResolutionChanged != null)
+        {
+            onResolutionChanged.Invoke();
+        }
     }
 
     // Sets the quality level

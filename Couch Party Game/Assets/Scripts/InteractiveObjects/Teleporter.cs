@@ -18,6 +18,9 @@ public class Teleporter : MonoBehaviour
 
     [SerializeField] CameraRelocator cameraRelocator;
 
+    [SerializeField] AudioClip teleportSFX;
+
+
     // Performs teleport
     void PerformTeleport(GameObject targetToTeleport)
     {
@@ -32,6 +35,11 @@ public class Teleporter : MonoBehaviour
 
         if (player != null) // Is the target a player?
         {
+            if(SoundManager.instance != null)
+            {
+                Destroy(SoundManager.instance.SpawnAudio(teleportSFX, false), teleportSFX.length);
+            }
+
             foreach(MobilePassenger passenger in player.followingPassengers) // Goes through all the passengers that are following this player
             {
                 if (connectedTeleporter != null) // Does this lead to another teleporter?
@@ -71,7 +79,7 @@ public class Teleporter : MonoBehaviour
             {
                 if(fadeDuration > 0) // Is there a fade required?
                 {
-                    FadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<FadeManager>(); // Finds fade handler
+                    IngameFadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>(); // Finds fade handler
 
                     if (fadeManager != null)
                     {
@@ -91,7 +99,7 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target can be teleported
         {

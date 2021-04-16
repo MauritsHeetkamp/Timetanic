@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(this); // Prevents object from being destroyed when swapping scenes
+        DontDestroyOnLoad(gameObject); // Prevents object from being destroyed when swapping scenes
     }
 
     // Gets called when a new player connected

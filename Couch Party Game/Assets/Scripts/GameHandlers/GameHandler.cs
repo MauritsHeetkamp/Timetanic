@@ -8,22 +8,30 @@ using UnityEngine.UI;
 
 public class GameHandler : MonoBehaviour
 {
+
     [Header("CountdownTimer")]
     bool almostFinished; // Is the time almost over?
     [SerializeField] CountdownTimer gameTime; // the timer
     [SerializeField] TimeDuration almostFinishedTime; // Timestamp when the time is almost over
+
+    [SerializeField] UnityEvent onAlmostFinished, onNotAlmostFinished;
+
     [SerializeField] Slider timeIndicator;
+    [SerializeField] TextMeshProUGUI gameTimeText;
     Coroutine countdownRoutine; // Countdown coroutine
 
 
     [Header("Score")]
+    [SerializeField] GameObject resultsMenu;
+    [SerializeField] ResultsMenu resultsMenuScript;
     [SerializeField] string scoreName = "Score: ";
     [SerializeField] TextMeshProUGUI scoreText;
     public int score;
 
     [Header("Spawning")]
-    [SerializeField] SpawnManager spawnHandler;
-    [SerializeField] MinigameHandler minigameHandler;
+    [SerializeField] NPCSpawner npcSpawner;
+    [SerializeField] PlayerSpawner playerSpawner;
+    [SerializeField] MinigameHandler minigameSpawner;
 
     private void Awake()
     {
@@ -38,8 +46,11 @@ public class GameHandler : MonoBehaviour
     public void StartGame()
     {      
         StartStopCountdown(true, true); // Starts and resets timer
-        spawnHandler.GetSpawnData(); // Spawns players
-        minigameHandler.Initialize();
+
+        npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
+        npcSpawner.SpawnNPC();
+
+        minigameSpawner.Initialize();
     }
 
     // Starts or stops the countdown
@@ -61,60 +72,46 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    /* Old timer (shows actual time)
-    // Updates the timer ui
-    public void UpdateTimer()
-    {
-        string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString() : gameTime.remainingSeconds.ToString(); // Gets the seconds string
-        gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
-
-        if (almostFinished)
-        {
-            if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
-            {
-                almostFinished = false;
-                if(textAnimator != null && defaultTextAnim != null) // Checks if animations should be stopped
-                {
-                    textAnimator.Play(defaultTextAnim.name);
-                }
-            }
-        }
-        else
-        {
-            if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
-            {
-                almostFinished = true;
-                if(textAnimator != null && almostFinishedTextAnim != null) // Checks if animations should be started
-                {
-                    textAnimator.Play(almostFinishedTextAnim.name);
-                }
-            }
-        }
-    }*/
-
     public void UpdateTimer()
     {
         float remainingSeconds = gameTime.GetRemainingSeconds();
         float totalSeconds = gameTime.duration.GetSeconds();
 
-
-        if(timeIndicator != null)
+        if(gameTimeText != null)
         {
-            timeIndicator.value = remainingSeconds / totalSeconds;
+            string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString("F0") : gameTime.remainingSeconds.ToString("F0"); // Gets the seconds string
+            gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
+        }
+
+        if (timeIndicator != null)
+        {
+            timeIndicator.value =  1 - (remainingSeconds / totalSeconds);
         }
 
         if (almostFinished)
         {
-            if (gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
+            if (!gameTime.IsEqual(almostFinishedTime) && gameTime.IsLower(almostFinishedTime)) // Is the almostfinished time lower then the remaining time?
             {
+                Debug.Log("WAS LOWER M9");
                 almostFinished = false;
+
+                if (onNotAlmostFinished != null)
+                {
+                    onNotAlmostFinished.Invoke();
+                }
             }
         }
         else
         {
             if (gameTime.IsHigher(almostFinishedTime) || gameTime.IsEqual(almostFinishedTime)) // Is the almostfinished time higher or equal to the remaining time?
             {
+                Debug.Log("FINISH IT");
                 almostFinished = true;
+
+                if (onAlmostFinished != null)
+                {
+                    onAlmostFinished.Invoke();
+                }
             }
         }
     }
@@ -122,7 +119,15 @@ public class GameHandler : MonoBehaviour
     // Finishes the game
     public void FinishGame()
     {
+        StartStopCountdown(false);
 
+        foreach(Player player in playerSpawner.globalPlayers)
+        {
+            player.Disable(true);
+        }
+
+        resultsMenu.SetActive(true);
+        resultsMenuScript.ShowScore(300, 300, gameTime);
     }
 
     // Modifies the final score
@@ -161,8 +166,9 @@ namespace Custom.Time
         // Countdown routine
         public IEnumerator Countdown()
         {
-            while (remainingMinutes != 0 || remainingSeconds != 0) // Is the time over?
+            while (remainingMinutes > 0 || remainingSeconds > 0) // Is the time over?
             {
+                yield return new WaitForSeconds(UnityEngine.Time.deltaTime);
                 if (remainingSeconds > 0)
                 {
                     remainingSeconds -= UnityEngine.Time.deltaTime * countdownSpeed;
@@ -180,7 +186,6 @@ namespace Custom.Time
                     }
                 }
                 onTimerChanged.Invoke();
-                yield return new WaitForSeconds(UnityEngine.Time.deltaTime);
             }
             onCompleteTimer.Invoke();
         }
@@ -220,7 +225,7 @@ namespace Custom.Time
             }
             else
             {
-                if (time.seconds > remainingSeconds)
+                if (time.minutes == remainingMinutes && time.seconds > remainingSeconds)
                 {
                     return true;
                 }
@@ -238,7 +243,7 @@ namespace Custom.Time
             }
             else
             {
-                if (time.seconds < remainingSeconds)
+                if (time.minutes == remainingMinutes && time.seconds < remainingSeconds)
                 {
                     return true;
                 }
@@ -250,7 +255,7 @@ namespace Custom.Time
         // Checks if a time is equal to the current time
         public bool IsEqual(TimeDuration time)
         {
-            if (time.minutes == remainingMinutes && time.seconds == remainingSeconds)
+            if (time.minutes == remainingMinutes && Mathf.RoundToInt(time.seconds) == Mathf.RoundToInt(remainingSeconds))
             {
                 return true;
             }

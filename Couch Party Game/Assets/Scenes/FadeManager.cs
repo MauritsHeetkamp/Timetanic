@@ -1,74 +1,90 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class FadeManager : MonoBehaviour
 {
+    public Transform targetParent;
+    [SerializeField] GameObject fadePanel; // Fade panel prefab
     [SerializeField] float defaultFadeDuration = 1;
 
-    [SerializeField] bool unfadeOnStart;
-
-    [SerializeField] RectTransform globalPanelHolder; // The object that holds the fade panels
-    [SerializeField] GameObject fadePanel; // Fade panel prefab
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (unfadeOnStart)
-        {
-            FadeOut();
-        }
-    }
+    public List<FadePanel> permanentFadePanels = new List<FadePanel>();
 
     // Fade the screen in and out
-    public FadePanel FadeInOut(float duration = 0, Player specificPlayer = null)
+    public FadePanel FadeInOut(float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        StartCoroutine(FadeInOutRoutine(newPanel, duration, destroyOnFinish, specificPlayer));
 
-        StartCoroutine(FadeInOutRoutine(newPanel, duration, true, specificPlayer));
+        if (!destroyOnFinish)
+        {
+            permanentFadePanels.Add(newPanel);
+        }
 
         return newPanel;
     }
 
     // Fade the screen in and out
-    public FadePanel FadeIn(float duration = 0, Player specificPlayer = null)
+    public FadePanel FadeIn(float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        StartCoroutine(FadeInRoutine(newPanel, duration, destroyOnFinish, specificPlayer));
 
-        StartCoroutine(FadeInRoutine(newPanel, duration, true, specificPlayer));
+        if (!destroyOnFinish)
+        {
+            permanentFadePanels.Add(newPanel);
+        }
 
         return newPanel;
     }
 
     // Fade the screen out
-    public FadePanel FadeOut(float duration = 0, Player specificPlayer = null)
+    public FadePanel FadeOut(float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
     {
         duration = duration > 0 ? duration : defaultFadeDuration; // Is the duration longer then 0?
 
-        Transform targetLocation = specificPlayer != null ? specificPlayer.attachedSplitscreen.transform : globalPanelHolder; // Select which panel should be faded
+        FadePanel newPanel = Instantiate(fadePanel, targetParent).GetComponent<FadePanel>(); // Creates fade panel
 
-        FadePanel newPanel = Instantiate(fadePanel, targetLocation).GetComponent<FadePanel>(); // Creates fade panel
+        StartCoroutine(FadeOutRoutine(newPanel, duration, destroyOnFinish, specificPlayer));
 
-        StartCoroutine(FadeOutRoutine(newPanel, duration, true, specificPlayer));
+        if (!destroyOnFinish)
+        {
+            permanentFadePanels.Add(newPanel);
+        }
 
         return newPanel;
+    }
+
+    public void FadeOut(FadePanel panel, float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
+    {
+        StartCoroutine(FadeOutRoutine(panel, duration, destroyOnFinish, specificPlayer));
+    }
+
+    public void FadeIn(FadePanel panel, float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
+    {
+        StartCoroutine(FadeInRoutine(panel, duration, destroyOnFinish, specificPlayer));
+    }
+
+    public void FadeInOut(FadePanel panel, float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
+    {
+        StartCoroutine(FadeInOutRoutine(panel, duration, destroyOnFinish, specificPlayer));
     }
 
 
     // Fade screen in and out coroutine
     IEnumerator FadeInOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
     {
+        if (duration < 0)
+        {
+            duration = defaultFadeDuration;
+        }
+
         target.fadePanel.raycastTarget = true; // People çan't interact with UI anymore
         Color newColor = target.fadePanel.color; // Creates copy of current panel color
         newColor.a = 0;
@@ -86,11 +102,11 @@ public class FadeManager : MonoBehaviour
             yield return null;
         }
 
-        if(target.onFadedIn != null)
+        if (target.onFadedIn != null)
         {
             target.onFadedIn.Invoke(); // Effect on fade in
         }
-        if(target.onFadedInSpecificPlayer != null && specificPlayer != null)
+        if (target.onFadedInSpecificPlayer != null && specificPlayer != null)
         {
             target.onFadedInSpecificPlayer.Invoke(specificPlayer.gameObject); // Effect on fade in for specific player object
         }
@@ -108,7 +124,7 @@ public class FadeManager : MonoBehaviour
             yield return null;
         }
 
-        if(target.onFadedOut != null)
+        if (target.onFadedOut != null)
         {
             target.onFadedOut.Invoke(); // Effect on fade in
         }
@@ -125,6 +141,11 @@ public class FadeManager : MonoBehaviour
     // Fade screen out coroutine
     IEnumerator FadeOutRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
     {
+        if(duration < 0)
+        {
+            duration = defaultFadeDuration;
+        }
+
         target.fadePanel.raycastTarget = false; // People can interact with ui again
         Color newColor = target.fadePanel.color; // Creates copy of current panel color
         newColor.a = 1;
@@ -161,6 +182,11 @@ public class FadeManager : MonoBehaviour
     // Fade screen in coroutine
     IEnumerator FadeInRoutine(FadePanel target, float duration, bool destroyOnComplete = true, Player specificPlayer = null)
     {
+        if (duration < 0)
+        {
+            duration = defaultFadeDuration;
+        }
+
         target.fadePanel.raycastTarget = true; // People çan't interact with UI anymore
         Color newColor = target.fadePanel.color; // Creates copy of current panel color
         newColor.a = 0;
@@ -192,5 +218,4 @@ public class FadeManager : MonoBehaviour
             Destroy(target.gameObject);
         }
     }
-
 }
