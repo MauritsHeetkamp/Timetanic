@@ -492,7 +492,11 @@ public class Player : MovingEntity
             {
                 if (stopOnCollision) // Should the dash stop whenever the player collides
                 {
-                    Knockback(localKnockback);
+                    Vector3 knockbackVelocity = localKnockback.z * transform.forward;
+                    knockbackVelocity += localKnockback.x * transform.right;
+                    knockbackVelocity.y += localKnockback.y;
+
+                    Knockback(knockbackVelocity);
                     screenShake.Shake(knockbackShake);
                     Debug.Log("STUNNED");
                     break;

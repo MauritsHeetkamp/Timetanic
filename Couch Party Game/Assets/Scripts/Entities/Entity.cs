@@ -69,15 +69,12 @@ public class Entity : Damagable
         }
     }
 
-    public virtual void Knockback(Vector3 localKnockbackVelocity)
+    public virtual void Knockback(Vector3 globalKnockbackVelocity)
     {
-        if(knockbackRoutine == null && thisRigid != null && localKnockbackVelocity != Vector3.zero)
+        if(knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
             Disable(true);
-            Vector3 knockbackVelocity = localKnockbackVelocity.z * transform.forward;
-            knockbackVelocity += localKnockbackVelocity.x * transform.right;
-            knockbackVelocity.y += localKnockbackVelocity.y;
-            thisRigid.AddForce(knockbackVelocity);
+            thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());
         }
     }

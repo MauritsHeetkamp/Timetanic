@@ -20,6 +20,9 @@ public class GameHandler : MonoBehaviour
     [SerializeField] TextMeshProUGUI gameTimeText;
     Coroutine countdownRoutine; // Countdown coroutine
 
+    [SerializeField] Animator shipAnimator;
+    [SerializeField] AnimationClip sinkAnim;
+    float playbackSpeed = 1;
 
     [Header("Score")]
     [SerializeField] GameObject resultsMenu;
@@ -39,6 +42,15 @@ public class GameHandler : MonoBehaviour
         {
             scoreText.text = scoreName + score.ToString();
         }
+
+        float timerSeconds = gameTime.duration.GetSeconds();
+
+        if(shipAnimator != null && sinkAnim.length > 0 && timerSeconds > 0)
+        {
+            playbackSpeed = sinkAnim.length / timerSeconds;
+            shipAnimator.speed = playbackSpeed;
+        }
+
         StartGame();
     }
 
@@ -60,6 +72,10 @@ public class GameHandler : MonoBehaviour
         {
             StopCoroutine(countdownRoutine);
             countdownRoutine = null;
+            if (shipAnimator != null)
+            {
+                shipAnimator.speed = 0;
+            }
         }
 
         if (start)
@@ -69,6 +85,10 @@ public class GameHandler : MonoBehaviour
                 gameTime.Reset(); // Resets the timer
             }
             countdownRoutine = StartCoroutine(gameTime.Countdown()); // Starts countdown
+            if (shipAnimator != null)
+            {
+                shipAnimator.Play(sinkAnim.name);
+            }
         }
     }
 
