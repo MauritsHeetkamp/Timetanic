@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 67e4d18ddb815b74faab8a1040c7af59
+=======
 guid: a09a4852ae854224895761eaa4119f0d
+>>>>>>> Development/Maurits
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
