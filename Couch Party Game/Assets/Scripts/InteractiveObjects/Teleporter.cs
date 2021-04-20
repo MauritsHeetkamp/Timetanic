@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    [SerializeField] bool canTeleport = true;
+    public bool canTeleport = true;
     [SerializeField] bool resetCamera; // Reset the camera its location
     [SerializeField] bool teleportOnTrigger;
 
 
-    public Transform target; // Target to teleport to
-    [SerializeField] Teleporter connectedTeleporter; // Teleporter that this is possibly teleporting to
+    public TeleportLocation target; // Target to teleport to
 
     [SerializeField] float fadeDuration = 0.5f; // Fade duration in teleports
 
-    [HideInInspector] public List<GameObject> attachedTargets; // Targets that should be ignored from teleportation
+    [HideInInspector] public List<GameObject> teleportingTargets; // Targets that should be ignored from teleportation
 
     [SerializeField] CameraRelocator cameraRelocator;
 
@@ -24,14 +23,9 @@ public class Teleporter : MonoBehaviour
     // Performs teleport
     void PerformTeleport(GameObject targetToTeleport)
     {
-        if (connectedTeleporter != null) // Does this lead to another teleporter?
-        {
-            connectedTeleporter.attachedTargets.Add(targetToTeleport); // Make sure the connected teleporter doesn't teleport us back
-        }
-
         Player player = targetToTeleport.GetComponent<Player>();
 
-        targetToTeleport.transform.position = target.position; // Teleports target to target location
+        targetToTeleport.transform.position = target.targetPosition.position; // Teleports target to target location
 
         if (player != null) // Is the target a player?
         {
@@ -42,11 +36,7 @@ public class Teleporter : MonoBehaviour
 
             foreach(MobilePassenger passenger in player.followingPassengers) // Goes through all the passengers that are following this player
             {
-                if (connectedTeleporter != null) // Does this lead to another teleporter?
-                {
-                    connectedTeleporter.attachedTargets.Add(passenger.gameObject); // Make sure the connected teleporter doesn't teleport the npc back
-                }
-                passenger.navmeshAgent.Warp(target.position); // Teleports the npc to the target location
+                passenger.navmeshAgent.Warp(target.targetPosition.position); // Teleports the npc to the target location
                 passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
             }
 
@@ -62,7 +52,7 @@ public class Teleporter : MonoBehaviour
             }
         }
 
-
+        teleportingTargets.Remove(targetToTeleport);
     }
 
     // Teleport target
@@ -71,7 +61,8 @@ public class Teleporter : MonoBehaviour
         Player player = targetToTeleport.GetComponent<Player>();
         if (canTeleport)
         {
-            if(player == null) // Is the target not a player?
+            teleportingTargets.Add(targetToTeleport);
+            if (player == null) // Is the target not a player?
             {
                 PerformTeleport(targetToTeleport);
             }
@@ -101,17 +92,9 @@ public class Teleporter : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (teleportOnTrigger && !attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target can be teleported
+        if (teleportOnTrigger && !other.isTrigger) // Checks if target can be teleported
         {
             Teleport(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (attachedTargets.Contains(other.gameObject) && !other.isTrigger) // Checks if target was attached
-        {
-            attachedTargets.Remove(other.gameObject);
         }
     }
 }

@@ -29,6 +29,30 @@ public class CameraRelocator : MonoBehaviour
         
     }
 
+    public void ChangeCameraNoFade(GameObject target)
+    {
+        Player player = target.GetComponent<Player>();
+
+        if (player != null)
+        {
+            if (newCameraDirection != null)
+            {
+                player.SetCameraRotationXZ(newCameraDirection.eulerAngles, false);
+                player.SetCameraRotationY(newCameraDirection.eulerAngles, false);
+            }
+
+            if (newYDistance != 0)
+            {
+                player.yDistance = newYDistance;
+            }
+
+            if (newZDistance != 0)
+            {
+                player.zDistance = newZDistance;
+            }
+        }
+    }
+
     public void ChangeCameraInstant(GameObject target)
     {
         Player player = target.GetComponent<Player>();

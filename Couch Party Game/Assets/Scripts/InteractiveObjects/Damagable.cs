@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
+    public bool dead;
+
     [SerializeField] int health;
     public int invulnerable;
     [SerializeField] float defaultInvulnerabilityDuration;
@@ -20,6 +22,15 @@ public class Damagable : MonoBehaviour
     public virtual void TakeDamage(int damage, string damagedBy)
     {
 
+    }
+
+    public void ConfirmDeath()
+    {
+        if (!dead)
+        {
+            dead = true;
+            OnDeath();
+        }
     }
 
     // What happens on death

@@ -139,7 +139,6 @@ public class Minigame : MonoBehaviour
                 npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
 
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
-                Debug.Log("RESPAWNED");
                 availableLocations.RemoveAt(selectedSpawn);
             }
         }

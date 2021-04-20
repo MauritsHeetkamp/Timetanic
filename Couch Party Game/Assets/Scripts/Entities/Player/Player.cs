@@ -87,6 +87,10 @@ public class Player : MovingEntity
     [SerializeField] Vector3 localKnockback;
     [SerializeField] ShakeData knockbackShake;
 
+
+    [Header("References")]
+    [HideInInspector] public PlayerSpawner playerSpawner;
+
     // Handles camera following and interaction checks
     private void Update()
     {
@@ -600,7 +604,7 @@ public class Player : MovingEntity
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance; // Calculates how much the camera should be moved upwards
+            float distanceToMoveOnY = 1 * yDistance; // Calculates how much the camera should be moved upwards
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
         playerCameraHolder.transform.position = targetPosition; // Sets camera location
@@ -622,7 +626,7 @@ public class Player : MovingEntity
         }
         if (followY)
         {
-            float distanceToMoveOnY = playerCameraHolder.transform.position.y - transform.position.y <= 0 ? -1 * yDistance : 1 * yDistance;
+            float distanceToMoveOnY = 1 * yDistance;
             targetPosition.y = transform.position.y + distanceToMoveOnY; // Calculates the target location on the y axis
         }
 
@@ -665,6 +669,16 @@ public class Player : MovingEntity
         }
 
         base.SetShock(value);
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+
+        if(playerSpawner != null)
+        {
+            playerSpawner.Respawn(this);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

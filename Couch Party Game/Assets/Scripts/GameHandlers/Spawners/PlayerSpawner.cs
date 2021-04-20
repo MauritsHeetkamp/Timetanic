@@ -6,8 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] GameObject[] allCharacters; // All controllable character prefabs
-    [SerializeField] SpawnLocations[] allSpawnLocations; // All spawn locations (role based)
-    [SerializeField] Transform defaultSpawn; // Default spawn when no other location is available
+    [SerializeField] RoleSpawnLocation[] allRoleSpawnLocations; // All spawn locations (role based)
+    SpawnLocation[] allSpawnLocations;
+    [SerializeField] SpawnLocation defaultSpawn; // Default spawn when no other location is available
     [SerializeField] bool onlyUniqueCharacters = true; // Can people play with the same character skin
 
     public List<Player> localPlayers = new List<Player>();
@@ -16,13 +17,29 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField] CameraHandler cameraHandler; // Instance that handles the cameras for everyone
 
+
+    private void Awake()
+    {
+        List<SpawnLocation> allSpawns = new List<SpawnLocation>();
+
+        foreach(RoleSpawnLocation roleLocation in allRoleSpawnLocations)
+        {
+            foreach(SpawnLocation spawnLocation in roleLocation.locations)
+            {
+                allSpawns.Add(spawnLocation);
+            }
+        }
+
+        allSpawnLocations = allSpawns.ToArray();
+    }
+
     // Gets the spawn data and spawns in the end
     public void GetSpawnData()
     {
         if(allCharacters.Length > 0 && defaultSpawn != null) // Requires at least one character and a default spawn
         {
             List<GameObject> availableCharacters = new List<GameObject>(allCharacters);
-            List<SpawnLocations> availableSpawnLocations = new List<SpawnLocations>(allSpawnLocations);
+            List<RoleSpawnLocation> availableSpawnLocations = new List<RoleSpawnLocation>(allRoleSpawnLocations);
 
             for (int i = 0; i < PlayerManager.instance.connectedToLobbyPlayers.Count; i++) // Goes through all players
             {
@@ -42,11 +59,11 @@ public class PlayerSpawner : MonoBehaviour
 
                 Player.Role characterRole = selectedCharacter.GetComponent<Player>().role;
 
-                foreach(SpawnLocations roleLocation in availableSpawnLocations) // Goes through all spawn locations
+                foreach(RoleSpawnLocation roleLocation in availableSpawnLocations) // Goes through all spawn locations
                 {
                     if(roleLocation.requiredRole == characterRole) // Checks if the player role matches the spawn locations required role
                     {
-                        Transform selectedSpawn = defaultSpawn;
+                        SpawnLocation selectedSpawn = defaultSpawn;
 
                         if (roleLocation.locations.Length > 0)
                         {
@@ -68,28 +85,62 @@ public class PlayerSpawner : MonoBehaviour
         cameraHandler.ResetCamera();
     }
 
+    public void Respawn(Player target)
+    {
+        List<SpawnLocation> safeSpawns = new List<SpawnLocation>(allSpawnLocations);
+
+        for(int i = safeSpawns.Count - 1; i >= 0; i--)
+        {
+            if (!safeSpawns[i].safe)
+            {
+                safeSpawns.RemoveAt(i);
+            }
+        }
+
+        SpawnLocation selectedSpawn = safeSpawns[Random.Range(0, safeSpawns.Count)];
+
+        //Relocation
+
+        target.transform.position = selectedSpawn.location.position;
+        if (selectedSpawn.wantedCameraDirection != null)
+        {
+            selectedSpawn.wantedCameraDirection.ChangeCameraNoFade(target.gameObject);
+        }
+        
+        //target.ResetCameraLocation();
+    }
+
     // Spawns the player instance
-    void ActualSpawn(Transform location, GameObject character, int playerIndex)
+    void ActualSpawn(SpawnLocation location, GameObject character, int playerIndex)
     {
         PlayerData data = PlayerManager.instance.connectedToLobbyPlayers[playerIndex]; // Finds the playerdata from this player
 
-        Player newCharacter = Instantiate(character, location.position, location.rotation).GetComponent<Player>(); // Spawns player and stores player script
+        Player newCharacter = Instantiate(character, location.location.position, location.location.rotation).GetComponent<Player>(); // Spawns player and stores player script
         newCharacter.owner = data;
+        newCharacter.playerSpawner = this;
+
+        if(location.wantedCameraDirection != null)
+        {
+            location.wantedCameraDirection.ChangeCameraInstant(newCharacter.gameObject);
+            newCharacter.ResetCameraLocation();
+        }
+
+
         localPlayers.Add(newCharacter);
         globalPlayers.Add(newCharacter);
     }
 
     [System.Serializable]
-    public class SpawnLocations
+    public class RoleSpawnLocation
     {
         public Player.Role requiredRole;
-        public Transform[] locations;
+        public SpawnLocation[] locations;
 
 
         // Removes location from the available locations
-        public void RemoveLocation(Transform target)
+        public void RemoveLocation(SpawnLocation target)
         {
-            List<Transform> newLocations = new List<Transform>(locations);
+            List<SpawnLocation> newLocations = new List<SpawnLocation>(locations);
             newLocations.Remove(target);
             locations = newLocations.ToArray();
         }
@@ -97,7 +148,7 @@ public class PlayerSpawner : MonoBehaviour
         // Removes location from the available locations
         public void RemoveLocation(int target)
         {
-            List<Transform> newLocations = new List<Transform>(locations);
+            List<SpawnLocation> newLocations = new List<SpawnLocation>(locations);
             newLocations.RemoveAt(target);
             locations = newLocations.ToArray();
         }
