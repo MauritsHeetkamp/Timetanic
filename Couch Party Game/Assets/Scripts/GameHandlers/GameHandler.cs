@@ -29,7 +29,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] ResultsMenu resultsMenuScript;
     [SerializeField] string scoreName = "Score: ";
     [SerializeField] TextMeshProUGUI scoreText;
-    public int score;
+    public int savedPassengers, deadPassengers;
 
     [Header("Spawning")]
     [SerializeField] NPCSpawner npcSpawner;
@@ -150,14 +150,14 @@ public class GameHandler : MonoBehaviour
         resultsMenuScript.ShowScore(300, 300, gameTime);
     }
 
-    // Modifies the final score
-    public void ChangeScore(int value)
+    public void PassengerSaved()
     {
-        score += value;
-        if(scoreText != null)
-        {
-            scoreText.text = scoreName + score.ToString();
-        }
+        savedPassengers++;
+    }
+
+    public void PassengerDied()
+    {
+        deadPassengers++;
     }
 }
 

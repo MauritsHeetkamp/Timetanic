@@ -31,6 +31,13 @@ public class Passenger : MovingEntity
         }
     }
 
+    public override void OnDeath()
+    {
+        GameHandler gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<GameHandler>();
+        gameHandler.PassengerDied();
+        base.OnDeath();
+    }
+
     public enum AIState
     {
         IdleScared,
