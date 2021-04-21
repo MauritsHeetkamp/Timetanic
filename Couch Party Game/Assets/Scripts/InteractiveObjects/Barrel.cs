@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Barrel : MonoBehaviour
 {
-    float defaultColliderY;
     [SerializeField] Vector3 moveAmount;
-    [SerializeField] Transform actualBarrel;
+    [SerializeField] Transform masterObject;
 
     [SerializeField] float speedMultiplier;
     [SerializeField] float knockbackMultiplier;
@@ -15,33 +14,16 @@ public class Barrel : MonoBehaviour
 
     [SerializeField] string[] entityTags;
 
-    [SerializeField] CapsuleCollider collider;
-    [SerializeField] Vector3 offset;
-
-    [Header("Animations")]
-    [SerializeField] Animator barrelAnimator;
-    [SerializeField] float minAnimSpeed, maxAnimSpeed;
-
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-        defaultColliderY = collider.center.y;
-        if(barrelAnimator != null)
-        {
-            barrelAnimator.speed = Random.Range(minAnimSpeed, maxAnimSpeed);
-        }
+        
     }
-
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 newCenter = collider.center;
-        newCenter.y = defaultColliderY + actualBarrel.localPosition.y;
-        newCenter += offset;
-        collider.center = newCenter;
-
-        transform.Translate(moveAmount * Time.fixedDeltaTime * speedMultiplier);
+        masterObject.Translate(moveAmount * Time.fixedDeltaTime * speedMultiplier);
     }
 
 
