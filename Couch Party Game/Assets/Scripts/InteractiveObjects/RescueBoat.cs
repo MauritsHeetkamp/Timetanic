@@ -43,7 +43,7 @@ public class RescueBoat : MonoBehaviour
 
                 if(gameHandler != null)
                 {
-                    gameHandler.PassengerSaved();
+                    gameHandler.ChangeScore(1);
                 }
 
                 break;
