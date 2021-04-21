@@ -32,7 +32,8 @@ public class RescueBoat : MonoBehaviour
                     entity.Seat(true);
                 }
 
-                seat.seatOwner = target;
+                //seat.seatOwner = target;
+
                 target.transform.position = seat.seatLocation.position;
                 target.transform.parent = seat.seatLocation;
 

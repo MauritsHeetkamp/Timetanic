@@ -11,6 +11,7 @@
 		_FoamMultiplier("Foam Multiplier", float) = 1
 		_WaveHeight("Wave Height", Range(0, 20)) = 0.5
 		_DepthMultiplier("Depth Multiplier", float) = 1
+		_DepthBaseMultiplier("Depth Base Multiplier", float) = 0
 		_DepthColor("Depth Color", float) = 0
 		_Smoothness("Smoothness", Range(0, 1)) = 0
     }
@@ -59,6 +60,7 @@
 				float _FoamMultiplier;
 				float _WaterOpacity;
 				float _DepthMultiplier;
+				float _DepthBaseMultiplier;
 				float _DepthColor;
 				float _Smoothness;
 				
@@ -153,6 +155,7 @@
 					float shoreLine = 1 - saturate(_FoamMultiplier * (eyeDepth - IN.screenPos.w));
 					float depthDarkener = saturate(_DepthMultiplier * (eyeDepth - IN.screenPos.w));
 					waterColor += shoreLine;
+					waterColor -= _DepthBaseMultiplier;
 					waterColor -= _DepthColor * depthDarkener;
 
 					float4 reflectionColor = float4(GetReflection(IN.normal, IN.worldPos), 1) * _Smoothness;

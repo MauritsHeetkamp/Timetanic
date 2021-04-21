@@ -206,6 +206,8 @@ public class Options : MonoBehaviour
 
     public void SetResolution(Resolution resolution)
     {
+        Debug.Log("SETRES");
+
         PlayerPrefs.SetInt("ResolutionWidth", resolution.width);
         PlayerPrefs.SetInt("ResolutionHeight", resolution.height);
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);

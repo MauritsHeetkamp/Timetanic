@@ -83,6 +83,18 @@ public class PlayerSpawner : MonoBehaviour
         cameraHandler.InitializeSplitscreenCameras();
         cameraHandler.handleTheCameras = true; // Enables automatic camera handling
         cameraHandler.ResetCamera();
+
+        GameObject screenShakeObject = GameObject.FindGameObjectWithTag("GameManager");
+
+        if(screenShakeObject != null)
+        {
+            ScreenshakeManager screenShaker = screenShakeObject.GetComponentInChildren<ScreenshakeManager>();
+
+            if(screenShaker != null)
+            {
+                screenShaker.Initialize();
+            }
+        }
     }
 
     public void Respawn(Player target)

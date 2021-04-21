@@ -141,13 +141,18 @@ PrefabInstance:
     - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.data[0].clip
       value: 
       objectReference: {fileID: 8300000, guid: f0b4562ae0bca9e4598e24d1d24b99d4, type: 3}
+    - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
+        type: 3}
+      propertyPath: defaultBackgroundMusic.Array.data[0].loop
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.data[1].clip
@@ -221,7 +226,7 @@ PrefabInstance:
     - target: {fileID: 1021714494084748087, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2542de37c3424b64c8780eb4ac0a2eee, type: 3}
