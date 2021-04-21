@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49f30bbf1c94394192c1563340393fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dead: 0
   health: 0
   invulnerable: 0
   defaultInvulnerabilityDuration: 2
@@ -474,10 +475,12 @@ MonoBehaviour:
   animator: {fileID: 1560182755}
   electrifiedParticles: {fileID: 8918154392723722310}
   shockAnimation: Shocked
+  maxStopKnockVelocity: {x: 0.01, y: 0.01, z: 0.01}
   movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player
   role: 1
+  maxFollowingPassengers: 3
   followingPassengers: []
   movementParam: Movement
   jumpParam: Jump
@@ -554,6 +557,7 @@ MonoBehaviour:
     smoothSpeed: 0
     cameraSwayRotations: []
     cameraSwaySpeed: 0
+  playerSpawner: {fileID: 0}
 --- !u!1 &4519774120890984048
 GameObject:
   m_ObjectHideFlags: 0

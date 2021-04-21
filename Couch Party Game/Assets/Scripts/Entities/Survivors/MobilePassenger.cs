@@ -106,8 +106,6 @@ public class MobilePassenger : Passenger
                 }
             }
 
-            Debug.Log(targetLocation);
-
             navmeshAgent.SetDestination(targetLocation);
 
             yield return new WaitForSeconds(delayBeforeNextCheck);
@@ -164,7 +162,7 @@ public class MobilePassenger : Passenger
 
             navmeshAgent.enabled = false;
 
-            SetState(AIState.Idle);
+            SetState(AIState.IdleScared);
         }
         else
         {
@@ -176,7 +174,12 @@ public class MobilePassenger : Passenger
     {
         if(disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
         {
-            FollowTarget(other.GetComponent<Player>());
+            Player player = other.GetComponent<Player>();
+
+            if(player != null && player.followingPassengers.Count < player.maxFollowingPassengers)
+            {
+                FollowTarget(other.GetComponent<Player>());
+            }
         }
     }
 

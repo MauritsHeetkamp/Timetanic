@@ -9,6 +9,17 @@ public class Passenger : MovingEntity
     public AIState currentState;
 
 
+    public override void Knockback(Vector3 globalKnockbackVelocity)
+    {
+        Debug.Log("KNOCKED BACK");
+        if (knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
+        {
+            Disable(true);
+            thisRigid.AddForce(globalKnockbackVelocity);
+            knockbackRoutine = StartCoroutine(CheckStopKnockback());
+        }
+    }
+
     public void SetRandomIdleState()
     {
         switch (Random.Range(0, 2))
@@ -29,6 +40,13 @@ public class Passenger : MovingEntity
         {
             currentState = state;
         }
+    }
+
+    public override void OnDeath()
+    {
+        GameHandler gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<GameHandler>();
+        gameHandler.PassengerDied();
+        base.OnDeath();
     }
 
     public enum AIState

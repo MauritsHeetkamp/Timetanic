@@ -10,6 +10,7 @@ public class Player : MovingEntity
     public PlayerData owner;
     [SerializeField] string characterControlScheme = "Player";
     public Role role; //The role of the player, this is used for where the player needs to be spawned
+    public int maxFollowingPassengers;
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
 
     [Header("Animation")]
@@ -145,6 +146,12 @@ public class Player : MovingEntity
                 owner.onDash += Dash;
                 owner.onInteract += Interact;
             }
+        }
+
+
+        if(currentHoldingItem != null)
+        {
+            ForceDropCurrentItem();
         }
     }
 
@@ -284,8 +291,13 @@ public class Player : MovingEntity
             {
                 return;
             }
-            currentHoldingItem.Disattach();
+            ForceDropCurrentItem();
         }
+    }
+
+    public void ForceDropCurrentItem()
+    {
+        currentHoldingItem.Disattach();
     }
 
     // Handles jumping
