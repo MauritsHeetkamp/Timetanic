@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
-    [SerializeField] SpawnManager spawnHandler;
+    [SerializeField] PlayerSpawner spawnHandler;
     [SerializeField] CameraHandler cameraHandler;
     [SerializeField] GameObject taskPrefab;
     [SerializeField] Transform globalTaskHolder;

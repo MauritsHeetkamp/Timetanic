@@ -135,7 +135,6 @@ public class ObjectShaker : MonoBehaviour
                                 }
                             }
 
-                            Debug.Log(targetEulers + " IS TARGET EULERS");
 
                             transform.localEulerAngles = targetEulers;
 
@@ -212,8 +211,6 @@ public class ObjectShaker : MonoBehaviour
                                 targetEulers.z = 360 + (currentSwayRotation.z % -360);
                             }
                         }
-
-                        Debug.Log(targetEulers + " IS TARGET EULERS");
 
                         transform.localEulerAngles = targetEulers;
 

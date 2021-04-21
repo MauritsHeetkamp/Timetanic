@@ -6,12 +6,14 @@ using TMPro;
 
 public class UISubOptionButton : UISubOption
 {
+    public bool autoInteract = true;
     public Button thisButton;
     public TextMeshProUGUI buttonText;
 
     public override void Interact()
     {
         base.Interact();
+        Debug.Log("ITTEERR");
         thisButton.onClick.Invoke();
     }
 

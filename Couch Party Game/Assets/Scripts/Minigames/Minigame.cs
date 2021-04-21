@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class Minigame : MonoBehaviour
 {
-    [SerializeField] bool startOnStart;
-    [SerializeField] PlayerCounter[] playerCounters;
+    public bool startOnStart;
+    [SerializeField] PlayerCounter[] playerCounters; // Counters that check if enough players are in the room
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
     bool active;
     public bool finished;
@@ -15,15 +15,15 @@ public class Minigame : MonoBehaviour
     [SerializeField] UnityEvent onStarted, onFinished, onReset, onStopped; 
 
     [Header("Tasks")]
-    [SerializeField] TaskData task;
-    [HideInInspector] MinigameHandler owner;
+    [SerializeField] TaskData task; // Task data to show up on the task list
+    [HideInInspector] MinigameHandler owner; // Manager that handles the minigames their data
 
-    List<Task> trackingTasks = new List<Task>();
+    List<Task> trackingTasks = new List<Task>(); // Tasks that this minigame is currently attached to
 
     [Header("NPC Spawn")]
     public GameObject[] npcObjects; // NPC's that can spawn here
     public Transform[] spawnLocations; // Spawn locations for the NPC's
-    public int minSpawns, maxSpawns;
+    public int minSpawns, maxSpawns; // Minimum and maximum NPC spawn amount
     public List<GameObject> trappedNPCS = new List<GameObject>(); // List of all the NPC's that can be rescued
 
 
@@ -139,7 +139,6 @@ public class Minigame : MonoBehaviour
                 npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
 
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
-
                 availableLocations.RemoveAt(selectedSpawn);
             }
         }

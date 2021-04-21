@@ -15,6 +15,14 @@ PrefabInstance:
       propertyPath: jumpVelocity
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 1560182756, guid: a7d491509153ea747ba16b34698d268f, type: 3}
+      propertyPath: soundSpawnDelay
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560182756, guid: a7d491509153ea747ba16b34698d268f, type: 3}
+      propertyPath: walkingSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1560182758, guid: a7d491509153ea747ba16b34698d268f, type: 3}
       propertyPath: m_IsKinematic
       value: 0
@@ -78,6 +86,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DebugSkinnyChef Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431644307147915417, guid: a7d491509153ea747ba16b34698d268f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7425647816289090952, guid: a7d491509153ea747ba16b34698d268f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7d491509153ea747ba16b34698d268f, type: 3}

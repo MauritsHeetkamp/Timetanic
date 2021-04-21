@@ -32,6 +32,12 @@ public class ScreenshakeManager : MonoBehaviour
         }
     }
 
+    public void ShakeAllScreens(ShakeDataScriptableObject shakeDataSO)
+    {
+        ShakeData newShakeData = new ShakeData(shakeDataSO.duration, shakeDataSO.intensity, shakeDataSO.shakeInterval, shakeDataSO.cameraSwayRotations, shakeDataSO.cameraSwaySpeed, shakeDataSO.smoothShake, shakeDataSO.smoothSpeed);
+        ShakeAllScreens(newShakeData);
+    }
+
     public void ShakeAllScreens(ShakeData shakeData)
     {
         if(cameraHandler != null)

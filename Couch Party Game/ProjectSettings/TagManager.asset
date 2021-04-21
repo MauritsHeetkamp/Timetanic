@@ -8,6 +8,7 @@ TagManager:
   - Passenger
   - GlobalFader
   - Water
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Passenger
   - Player
   - PenetratableSurface
-  - 
-  - 
+  - Teleporter
+  - SpawnLocation
   - 
   - 
   - 

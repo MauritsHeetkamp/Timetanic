@@ -46,9 +46,9 @@ public class CustomPathFinder : MonoBehaviour
 
         foreach(Path completedPath in root.completedPaths)
         {
-            if(completedPath.distanceTravelled + Vector3.Distance(completedPath.teleporterToUse.target.position, targetLocation) < defaultDistance)
+            if(completedPath.distanceTravelled + Vector3.Distance(completedPath.teleporterToUse.target.targetPosition.position, targetLocation) < defaultDistance)
             {
-                defaultDistance = completedPath.distanceTravelled + Vector3.Distance(completedPath.teleporterToUse.target.position, targetLocation);
+                defaultDistance = completedPath.distanceTravelled + Vector3.Distance(completedPath.teleporterToUse.target.targetPosition.position, targetLocation);
                 selectedPath = completedPath;
             }
         }

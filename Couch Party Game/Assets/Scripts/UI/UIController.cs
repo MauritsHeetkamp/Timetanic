@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class UIController : MonoBehaviour
 {
     public int currentSelectedOption = -1; // Current option index that has been selected
+
+    [SerializeField] UIOption[] defaultOptions;
+
     [SerializeField] UIOption[] allOptions;
 
     [SerializeField] float recenterThreshold = 0.8f; // Treshold before player can move the selection again
@@ -34,12 +37,41 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void SetScroller(ScrollRect scrollRect)
+    {
+        scroller = scrollRect;
+    }
+
     void Scroll(InputAction.CallbackContext context, PlayerData owner)
     {
         if(scroller != null)
         {
             scrollAmount = context.ReadValue<float>();
         }
+    }
+
+    public void SetOptions(UIOptionsData data)
+    {
+        List<UIOption> newData = new List<UIOption>(defaultOptions);
+
+        if(data != null)
+        {
+            foreach (UIOption optionData in data.options)
+            {
+                newData.Add(optionData);
+            }
+        }
+
+        allOptions = newData.ToArray();
+        foreach (UIOption option in allOptions)
+        {
+            option.ownerController = this; // Initializes option
+        }
+    }
+
+    public void ResetOptions()
+    {
+        allOptions = defaultOptions;
     }
 
     private void OnDisable()
@@ -210,7 +242,7 @@ public class UIController : MonoBehaviour
             option.OnMovedHorizontalStay(lastMoveAmount); // Tells the current option that it moved horizontally
         }
 
-        if(scroller != null)
+        if(scroller != null && scroller.isActiveAndEnabled)
         {
             scroller.verticalNormalizedPosition += scrollAmount * Time.deltaTime * scrollSensitivity;
         }
