@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1854687850779632453}
   - component: {fileID: 425051613784754184}
   - component: {fileID: 8436372611108593499}
+  - component: {fileID: 922336550342162402}
   m_Layer: 0
   m_Name: DeckPipelong
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &922336550342162402
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7891638550027767456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1364748777132667070, guid: 5dcacdabe5a0f9440819ed6ea757e11c, type: 3}

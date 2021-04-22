@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4691867495996603928}
   - component: {fileID: 3747027959800223793}
   - component: {fileID: 1334382782021767742}
+  - component: {fileID: 1237572078569089347}
   m_Layer: 0
   m_Name: ReserveBoat
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1237572078569089347
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653230921584056820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.428028, y: 1.3791339, z: 2.034459}
+  m_Center: {x: -0.3574189, y: 0.6859534, z: -0.01181674}

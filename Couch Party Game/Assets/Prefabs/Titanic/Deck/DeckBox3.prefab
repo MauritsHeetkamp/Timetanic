@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4387289126284650200}
   - component: {fileID: 5440865875701229268}
   - component: {fileID: 878567824004901852}
+  - component: {fileID: 4099973450197620192}
   m_Layer: 0
   m_Name: DeckBox3
   m_TagString: Untagged
@@ -79,3 +80,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4099973450197620192
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995586380263718029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.786852, y: 1.8277688, z: 5.5344334}
+  m_Center: {x: -0.0000010728836, y: 0.9138844, z: 0.00000011920929}
