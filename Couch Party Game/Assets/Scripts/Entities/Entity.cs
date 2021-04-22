@@ -12,7 +12,8 @@ public class Entity : Damagable
     [SerializeField] ParticleSystem electrifiedParticles;
     [SerializeField] string shockAnimation;
 
-    Coroutine knockbackRoutine;
+    public Coroutine knockbackRoutine;
+    [SerializeField] Vector3 maxStopKnockVelocity = new Vector3(0.01f, 0.01f, 0.01f);
 
     // Toggles movement
     public virtual void ToggleMovement()
@@ -69,28 +70,29 @@ public class Entity : Damagable
         }
     }
 
-    public virtual void Knockback(Vector3 localKnockbackVelocity)
+    public virtual void Knockback(Vector3 globalKnockbackVelocity)
     {
-        if(knockbackRoutine == null && thisRigid != null && localKnockbackVelocity != Vector3.zero)
+        if(knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
             Disable(true);
-            Vector3 knockbackVelocity = localKnockbackVelocity.z * transform.forward;
-            knockbackVelocity += localKnockbackVelocity.x * transform.right;
-            knockbackVelocity.y += localKnockbackVelocity.y;
-            thisRigid.AddForce(knockbackVelocity);
+            thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());
         }
     }
 
-    IEnumerator CheckStopKnockback()
+    public IEnumerator CheckStopKnockback()
     {
         while (true)
         {
             yield return null;
-            if (Vector3.Equals(thisRigid.velocity, Vector3.zero))
+            if (thisRigid.velocity.x < maxStopKnockVelocity.x && thisRigid.velocity.y < maxStopKnockVelocity.y && thisRigid.velocity.z < maxStopKnockVelocity.z)
             {
-                Disable(false);
-                break;
+                if(thisRigid.velocity.x > -maxStopKnockVelocity.x && thisRigid.velocity.y > -maxStopKnockVelocity.y && thisRigid.velocity.z > -maxStopKnockVelocity.z)
+                {
+                    Debug.Log("KNOCKED");
+                    Disable(false);
+                    break;
+                }
                 //Player is not moving anymore
             }
         }

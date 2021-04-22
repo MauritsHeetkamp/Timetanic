@@ -10,6 +10,8 @@ public class UIButtonArray : UIOption
     [SerializeField] UISubOptionButton[] buttons;
 
     [SerializeField] bool initializeOnStart;
+    [SerializeField] string hoveredAnimationString;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,18 @@ public class UIButtonArray : UIOption
         foreach(UISubOptionButton button in buttons)
         {
             button.SetInteract(_interactable);
+        }
+    }
+
+    public void ShowSelected(bool show)
+    {
+        foreach(UISubOptionButton button in buttons)
+        {
+            if (button.animator != null)
+            {
+                Debug.Log(show);
+                button.animator.SetBool(hoveredAnimationString, show);
+            }
         }
     }
 
@@ -53,6 +67,12 @@ public class UIButtonArray : UIOption
                 selected.onLeaveHover.Invoke();
             }
 
+            if(selected.onLeaveHoverController != null)
+            {
+                Debug.Log("LEFT");
+                selected.onLeaveHoverController.Invoke();
+            }
+
             if(selected.reset != null)
             {
                 selected.reset.Invoke();
@@ -66,7 +86,15 @@ public class UIButtonArray : UIOption
                 selected.onHover.Invoke();
             }
 
-            selected.Interact();
+            if(selected.onHoverController != null)
+            {
+                selected.onHoverController.Invoke();
+            }
+
+            if (selected.autoInteract)
+            {
+                selected.Interact();
+            }
         }
     }
 
@@ -99,7 +127,10 @@ public class UIButtonArray : UIOption
                         selected.onHover.Invoke();
                     }
 
-                    selected.Interact();
+                    if (selected.autoInteract)
+                    {
+                        selected.Interact();
+                    }
                     break;
                 }
             }

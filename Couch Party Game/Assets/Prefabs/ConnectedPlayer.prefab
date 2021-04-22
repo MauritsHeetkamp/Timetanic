@@ -50,10 +50,32 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -9166431627977747533}
+        m_MethodName: SetConnectionFalse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -9166431627977747533}
+        m_MethodName: SetConnectionTrue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -272,6 +294,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8b9b3f72-169b-4d2b-a31d-1e7f7fba0081
     m_ActionName: Player/TaskMenu[/Keyboard/t,/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9166431627977747533}
+        m_MethodName: AnyButtonPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8146a556-e950-4b31-8d1f-14d0e60c7439
+    m_ActionName: UI/AnyButton[/Keyboard/anyKey,/XInputControllerWindows/leftTrigger,/XInputControllerWindows/leftShoulder,/XInputControllerWindows/rightTrigger,/XInputControllerWindows/rightShoulder,/XInputControllerWindows/dpad/left,/XInputControllerWindows/dpad/down,/XInputControllerWindows/dpad/right,/XInputControllerWindows/dpad/up,/XInputControllerWindows/buttonWest,/XInputControllerWindows/buttonNorth,/XInputControllerWindows/buttonEast,/XInputControllerWindows/buttonSouth,/XInputControllerWindows/select,/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Default
@@ -289,5 +326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba2f0600e8268d48ab4e5c5d5c2be7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preferredPlayer: {fileID: 0}
   isConnected: 1
   playerInput: {fileID: 907963393082735474}

@@ -32,7 +32,8 @@ public class RescueBoat : MonoBehaviour
                     entity.Seat(true);
                 }
 
-                seat.seatOwner = target;
+                //seat.seatOwner = target;
+
                 target.transform.position = seat.seatLocation.position;
                 target.transform.parent = seat.seatLocation;
 
@@ -43,7 +44,7 @@ public class RescueBoat : MonoBehaviour
 
                 if(gameHandler != null)
                 {
-                    gameHandler.ChangeScore(1);
+                    gameHandler.PassengerSaved();
                 }
 
                 break;

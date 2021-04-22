@@ -9,6 +9,7 @@ public class Splitscreen : MonoBehaviour
     public Player owner;
     public RawImage splitscreenRenderImage;
     [SerializeField] GameObject taskUI;
+    public FadeManager fadeManager;
     public Transform taskHolder;
     bool initialized;
 

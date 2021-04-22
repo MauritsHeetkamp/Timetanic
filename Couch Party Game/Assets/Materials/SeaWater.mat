@@ -63,11 +63,12 @@ Material:
     - _BumpScale: 1
     - _CellSize: 5.89
     - _Cutoff: 0.5
+    - _DepthBaseMultiplier: 0.22
     - _DepthColor: 0.34
-    - _DepthMultiplier: 0.19
+    - _DepthMultiplier: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _FoamMultiplier: 1.5
+    - _FoamMultiplier: 9999
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -85,7 +86,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _WaterOpacity: 1
-    - _WaveHeight: 9.87
+    - _WaveHeight: 7.1
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.36903453, b: 0.7075472, a: 1}
