@@ -14,6 +14,9 @@ public class Passenger : MovingEntity
         Debug.Log("KNOCKED BACK");
         if (knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
+            thisRigid.isKinematic = false;
+            thisRigid.useGravity = true;
+
             Disable(true);
             thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());

@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 7aa66edd582f8524eb68c7090b34b93a
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2189086029290062660
+    second: room icons_Kitchen
+  - first:
+      213: -780336391001512611
+    second: room icons_Dining
+  - first:
+      213: 3017622093783108034
+    second: room icons_Machine
+  - first:
+      213: 5353910548662030219
+    second: room icons_Storage
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +52,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -85,7 +97,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: room icons_Kitchen
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 398
+        width: 372
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 443ca963522316e10800000000000000
+      internalID: 2189086029290062660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: room icons_Dining
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 399
+        width: 371
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d556b01df20bb25f0800000000000000
+      internalID: -780336391001512611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: room icons_Machine
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 17
+        width: 371
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c900566e4fb0e920800000000000000
+      internalID: 3017622093783108034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: room icons_Storage
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 16
+        width: 371
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8f873c1749ec4a40800000000000000
+      internalID: 5353910548662030219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
