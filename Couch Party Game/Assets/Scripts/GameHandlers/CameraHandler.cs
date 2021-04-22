@@ -31,14 +31,18 @@ public class CameraHandler : MonoBehaviour
 
     public bool handleTheCameras = true; // Should the cameras be handled automatically?
     bool singlePlayer;
-    IngameFadeManager globalFader; // The fade handler
+    public IngameFadeManager globalFader; // The fade handler
 
     [SerializeField] Options options;
+
+    public GameObject test;
 
     // Start is called before the first frame update
     void Start()
     {
         globalFader = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>();
+        test = GameObject.FindGameObjectWithTag("GlobalFader");
+
 
         targetLocation = globalCamera.position;
     }
@@ -269,6 +273,8 @@ public class CameraHandler : MonoBehaviour
 
             globalCamera.position = instantMove ? targetLocation : Vector3.Lerp(globalCamera.position, targetLocation, zoomSmooth); // Moves instant or smoothly to target
 
+            Debug.Log(targetLocation);
+
             if (instantMove)
             {
                 CheckSplit(true);
@@ -343,7 +349,7 @@ public class CameraHandler : MonoBehaviour
         {
             player.actualCameraTransform.GetComponent<Camera>().enabled = true; // Enables all players their cameras
         }
-        globalCamera.GetComponent<Camera>().enabled = false; // Disables global camera
+        globalCamera.GetComponentInChildren<Camera>().enabled = false; // Disables global camera
     }
 
     // Recalculates the global cameras rotation
@@ -408,7 +414,7 @@ public class CameraHandler : MonoBehaviour
             player.actualCameraTransform.GetComponent<Camera>().enabled = false; // Disables all players their cameras
         }
 
-        globalCamera.GetComponent<Camera>().enabled = true; // Enables global camera
+        globalCamera.GetComponentInChildren<Camera>().enabled = true; // Enables global camera
     }
 
     struct GenericCounter<T>

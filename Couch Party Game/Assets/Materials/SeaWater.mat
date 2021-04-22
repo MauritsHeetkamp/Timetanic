@@ -86,7 +86,7 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _WaterOpacity: 1
-    - _WaveHeight: 7.1
+    - _WaveHeight: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.36903453, b: 0.7075472, a: 1}

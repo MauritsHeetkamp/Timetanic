@@ -16812,6 +16812,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneSwapManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5088925122657819608, guid: 43dcd9492f3194440af1fa65025590f5,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6891712530838273488, guid: 43dcd9492f3194440af1fa65025590f5,
         type: 3}
       propertyPath: m_LocalPosition.z
