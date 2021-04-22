@@ -63,6 +63,7 @@ Material:
     - _BumpScale: 1
     - _CellSize: 5.89
     - _Cutoff: 0.5
+    - _DepthBaseMultiplier: 0.87
     - _DepthColor: 0
     - _DepthMultiplier: 0
     - _DetailNormalMapScale: 1
