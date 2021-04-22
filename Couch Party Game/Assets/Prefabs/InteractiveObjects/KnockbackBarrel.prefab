@@ -57,6 +57,8 @@ MonoBehaviour:
   barrelAnimator: {fileID: 917911056093782891}
   minAnimSpeed: 0.1
   maxAnimSpeed: 1.2
+  destroyParticle: {fileID: 478491665360367903, guid: 93927300b1439ef4185e2707413a1e9f,
+    type: 3}
 --- !u!136 &6735683619833304257
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -67,10 +69,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.46582356
-  m_Height: 0.93164736
+  m_Radius: 0.62822866
+  m_Height: 1.2564578
   m_Direction: 1
-  m_Center: {x: 0.0119616985, y: 0.43854395, z: -0.0017088354}
+  m_Center: {x: 0, y: 0.4385436, z: 0}
 --- !u!1 &8082626748338788870
 GameObject:
   m_ObjectHideFlags: 0

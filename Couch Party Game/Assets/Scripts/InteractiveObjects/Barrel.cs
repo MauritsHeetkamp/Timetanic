@@ -22,6 +22,9 @@ public class Barrel : MonoBehaviour
     [SerializeField] float minAnimSpeed, maxAnimSpeed;
 
 
+    public GameObject destroyParticle;
+    [SerializeField] float particleDuration = 1f;
+
     void Awake()
     {
         defaultColliderY = collider.center.y;
@@ -53,9 +56,19 @@ public class Barrel : MonoBehaviour
                 knockback.y += upwardsModifier;
 
                 collision.transform.GetComponent<Entity>().Knockback(knockback);
+
                 Destroy(gameObject);
                 break;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameObject newPoofParticle = Instantiate(destroyParticle, actualBarrel.position, Quaternion.identity);
+
+        Destroy(newPoofParticle, particleDuration);
+
+        Debug.Log("SPAWNED PARTICLE");
     }
 }

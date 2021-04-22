@@ -6,6 +6,9 @@ public class RescueBoat : MonoBehaviour
 {
     GameHandler gameHandler;
     [SerializeField] Seat[] seats;
+
+    [SerializeField] GameObject poofParticle;
+    [SerializeField] float particleDuration = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +28,12 @@ public class RescueBoat : MonoBehaviour
         {
             if(seat.seatOwner == null)
             {
+                GameObject newSeatPoof = Instantiate(poofParticle, seat.seatLocation.position, Quaternion.identity);
+                GameObject newPlayerPoof = Instantiate(poofParticle, target.transform.position, Quaternion.identity);
+
+                Destroy(newSeatPoof, particleDuration);
+                Destroy(newPlayerPoof, particleDuration);
+
                 Entity entity = target.GetComponent<Entity>();
                 if (entity != null)
                 {

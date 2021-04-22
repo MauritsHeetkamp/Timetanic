@@ -15,6 +15,12 @@ public class Entity : Damagable
     public Coroutine knockbackRoutine;
     [SerializeField] Vector3 maxStopKnockVelocity = new Vector3(0.01f, 0.01f, 0.01f);
 
+
+    public GameObject deathParticle;
+    public float deathParticleDuration = 1;
+
+    [SerializeField] Transform center;
+
     // Toggles movement
     public virtual void ToggleMovement()
     {
@@ -24,6 +30,15 @@ public class Entity : Damagable
     public virtual void Seat(bool seat)
     {
 
+    }
+
+    public override void OnDeath()
+    {
+        base.OnDeath();
+
+        GameObject newEntityPoof = Instantiate(deathParticle, center.position, Quaternion.identity);
+
+        Destroy(newEntityPoof, deathParticleDuration);
     }
 
     public virtual void Disable(bool disable)

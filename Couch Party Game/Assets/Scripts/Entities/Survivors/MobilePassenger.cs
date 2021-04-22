@@ -170,6 +170,14 @@ public class MobilePassenger : Passenger
         }
     }
 
+    public override void OnDeath()
+    {
+        base.OnDeath();
+
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().deadPassengers.ChangeScore(1);
+        Destroy(gameObject);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if(disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
