@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4450028658500141671}
   - component: {fileID: 4561704461608724023}
   - component: {fileID: 6165453172379825689}
+  - component: {fileID: 3007116699811637680}
   m_Layer: 0
   m_Name: DeckVent
   m_TagString: Untagged
@@ -79,3 +80,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3007116699811637680
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441563842190417114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7691555818511173218, guid: 5dcacdabe5a0f9440819ed6ea757e11c, type: 3}
