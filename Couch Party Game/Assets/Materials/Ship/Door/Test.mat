@@ -9,8 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Test
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHABLEND_ON
-  m_LightmapFlags: 4
+  m_ShaderKeywords: _ALPHABLEND_ON _EMISSION
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3000
@@ -27,7 +27,7 @@ Material:
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 10.86, y: 0}
     - _DetailMask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -41,7 +41,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d2b73363744c1eb4fbe6290e545d80e9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3b752e6a4c783324c9832a6049d41171, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -74,5 +74,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0.8}
-    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.9056604, g: 0.87368494, b: 0.6450694, a: 1}
+    - _EmissionColor: {r: 1.1402527, g: 1.7578923, b: 2.4470592, a: 1}
