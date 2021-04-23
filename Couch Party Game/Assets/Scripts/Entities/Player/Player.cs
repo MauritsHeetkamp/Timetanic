@@ -84,6 +84,8 @@ public class Player : MovingEntity
     [SerializeField] bool decreaseSpeedOverTime;
     [SerializeField] LayerMask hittableLayers; // Layers that cancels the dash
     [SerializeField] Transform dashCheckLocation;
+    [SerializeField] Transform dashStartCheckLocation;
+    [SerializeField] float dashStartCheckRange;
 
     [SerializeField] Vector3 localKnockback;
     [SerializeField] ShakeData knockbackShake;
@@ -467,7 +469,7 @@ public class Player : MovingEntity
     // Checks to use a dash
     public void Dash(InputAction.CallbackContext context, PlayerData owner)
     {
-        if (context.started && canDash) // Checks input and if the player can dash
+        if (context.started && canDash && Physics.Raycast(dashStartCheckLocation.position, -dashStartCheckLocation.up , dashStartCheckRange)) // Checks input and if the player can dash
         {
             Vector3 dashDirection = transform.forward;
 

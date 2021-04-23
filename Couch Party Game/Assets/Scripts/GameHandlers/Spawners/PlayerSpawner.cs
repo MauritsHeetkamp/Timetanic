@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class PlayerSpawner : MonoBehaviour
 
     [SerializeField] CameraHandler cameraHandler; // Instance that handles the cameras for everyone
 
+    public UnityAction onCompletedSpawn;
 
     private void Awake()
     {
@@ -94,6 +95,11 @@ public class PlayerSpawner : MonoBehaviour
             {
                 screenShaker.Initialize();
             }
+        }
+
+        if(onCompletedSpawn != null)
+        {
+            onCompletedSpawn.Invoke();
         }
     }
 

@@ -705,6 +705,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 32311
   dashCheckLocation: {fileID: 1128770941}
+  dashStartCheckLocation: {fileID: 7425647816289090952}
+  dashStartCheckRange: 0.1
   localKnockback: {x: 0, y: 10000, z: -10000}
   knockbackShake:
     remainingDuration: 0

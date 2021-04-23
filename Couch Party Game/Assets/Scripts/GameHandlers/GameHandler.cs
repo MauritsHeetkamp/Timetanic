@@ -30,14 +30,14 @@ public class GameHandler : MonoBehaviour
     public Score savedPassengers, deadPassengers;
 
     [Header("Spawning")]
+    [SerializeField] UIManager uiManager;
+    [SerializeField] SceneSwapManager sceneSwapper;
     [SerializeField] NPCSpawner npcSpawner;
     [SerializeField] PlayerSpawner playerSpawner;
     [SerializeField] MinigameHandler minigameSpawner;
 
     private void Awake()
     {
-
-
         float timerSeconds = gameTime.duration.GetSeconds();
 
         if(shipAnimator != null && sinkAnim.length > 0 && timerSeconds > 0)
@@ -55,9 +55,21 @@ public class GameHandler : MonoBehaviour
         StartStopCountdown(true, true); // Starts and resets timer
 
         npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
+        playerSpawner.onCompletedSpawn += minigameSpawner.Initialize;
+        minigameSpawner.onCompleteInit += OnInitFinished;
         npcSpawner.SpawnNPC();
+    }
 
-        minigameSpawner.Initialize();
+    public void OnInitFinished()
+    {
+        npcSpawner.onCompletedSpawn -= playerSpawner.GetSpawnData;
+        playerSpawner.onCompletedSpawn -= minigameSpawner.Initialize;
+        minigameSpawner.onCompleteInit -= OnInitFinished;
+        if (sceneSwapper.fader != null)
+        {
+            sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
+        }
+        uiManager.canvasGroup.alpha = 1;
     }
 
     // Starts or stops the countdown

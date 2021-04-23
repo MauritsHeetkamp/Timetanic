@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3747027959800223793}
   - component: {fileID: 1334382782021767742}
   - component: {fileID: 1237572078569089347}
+  - component: {fileID: 1460866692309389910}
   m_Layer: 0
   m_Name: ReserveBoat
   m_TagString: Untagged
@@ -93,3 +94,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.428028, y: 1.3791339, z: 2.034459}
   m_Center: {x: -0.3574189, y: 0.6859534, z: -0.01181674}
+--- !u!114 &1460866692309389910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8653230921584056820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

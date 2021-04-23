@@ -14,13 +14,18 @@ public class Passenger : MovingEntity
         Debug.Log("KNOCKED BACK");
         if (knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
-            thisRigid.isKinematic = false;
-            thisRigid.useGravity = true;
+            thisRigid.constraints = RigidbodyConstraints.FreezeRotation;
 
             Disable(true);
             thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());
         }
+    }
+
+    public override void OnStoppedKnockback()
+    {
+        thisRigid.constraints = RigidbodyConstraints.FreezeAll;
+        base.OnStoppedKnockback();
     }
 
     public void SetRandomIdleState()

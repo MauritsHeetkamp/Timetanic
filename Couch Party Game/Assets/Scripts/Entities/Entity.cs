@@ -104,13 +104,17 @@ public class Entity : Damagable
             {
                 if(thisRigid.velocity.x > -maxStopKnockVelocity.x && thisRigid.velocity.y > -maxStopKnockVelocity.y && thisRigid.velocity.z > -maxStopKnockVelocity.z)
                 {
-                    Debug.Log("KNOCKED");
-                    Disable(false);
+                    OnStoppedKnockback();
                     break;
                 }
                 //Player is not moving anymore
             }
         }
         knockbackRoutine = null;
+    }
+
+    public virtual void OnStoppedKnockback()
+    {
+        Disable(false);
     }
 }

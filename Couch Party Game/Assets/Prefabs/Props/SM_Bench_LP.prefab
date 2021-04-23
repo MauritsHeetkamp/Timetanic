@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1612474038068388273}
   - component: {fileID: 3568082159301023099}
   - component: {fileID: 3228909166429034836}
+  - component: {fileID: 9073541489356759309}
   m_Layer: 0
   m_Name: SM_Bench_LP
   m_TagString: Untagged
@@ -93,3 +94,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.8691053, y: 3.286958, z: 3.1788955}
   m_Center: {x: 0.0000009536744, y: 1.6434668, z: -0.122411326}
+--- !u!114 &9073541489356759309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3063753562499871918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

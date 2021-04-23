@@ -52,6 +52,7 @@ MonoBehaviour:
   upwardsModifier: 15000
   entityTags:
   - Player
+  - Passenger
   collider: {fileID: 6735683619833304257}
   offset: {x: 0, y: -0.46, z: 0}
   barrelAnimator: {fileID: 917911056093782891}
@@ -59,6 +60,7 @@ MonoBehaviour:
   maxAnimSpeed: 1.2
   destroyParticle: {fileID: 478491665360367903, guid: 93927300b1439ef4185e2707413a1e9f,
     type: 3}
+  particleDuration: 1
 --- !u!136 &6735683619833304257
 CapsuleCollider:
   m_ObjectHideFlags: 0

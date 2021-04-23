@@ -10,12 +10,12 @@ public class SceneSwapManager : MonoBehaviour
 
     public static SceneSwapManager instance;
 
-    [SerializeField] FadeManager fadeManager;
+    public FadeManager fadeManager;
     [SerializeField] List<AsyncScene> loadingScenes = new List<AsyncScene>();
 
 
     bool canBeUsed = true;
-    FadePanel fader;
+    public FadePanel fader;
 
 
     private void Awake()

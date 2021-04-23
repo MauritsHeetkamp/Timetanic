@@ -22,6 +22,8 @@ public class MobilePassenger : Passenger
     [SerializeField] float minLookDelay, maxLookDelay;
     [SerializeField] string runString;
 
+    public bool debug;
+    public Vector3 debucLoc;
 
     Coroutine currentBehaviourRoutine;
 
@@ -94,6 +96,7 @@ public class MobilePassenger : Passenger
 
         while (true)
         {
+            debucLoc = targetLocation;
             if(Vector3.Distance(transform.position, targetLocation) <= distanceBeforeNewPoint)
             {
                 lastLocation = targetLocation;
@@ -238,5 +241,14 @@ public class MobilePassenger : Passenger
             }
         }
         followRoutine = null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (debug)
+        {
+            Gizmos.DrawCube(debucLoc, Vector3.one);
+        }
     }
 }
