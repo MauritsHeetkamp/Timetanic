@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Passenger : MovingEntity
 {
     public Player ownerPlayer; // Player the passenger is attached from
 
     public AIState currentState;
+
+    public UnityAction onFollowPlayer;
 
 
     public override void Knockback(Vector3 globalKnockbackVelocity)

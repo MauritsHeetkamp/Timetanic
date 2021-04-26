@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class NPCSpawner : MonoBehaviour
 {
-    List<GameObject> allSpawnedNPCS = new List<GameObject>();
+    public List<GameObject> allSpawnedNPCS = new List<GameObject>();
     [SerializeField] GameObject[] NPCPrefabs;
     public int minNPC, maxNPC;
 

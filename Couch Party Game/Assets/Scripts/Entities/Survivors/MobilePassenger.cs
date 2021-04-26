@@ -205,6 +205,12 @@ public class MobilePassenger : Passenger
             ownerPlayer = target; // Sets its target
             ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
             followRoutine = StartCoroutine(FollowTarget());
+
+            if(onFollowPlayer != null)
+            {
+                onFollowPlayer.Invoke();
+            }
+
         }
     }
 

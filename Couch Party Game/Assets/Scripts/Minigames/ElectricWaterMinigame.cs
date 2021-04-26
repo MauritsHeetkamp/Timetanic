@@ -10,6 +10,11 @@ public class ElectricWaterMinigame : Minigame
     private void Start()
     {
         Reset(); // Initialises the minigame
+
+        if (startOnStart)
+        {
+            StartMinigame();
+        }
     }
 
     // Checks if all the water has been removed

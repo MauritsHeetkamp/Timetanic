@@ -35,6 +35,7 @@ public class GameHandler : MonoBehaviour
     [SerializeField] NPCSpawner npcSpawner;
     [SerializeField] PlayerSpawner playerSpawner;
     [SerializeField] MinigameHandler minigameSpawner;
+    [SerializeField] VoicelineHandler voicelineHandler;
 
     private void Awake()
     {
@@ -70,6 +71,12 @@ public class GameHandler : MonoBehaviour
             sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
         }
         uiManager.canvasGroup.alpha = 1;
+
+        if(voicelineHandler != null)
+        {
+            voicelineHandler.InitVoicelineHandler();
+            voicelineHandler.StartStopAnnouncer(true);
+        }
     }
 
     // Starts or stops the countdown

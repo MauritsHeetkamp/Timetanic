@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Minigame : MonoBehaviour
 {
+    [HideInInspector] public Location location;
+
     public bool startOnStart;
     [SerializeField] PlayerCounter[] playerCounters; // Counters that check if enough players are in the room
     public GameObject[] triggerZones; // Zones that trigger the start of the minigame
@@ -71,6 +73,8 @@ public class Minigame : MonoBehaviour
     // Starts the minigame
     public virtual void StartMinigame()
     {
+        Debug.Log("STARTED");
+
         if(onStarted != null)
         {
             onStarted.Invoke();
@@ -83,6 +87,10 @@ public class Minigame : MonoBehaviour
         foreach (GameObject triggerZone in triggerZones)
         {
             triggerZone.SetActive(false); // Disables the trigger zones
+        }
+        if (owner != null)
+        {
+            owner.activeMinigames.Add(this);
         }
     }
 
@@ -123,7 +131,7 @@ public class Minigame : MonoBehaviour
 
         if (trappedNPCS.Count == 0)
         {
-            int spawnAmount = Random.Range(minSpawns, maxSpawns + 1); // How many npc's should be spawned
+            int spawnAmount = Random.Range(minSpawns, maxSpawns); // How many npc's should be spawned
             if (spawnAmount > spawnLocations.Length)
             {
                 spawnAmount = spawnLocations.Length;
@@ -141,11 +149,6 @@ public class Minigame : MonoBehaviour
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
                 availableLocations.RemoveAt(selectedSpawn);
             }
-        }
-
-        if (startOnStart)
-        {
-            StartMinigame();
         }
     }
 
@@ -170,6 +173,11 @@ public class Minigame : MonoBehaviour
             task.Complete();
         }
         trackingTasks = new List<Task>();
+
+        if(owner != null)
+        {
+            owner.activeMinigames.Remove(this);
+        }
 
         trappedNPCS = new List<GameObject>();
     }

@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class Location : MonoBehaviour
 {
-    [SerializeField] Animator floodAnimator;
-    [SerializeField] string floodString = "Flood";
+    public AudioClip goToThisLocationAudio;
 
-    public void Flood()
+    public GameObject[] minigames;
+
+
+
+    private void Awake()
     {
-        if(floodAnimator != null)
+        foreach(GameObject minigame in minigames)
         {
-            floodAnimator.SetBool(floodString, true);
+            Minigame minigameComponent = minigame.GetComponent<Minigame>();
+
+            if(minigameComponent != null)
+            {
+                minigameComponent.location = this;
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Damagable : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Damagable : MonoBehaviour
     float remainingInvulnerability;
     Coroutine invulnerabilityRoutine;
 
+    public UnityAction onDeath;
 
     public virtual void Init()
     {
@@ -30,6 +32,11 @@ public class Damagable : MonoBehaviour
         {
             dead = true;
             OnDeath();
+
+            if(onDeath != null)
+            {
+                onDeath.Invoke();
+            }
         }
     }
 
