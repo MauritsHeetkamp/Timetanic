@@ -124,6 +124,8 @@ public class PlayerSpawner : MonoBehaviour
         {
             selectedSpawn.wantedCameraDirection.ChangeCameraNoFade(target.gameObject);
         }
+
+        target.dead = false;
         
         //target.ResetCameraLocation();
     }

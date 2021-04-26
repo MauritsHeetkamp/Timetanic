@@ -5,7 +5,7 @@ using UnityEngine;
 public class SeaWater : MonoBehaviour
 {
     [SerializeField] LayerMask effectableLayers;
-
+    [SerializeField] Vector3 offset;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class SeaWater : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Collider[] targets = Physics.OverlapBox(transform.position, GetComponent<Collider>().bounds.extents, transform.rotation, effectableLayers, QueryTriggerInteraction.Collide);
+        Collider[] targets = Physics.OverlapBox(transform.position + offset, GetComponent<Collider>().bounds.extents, transform.rotation, effectableLayers, QueryTriggerInteraction.Ignore);
 
         if(targets.Length > 0)
         {

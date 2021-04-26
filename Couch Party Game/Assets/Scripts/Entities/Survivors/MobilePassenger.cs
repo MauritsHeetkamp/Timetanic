@@ -74,9 +74,11 @@ public class MobilePassenger : Passenger
                     break;
 
                 case AIState.RunningAround:
-                    navmeshAgent.isStopped = false;
+
+                    /*navmeshAgent.isStopped = false;
                     animator.SetBool(runString, true);
-                    currentBehaviourRoutine = StartCoroutine(RunAround());
+                    currentBehaviourRoutine = StartCoroutine(RunAround());*/
+                    SetState(AIState.IdleScared);
                     break;
 
                 case AIState.Following:

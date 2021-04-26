@@ -40,10 +40,10 @@ public class GameHandler : MonoBehaviour
     {
         float timerSeconds = gameTime.duration.GetSeconds();
 
-        if(shipAnimator != null && sinkAnim.length > 0 && timerSeconds > 0)
+        if(shipAnimator != null && timerSeconds > 0)
         {
-            playbackSpeed = sinkAnim.length / timerSeconds;
-            shipAnimator.speed = playbackSpeed;
+            //playbackSpeed = 1 / timerSeconds;
+            //shipAnimator.speed = playbackSpeed;
         }
 
         StartGame();
@@ -81,7 +81,7 @@ public class GameHandler : MonoBehaviour
             countdownRoutine = null;
             if (shipAnimator != null)
             {
-                shipAnimator.speed = 0;
+                //shipAnimator.speed = 0;
             }
         }
 
