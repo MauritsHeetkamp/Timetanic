@@ -8,7 +8,7 @@ public class Score : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] string changedScoreTrigger;
-    int currentScore;
+    public int currentScore;
 
     [SerializeField] TextMeshProUGUI scoreText;
 

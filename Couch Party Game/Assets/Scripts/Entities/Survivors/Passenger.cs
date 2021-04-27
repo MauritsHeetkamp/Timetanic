@@ -78,6 +78,7 @@ public class Passenger : MovingEntity
         IdleScared,
         Idle,
         RunningAround,
-        Following
+        Following,
+        Rescued
     }
 }

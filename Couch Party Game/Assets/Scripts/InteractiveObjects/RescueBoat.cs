@@ -66,18 +66,26 @@ public class RescueBoat : MonoBehaviour
                     gameHandler.PassengerSaved();
                 }
 
-                if(i == seats.Length - 1)
+                if (passenger != null)
                 {
-                    foreach(Seat thisSeat in seats)
+                    passenger.currentState = Passenger.AIState.Rescued;
+                }
+
+                if (i >= seats.Length - 1)
+                {
+                    for(int q = seats.Length - 1; q >= 0; q--)
                     {
-                        if(thisSeat.seatOwner != null)
+                        Seat thisSeat = seats[q];
+                        if (thisSeat.seatOwner != null)
                         {
-                            GameObject destroyPoof = Instantiate(poofParticle, seat.seatLocation.position, Quaternion.identity);
-                            Destroy(seat.seatOwner);
-                            seat.seatOwner = null;
+                            GameObject destroyPoof = Instantiate(poofParticle, thisSeat.seatLocation.position, Quaternion.identity);
+                            Destroy(destroyPoof, particleDuration);
+                            Destroy(thisSeat.seatOwner);
+                            thisSeat.seatOwner = null;
                         }
                     }
                 }
+
 
                 break;
             }

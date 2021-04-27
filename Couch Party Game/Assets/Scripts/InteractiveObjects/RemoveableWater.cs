@@ -19,20 +19,10 @@ public class RemoveableWater : MonoBehaviour
 
     public bool removed;
 
-    IEnumerator Test()
-    {
-        while(waterAmount > 0)
-        {
-            yield return new WaitForSeconds(2);
-            ChangeWaterAmount(-1);
-        }
-    }
-
     private void Start()
     {
         targetHeight = minWaterHeight + ((waterAmount / maxWaterAmount) * maxWaterHeight - minWaterHeight);
         transform.localPosition = new Vector3(transform.localPosition.x, targetHeight, transform.localPosition.z);
-        StartCoroutine(Test());
     }
 
     public void ChangeWaterAmount(float amount)

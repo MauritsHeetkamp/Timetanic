@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VoicelineHandler : MonoBehaviour
 {
+    bool isActive = true;
+
     AudioClip lastAudioClip;
     [SerializeField] AudioClip[] generalAudio;
     [SerializeField] AudioClip[] playerHasPassengersAudio;
@@ -53,6 +55,7 @@ public class VoicelineHandler : MonoBehaviour
     {
         if (start)
         {
+            isActive = true;
             if(announcerRoutine == null)
             {
                 announcerRoutine = StartCoroutine(AnnouncerRoutine());
@@ -60,6 +63,7 @@ public class VoicelineHandler : MonoBehaviour
         }
         else
         {
+            isActive = false;
             if (announcerRoutine != null)
             {
                 StopCoroutine(announcerRoutine);
@@ -88,7 +92,7 @@ public class VoicelineHandler : MonoBehaviour
 
     public void OnPassengerDied()
     {
-        if (canPlayAudio)
+        if (canPlayAudio && isActive)
         {
             int random = Random.Range(1, 101);
             if(random <= passengerDiedChance)
@@ -109,7 +113,7 @@ public class VoicelineHandler : MonoBehaviour
 
     public void OnPassengerFollowed()
     {
-        if (canPlayAudio)
+        if (canPlayAudio && isActive)
         {
             int random = Random.Range(1, 101);
             if (random <= playerHasPassengerChance)

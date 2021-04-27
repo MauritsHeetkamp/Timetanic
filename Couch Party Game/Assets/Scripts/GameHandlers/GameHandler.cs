@@ -113,7 +113,7 @@ public class GameHandler : MonoBehaviour
 
         if(gameTimeText != null)
         {
-            string secondsText = gameTime.remainingSeconds < 10 ? "0" + gameTime.remainingSeconds.ToString("F0") : gameTime.remainingSeconds.ToString("F0"); // Gets the seconds string
+            string secondsText = gameTime.remainingSeconds < 9.5f ? "0" + gameTime.remainingSeconds.ToString("F0") : gameTime.remainingSeconds.ToString("F0"); // Gets the seconds string
             gameTimeText.text = gameTime.remainingMinutes + ":" + secondsText; // Gets the minutes string
         }
 
@@ -160,8 +160,13 @@ public class GameHandler : MonoBehaviour
             player.Disable(true);
         }
 
+        if(voicelineHandler != null)
+        {
+            voicelineHandler.StartStopAnnouncer(false);
+        }
+
         resultsMenu.SetActive(true);
-        resultsMenuScript.ShowScore(300, 300, gameTime);
+        resultsMenuScript.ShowScore(savedPassengers.currentScore, deadPassengers.currentScore, gameTime);
     }
 
     // Modifies the final score

@@ -63,6 +63,7 @@ public class FadeManager : MonoBehaviour
 
     public void FadeOut(FadePanel panel, float duration = -1, bool destroyOnFinish = true, Player specificPlayer = null)
     {
+        Debug.Log("UNFADINNG");
         StartCoroutine(FadeOutRoutine(panel, duration, destroyOnFinish, specificPlayer));
     }
 

@@ -79,6 +79,8 @@ public class SceneSwapManager : MonoBehaviour
             return;
         }
 
+        canBeUsed = false;
+
         AsyncScene targetOperation = null;
 
         foreach(AsyncScene scene in loadingScenes)
@@ -108,6 +110,7 @@ public class SceneSwapManager : MonoBehaviour
     public void EnableAsyncSceneswap(AsyncScene operation)
     {
         operation.asyncOperation.allowSceneActivation = true;
+        canBeUsed = true;
     }
 
     // Changes scene instantly

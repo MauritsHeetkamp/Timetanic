@@ -33,7 +33,20 @@ public class SeaWater : MonoBehaviour
             if (other.GetComponent<Entity>() != null)
             {
                 Entity thisEntity = other.GetComponent<Entity>();
-                thisEntity.ConfirmDeath();
+
+                Passenger passenger = other.GetComponent<Passenger>();
+
+                if(passenger != null)
+                {
+                    if(passenger.currentState != Passenger.AIState.Rescued)
+                    {
+                        thisEntity.ConfirmDeath();
+                    }
+                }
+                else
+                {
+                    thisEntity.ConfirmDeath();
+                }
             }
 
             if (other.GetComponent<SpawnLocation>() != null)

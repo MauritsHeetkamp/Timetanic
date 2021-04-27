@@ -852,6 +852,9 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 1ddaa88af2f1ad44494ecc4a00051b1c, type: 2}
+  - {fileID: 2100000, guid: e9134f3517625bd4ca5445ace135e2a2, type: 2}
+  - {fileID: 2100000, guid: 3352dfa98542aca42a7f76d0a929858b, type: 2}
+  - {fileID: 2100000, guid: 4ad9f7fdf3bdf7740aeb43acb92035c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2643,6 +2646,7 @@ MonoBehaviour:
   deathParticleDuration: 1
   center: {fileID: 1933479251146376140}
   movementSpeed: 5
+  spawnHandler: {fileID: 0}
   ownerPlayer: {fileID: 0}
   currentState: 3
   followOnTrigger: 1
