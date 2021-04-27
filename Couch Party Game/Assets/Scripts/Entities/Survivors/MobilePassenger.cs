@@ -30,6 +30,11 @@ public class MobilePassenger : Passenger
     // Start is called before the first frame update
     void Start()
     {
+        if (spawnHandler != null)
+        {
+            spawnHandler.allSpawnedNPCS.Add(gameObject);
+        }
+
         navmeshAgent.speed = movementSpeed;
 
         if (init)

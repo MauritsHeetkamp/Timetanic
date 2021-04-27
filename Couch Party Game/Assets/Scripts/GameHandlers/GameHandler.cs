@@ -101,7 +101,7 @@ public class GameHandler : MonoBehaviour
             countdownRoutine = StartCoroutine(gameTime.Countdown()); // Starts countdown
             if (shipAnimator != null)
             {
-                shipAnimator.Play(sinkAnim.name);
+                //shipAnimator.Play(sinkAnim.name);
             }
         }
     }

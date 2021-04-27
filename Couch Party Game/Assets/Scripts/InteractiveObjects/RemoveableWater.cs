@@ -19,10 +19,20 @@ public class RemoveableWater : MonoBehaviour
 
     public bool removed;
 
+    IEnumerator Test()
+    {
+        while(waterAmount > 0)
+        {
+            yield return new WaitForSeconds(2);
+            ChangeWaterAmount(-1);
+        }
+    }
+
     private void Start()
     {
         targetHeight = minWaterHeight + ((waterAmount / maxWaterAmount) * maxWaterHeight - minWaterHeight);
-        transform.position = new Vector3(transform.position.x, targetHeight, transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, targetHeight, transform.localPosition.z);
+        StartCoroutine(Test());
     }
 
     public void ChangeWaterAmount(float amount)
@@ -66,9 +76,9 @@ public class RemoveableWater : MonoBehaviour
 
     IEnumerator MoveWaterHeight()
     {
-        while(transform.position.y != targetHeight)
+        while(transform.localPosition.y != targetHeight)
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, targetHeight, transform.position.z), waterRaiseSpeed);
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, new Vector3(transform.localPosition.x, targetHeight, transform.localPosition.z), waterRaiseSpeed);
             yield return null;
         }
         moveWaterRoutine = null;

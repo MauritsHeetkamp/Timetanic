@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraRelocator : MonoBehaviour
 {
     CameraHandler cameraHandler;
+    [SerializeField] bool rotateX, rotateY, rotateZ;
     [Header("Local Camera Properties")]
     [SerializeField] Transform newCameraDirection; // New camera direction
     [SerializeField] float newYDistance, newZDistance; // New camera location
@@ -37,7 +38,7 @@ public class CameraRelocator : MonoBehaviour
         {
             if (newCameraDirection != null)
             {
-                player.SetCameraRotationXZ(newCameraDirection.eulerAngles, false);
+                player.SetCameraRotationX(newCameraDirection.eulerAngles, false);
                 player.SetCameraRotationY(newCameraDirection.eulerAngles, false);
             }
 
@@ -61,7 +62,7 @@ public class CameraRelocator : MonoBehaviour
         {
             if (newCameraDirection != null)
             {
-                player.SetCameraRotationXZ(newCameraDirection.eulerAngles, false);
+                player.SetCameraRotationX(newCameraDirection.eulerAngles, false);
                 player.SetCameraRotationY(newCameraDirection.eulerAngles, false);
             }
 

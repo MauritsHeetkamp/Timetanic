@@ -852,6 +852,8 @@ MonoBehaviour:
             m_CallState: 2
   onTriggerExit:
     colliderEvents: []
+  onTriggerStay:
+    colliderEvents: []
 --- !u!1 &6602829813211870532
 GameObject:
   m_ObjectHideFlags: 0

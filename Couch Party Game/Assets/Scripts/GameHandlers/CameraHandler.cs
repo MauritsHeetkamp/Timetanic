@@ -23,6 +23,7 @@ public class CameraHandler : MonoBehaviour
 
     [SerializeField] GameObject splitscreen; // Split screen prefab
     [SerializeField] Transform splitscreenImageHolder; // Transform that holds all the splitscreens
+    [SerializeField] List<Splitscreen> splitscreens = new List<Splitscreen>();
 
     Vector3 targetLocation;
     public bool isSplit;
@@ -208,15 +209,16 @@ public class CameraHandler : MonoBehaviour
         {
             GameObject newSplitscreen = Instantiate(splitscreen, splitscreenImageHolder); // Creates new splitscreen
             newSplitscreens.Add(newSplitscreen);
+            splitscreens.Add(newSplitscreen.GetComponentInChildren<Splitscreen>());
 
-            if(i < playerAmount) // Checks if this splitscreen should be assigned to a player
+            if (i < playerAmount) // Checks if this splitscreen should be assigned to a player
             {
                 RenderTexture texture = new RenderTexture((int)splitscreenSizeX, (int)splitscreenSizeY, 0); // Creates new rendertexture with appropriate size
                 playerHandler.localPlayers[i].actualCameraTransform.GetComponent<Camera>().targetTexture = texture; // Assigns the players local camera to the rendertexture
-                playerHandler.localPlayers[i].attachedSplitscreen = newSplitscreen.GetComponent<Splitscreen>(); // Lets the player know what splitscreen it is connected to
-                newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.color = Color.white; // Makes sure the splitscreen isn't black
-                newSplitscreen.GetComponent<Splitscreen>().splitscreenRenderImage.texture = texture; // Assigns the rendertexture to the splitscreen
-                newSplitscreen.GetComponent<Splitscreen>().owner = playerHandler.localPlayers[i];
+                playerHandler.localPlayers[i].attachedSplitscreen = newSplitscreen.GetComponentInChildren<Splitscreen>(); // Lets the player know what splitscreen it is connected to
+                newSplitscreen.GetComponentInChildren<Splitscreen>().splitscreenRenderImage.color = Color.white; // Makes sure the splitscreen isn't black
+                newSplitscreen.GetComponentInChildren<Splitscreen>().splitscreenRenderImage.texture = texture; // Assigns the rendertexture to the splitscreen
+                newSplitscreen.GetComponentInChildren<Splitscreen>().owner = playerHandler.localPlayers[i];
             }
         }
 
@@ -344,7 +346,11 @@ public class CameraHandler : MonoBehaviour
         {
             onSplitStateChanged.Invoke(true);
         }
-        splitscreenImageHolder.gameObject.SetActive(true); // Enables split screens
+
+        foreach(Splitscreen split in splitscreens)
+        {
+            split.gameObject.SetActive(true);
+        }
         foreach(Player player in playerHandler.localPlayers)
         {
             player.actualCameraTransform.GetComponent<Camera>().enabled = true; // Enables all players their cameras
@@ -405,7 +411,10 @@ public class CameraHandler : MonoBehaviour
             onSplitStateChanged.Invoke(false);
         }
 
-        splitscreenImageHolder.gameObject.SetActive(false); // Disables split screens
+        foreach (Splitscreen split in splitscreens)
+        {
+            split.gameObject.SetActive(false);
+        }
 
         List<GenericCounter<Vector3>> cameraEulers = new List<GenericCounter<Vector3>>();
 

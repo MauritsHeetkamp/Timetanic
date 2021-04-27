@@ -24,36 +24,59 @@ public class RescueBoat : MonoBehaviour
     public void SeatTarget(Collider col)
     {
         GameObject target = col.gameObject;
-        foreach(Seat seat in seats)
+
+        for(int i = 0; i < seats.Length; i++)
         {
-            if(seat.seatOwner == null)
+            Seat seat = seats[i];
+
+            if (seat.seatOwner == null)
             {
+                Entity entity = target.GetComponent<Entity>();
+                Passenger passenger = target.GetComponent<Passenger>();
+
+                if (passenger != null && passenger.ownerPlayer == null || entity != null && entity.disables > 0)
+                {
+                    return;
+                }
+
                 GameObject newSeatPoof = Instantiate(poofParticle, seat.seatLocation.position, Quaternion.identity);
                 GameObject newPlayerPoof = Instantiate(poofParticle, target.transform.position, Quaternion.identity);
 
                 Destroy(newSeatPoof, particleDuration);
                 Destroy(newPlayerPoof, particleDuration);
 
-                Entity entity = target.GetComponent<Entity>();
                 if (entity != null)
                 {
                     entity.Disable(true);
                     entity.Seat(true);
                 }
 
-                //seat.seatOwner = target;
+                seat.seatOwner = target;
 
                 target.transform.position = seat.seatLocation.position;
                 target.transform.parent = seat.seatLocation;
 
-                if(gameHandler == null)
+                if (gameHandler == null)
                 {
                     gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>();
                 }
 
-                if(gameHandler != null)
+                if (gameHandler != null)
                 {
                     gameHandler.PassengerSaved();
+                }
+
+                if(i == seats.Length - 1)
+                {
+                    foreach(Seat thisSeat in seats)
+                    {
+                        if(thisSeat.seatOwner != null)
+                        {
+                            GameObject destroyPoof = Instantiate(poofParticle, seat.seatLocation.position, Quaternion.identity);
+                            Destroy(seat.seatOwner);
+                            seat.seatOwner = null;
+                        }
+                    }
                 }
 
                 break;

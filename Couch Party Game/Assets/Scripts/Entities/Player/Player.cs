@@ -20,6 +20,7 @@ public class Player : MovingEntity
     [SerializeField] string throwingParam;
 
     [Header("Movement")]
+    [SerializeField] bool worldspaceControls = true;
     [SerializeField]Vector2 rawMovement; //The raw input vector (New InputSystem)
 
     public int moveBlocks;
@@ -324,17 +325,24 @@ public class Player : MovingEntity
     {
         if(context.performed || context.started) // Checks input
         {
-            Transform selectedCamera = playerCameraHolder;
-
-            if(cameraHandler != null && !cameraHandler.isSplit && cameraHandler.globalCamera != null)
-            {
-                selectedCamera = cameraHandler.globalCamera;
-            }
-
+            Vector3 movementDirection = Vector3.zero;
             Vector2 axisValue = context.ReadValue<Vector2>();
-            Vector3 movementDirection = axisValue.x * selectedCamera.right;
-            movementDirection += axisValue.y * selectedCamera.forward;
-            movementDirection.y = 0;
+            if (worldspaceControls)
+            {
+                movementDirection = new Vector3(axisValue.x, 0, axisValue.y);
+            }
+            else
+            {
+                Transform selectedCamera = playerCameraHolder;
+
+                if (cameraHandler != null && !cameraHandler.isSplit && cameraHandler.globalCamera != null)
+                {
+                    selectedCamera = cameraHandler.globalCamera;
+                }
+                movementDirection = axisValue.x * selectedCamera.right;
+                movementDirection += axisValue.y * selectedCamera.forward;
+                movementDirection.y = 0;
+            }
 
             rawMovement = new Vector2(movementDirection.normalized.x, movementDirection.normalized.z); // Sets raw movement vector
 
@@ -661,9 +669,19 @@ public class Player : MovingEntity
     }
 
     //Sets the cameras direction in the x and z axis
-    public void SetCameraRotationXZ(Vector3 targetEulers, bool instant = true)
+    public void SetCameraRotationX(Vector3 targetEulers, bool instant = true)
     {
-        Vector3 newEulers = new Vector3(targetEulers.x, playerCameraHolder.eulerAngles.y, targetEulers.z); // Calculates new eulers
+        Vector3 newEulers = new Vector3(targetEulers.x, playerCameraHolder.eulerAngles.y, playerCameraHolder.eulerAngles.z); // Calculates new eulers
+        playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
+
+        if (instant) // Should the camera be instantly reset?
+        {
+            ResetCameraLocation();
+        }
+    }
+    public void SetCameraRotationZ(Vector3 targetEulers, bool instant = true)
+    {
+        Vector3 newEulers = new Vector3(playerCameraHolder.eulerAngles.x, playerCameraHolder.eulerAngles.y, targetEulers.z); // Calculates new eulers
         playerCameraHolder.eulerAngles = newEulers; // Sets the camera rotation to the new angle
 
         if (instant) // Should the camera be instantly reset?

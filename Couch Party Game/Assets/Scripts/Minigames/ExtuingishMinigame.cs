@@ -54,7 +54,7 @@ public class ExtuingishMinigame : Minigame
         {
             if (finisher != null)
             {
-                target.GetComponent<MobilePassenger>().FollowTarget(finisher); // Let the NPC's follow the finisher
+                //target.GetComponent<MobilePassenger>().FollowTarget(finisher); // Let the NPC's follow the finisher
                 target.GetComponent<SphereCollider>().enabled = true;
             }
         }

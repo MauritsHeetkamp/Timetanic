@@ -14,37 +14,31 @@ public class SeaWater : MonoBehaviour
     }
 
 
-
-    private void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        Collider[] targets = Physics.OverlapBox(transform.position + offset, GetComponent<Collider>().bounds.extents, transform.rotation, effectableLayers, QueryTriggerInteraction.Ignore);
-
-        if(targets.Length > 0)
+        if (!other.isTrigger)
         {
-            foreach(Collider targetCollider in targets)
+            if (other.GetComponent<Teleporter>() != null && other.GetComponent<Teleporter>().canTeleport)
             {
-                if(targetCollider.GetComponent<Teleporter>() != null && targetCollider.GetComponent<Teleporter>().canTeleport)
+
+                Teleporter thisTeleporter = other.GetComponent<Teleporter>();
+                thisTeleporter.canTeleport = false;
+                if (thisTeleporter.target.connectedTeleporter != null)
                 {
-
-                    Teleporter thisTeleporter = targetCollider.GetComponent<Teleporter>();
-                    thisTeleporter.canTeleport = false;
-                    if(thisTeleporter.target.connectedTeleporter != null)
-                    {
-                        thisTeleporter.target.connectedTeleporter.canTeleport = false;
-                    }
+                    thisTeleporter.target.connectedTeleporter.canTeleport = false;
                 }
+            }
 
 
-                if(targetCollider.GetComponent<Entity>() != null)
-                {
-                    Entity thisEntity = targetCollider.GetComponent<Entity>();
-                    thisEntity.ConfirmDeath();
-                }
+            if (other.GetComponent<Entity>() != null)
+            {
+                Entity thisEntity = other.GetComponent<Entity>();
+                thisEntity.ConfirmDeath();
+            }
 
-                if(targetCollider.GetComponent<SpawnLocation>() != null)
-                {
-                    targetCollider.GetComponent<SpawnLocation>().safe = false;
-                }
+            if (other.GetComponent<SpawnLocation>() != null)
+            {
+                other.GetComponent<SpawnLocation>().safe = false;
             }
         }
     }

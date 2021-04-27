@@ -5,12 +5,21 @@ using UnityEngine.Events;
 
 public class Passenger : MovingEntity
 {
+    public NPCSpawner spawnHandler;
     public Player ownerPlayer; // Player the passenger is attached from
 
     public AIState currentState;
 
     public UnityAction onFollowPlayer;
 
+
+    private void Start()
+    {
+        if(spawnHandler != null)
+        {
+            spawnHandler.allSpawnedNPCS.Add(gameObject);
+        }
+    }
 
     public override void Knockback(Vector3 globalKnockbackVelocity)
     {
@@ -57,6 +66,10 @@ public class Passenger : MovingEntity
     {
         GameHandler gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<GameHandler>();
         gameHandler.PassengerDied();
+        if (spawnHandler != null)
+        {
+            spawnHandler.allSpawnedNPCS.Remove(gameObject);
+        }
         base.OnDeath();
     }
 
