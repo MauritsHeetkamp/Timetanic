@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Custom.Audio;
+
 
 public class Barrel : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class Barrel : MonoBehaviour
 
     [SerializeField] CapsuleCollider collider;
     [SerializeField] Vector3 offset;
+
+    [SerializeField] ThreeDAudioPrefab destroySFX;
 
     [Header("Animations")]
     [SerializeField] Animator barrelAnimator;
@@ -66,6 +70,12 @@ public class Barrel : MonoBehaviour
     private void OnDestroy()
     {
         GameObject newPoofParticle = Instantiate(destroyParticle, actualBarrel.position, Quaternion.identity);
+
+        if(SoundManager.instance != null)
+        {
+            GameObject destroySound = SoundManager.instance.Spawn3DAudio(destroySFX, actualBarrel.position);
+            Destroy(destroySound, destroySFX.clip.length);
+        }
 
         Destroy(newPoofParticle, particleDuration);
 

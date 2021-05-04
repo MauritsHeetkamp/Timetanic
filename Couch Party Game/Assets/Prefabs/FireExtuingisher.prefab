@@ -5108,6 +5108,21 @@ MonoBehaviour:
   leftHandle: {fileID: 0}
   rightHandle: {fileID: 0}
   holdingParam: FireExtuingisher
+  raycastOffset: {x: 0, y: 0.1, z: 0}
+  dropSFX:
+    volume: 1
+    pitch: 1
+    clip: {fileID: 8300000, guid: 8f57040feb8678541bf86be450bd1e0f, type: 3}
+    loop: 0
+    range: 5
+    targets:
+      serializedVersion: 2
+      m_Bits: 16384
+  dropCheckRange: 1
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 229633
+  sfxDropDelay: 0.1
   canUse: 1
   useDelay: 0
   extuingishAmount: 1

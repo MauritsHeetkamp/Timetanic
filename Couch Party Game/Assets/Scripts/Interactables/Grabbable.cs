@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Custom.Audio;
+
 
 public class Grabbable : Interactable
 {
@@ -9,6 +11,14 @@ public class Grabbable : Interactable
     [SerializeField] Vector3 itemLocalPosition, itemLocalEulers; // Position and Rotation data
     [SerializeField] Transform leftHandle, rightHandle; // Handles for Inverse Kinematics (IK) rigs
     public string holdingParam;
+
+    [SerializeField] Vector3 raycastOffset = new Vector3(0, 0.1f, 0);
+    [SerializeField] ThreeDAudioPrefab dropSFX;
+    [SerializeField] float dropCheckRange = 1;
+    [SerializeField] LayerMask hittableLayers;
+
+    [SerializeField] float sfxDropDelay = 0.25f;
+    bool canSFX = true;
 
     // Override on completed interaction
     public override void CompleteInteract()
@@ -59,5 +69,25 @@ public class Grabbable : Interactable
     {
         currentInteractingPlayer.currentHoldingItem = null;
         currentInteractingPlayer.FinishedInteract(); // Lets player know it finished interacting
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(canSFX && Physics.Raycast(transform.position + raycastOffset, Vector3.down, dropCheckRange, hittableLayers))
+        {
+            if(SoundManager.instance != null && dropSFX.clip != null)
+            {
+                canSFX = false;
+                StartCoroutine(SFXCooldown());
+                GameObject audioObject = SoundManager.instance.Spawn3DAudio(dropSFX, transform.position);
+                Destroy(audioObject, dropSFX.clip.length);
+            }
+        }
+    }
+
+    IEnumerator SFXCooldown()
+    {
+        yield return new WaitForSeconds(sfxDropDelay);
+        canSFX = true;
     }
 }

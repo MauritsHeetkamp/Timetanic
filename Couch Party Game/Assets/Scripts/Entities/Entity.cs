@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Custom.Audio;
 
 public class Entity : Damagable
 {
@@ -15,6 +16,7 @@ public class Entity : Damagable
     public Coroutine knockbackRoutine;
     [SerializeField] Vector3 maxStopKnockVelocity = new Vector3(0.01f, 0.01f, 0.01f);
 
+    public ThreeDAudioPrefab gruntSFX;
 
     public GameObject deathParticle;
     public float deathParticleDuration = 1;
@@ -89,6 +91,11 @@ public class Entity : Damagable
     {
         if(knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
+            if(SoundManager.instance != null && gruntSFX.clip != null)
+            {
+                GameObject spawnedSFX = SoundManager.instance.Spawn3DAudio(gruntSFX, transform.position);
+                Destroy(spawnedSFX, gruntSFX.clip.length);
+            }
             Disable(true);
             thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());

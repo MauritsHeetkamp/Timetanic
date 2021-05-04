@@ -35393,6 +35393,7 @@ GameObject:
   - component: {fileID: 1093435599}
   - component: {fileID: 1093435601}
   - component: {fileID: 1093435600}
+  - component: {fileID: 1093435602}
   m_Layer: 0
   m_Name: Sound
   m_TagString: Untagged
@@ -35608,6 +35609,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &1093435602
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1093435598}
+  m_Enabled: 1
 --- !u!1 &1094874504
 GameObject:
   m_ObjectHideFlags: 0
@@ -70485,7 +70494,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6689657900780484251, guid: 91211ec1cdda85a4e8036f4d45f3b907, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91211ec1cdda85a4e8036f4d45f3b907, type: 3}
 --- !u!1001 &7674422935605059383
 PrefabInstance:

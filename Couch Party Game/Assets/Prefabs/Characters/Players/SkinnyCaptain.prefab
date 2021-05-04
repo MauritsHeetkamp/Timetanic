@@ -2352,6 +2352,15 @@ MonoBehaviour:
   electrifiedParticles: {fileID: 120513628281205670}
   shockAnimation: Shocked
   maxStopKnockVelocity: {x: 0.01, y: 0.01, z: 0.01}
+  gruntSFX:
+    volume: 1
+    pitch: 1
+    clip: {fileID: 8300000, guid: a2a547118c2d44b438f5d1c4f3f47537, type: 3}
+    loop: 0
+    range: 10
+    targets:
+      serializedVersion: 2
+      m_Bits: 16384
   deathParticle: {fileID: 478491665360367903, guid: bc2f8381c6dc5264aa41269742abfa76,
     type: 3}
   deathParticleDuration: 1
@@ -2367,6 +2376,7 @@ MonoBehaviour:
   useParam: StartUsing
   stopUseParam: StopUsing
   throwingParam: Throw
+  worldspaceControls: 1
   rawMovement: {x: 0, y: 0}
   moveBlocks: 0
   decellerationBlocks: 0
@@ -2429,6 +2439,7 @@ MonoBehaviour:
   dashCheckLocation: {fileID: 3646528369963106704}
   dashStartCheckLocation: {fileID: 6167153451590373733}
   dashStartCheckRange: 0.1
+  dashSFX: {fileID: 8300000, guid: 252e525801b0508419f6ed40e8c7a948, type: 3}
   localKnockback: {x: 0, y: 10000, z: -10000}
   knockbackShake:
     remainingDuration: 0

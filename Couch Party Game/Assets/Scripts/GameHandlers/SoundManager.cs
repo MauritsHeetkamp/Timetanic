@@ -169,6 +169,27 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public GameObject Spawn3DAudio(ThreeDAudioPrefab audioSettings, Vector3 target)
+    {
+        if(Physics.OverlapSphere(target, audioSettings.range, audioSettings.targets, QueryTriggerInteraction.Ignore).Length > 0)
+        {
+            GameObject newAudio = Instantiate(audioPrefab);
+            newAudio.transform.position = target;
+            AudioSource audioSource = newAudio.GetComponent<AudioSource>();
+
+            audioSource.clip = audioSettings.clip;
+            audioSource.volume = audioSettings.volume;
+            audioSource.pitch = audioSettings.pitch;
+            audioSource.loop = audioSettings.loop;
+
+            audioSource.Play();
+
+            return newAudio;
+        }
+        return null;
+    }
+
+
     // Spawns audio clip
     public GameObject SpawnAudio(AudioClip clip, bool loop)
     {
@@ -231,5 +252,28 @@ namespace Custom.Audio
         public float pitch;
         public AudioClip clip;
         public bool loop;
+    }
+
+    [System.Serializable]
+    public struct ThreeDAudioPrefab
+    {
+        public float volume;
+        public float pitch;
+        public AudioClip clip;
+        public bool loop;
+
+        public float range;
+        public LayerMask targets;
+
+        public ThreeDAudioPrefab(AudioClip _clip, float _range , LayerMask _targets, float _volume = 1, float _pitch = 1, bool _loop = false)
+        {
+            volume = _volume;
+            pitch = _pitch;
+            clip = _clip;
+            loop = _loop;
+
+            targets = _targets;
+            range = _range;
+        }
     }
 }

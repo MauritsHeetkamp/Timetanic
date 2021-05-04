@@ -87,6 +87,7 @@ public class Player : MovingEntity
     [SerializeField] Transform dashCheckLocation;
     [SerializeField] Transform dashStartCheckLocation;
     [SerializeField] float dashStartCheckRange;
+    [SerializeField] AudioClip dashSFX;
 
     [SerializeField] Vector3 localKnockback;
     [SerializeField] ShakeData knockbackShake;
@@ -490,6 +491,13 @@ public class Player : MovingEntity
             {
                 moveBlocks++;
                 canDash = false;
+
+                if(dashSFX != null && SoundManager.instance != null)
+                {
+                    GameObject soundObject = SoundManager.instance.SpawnAudio(dashSFX, false);
+                    Destroy(soundObject, dashSFX.length);
+                }
+
                 StartCoroutine(DashRoutine()); // Performs dash
             }
         }

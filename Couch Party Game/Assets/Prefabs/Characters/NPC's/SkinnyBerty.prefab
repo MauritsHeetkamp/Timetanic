@@ -2641,6 +2641,13 @@ MonoBehaviour:
   electrifiedParticles: {fileID: 0}
   shockAnimation: 
   maxStopKnockVelocity: {x: 0.01, y: 0.01, z: 0.01}
+  gruntSFX:
+    volume: 0.3
+    pitch: 1
+    clip: {fileID: 8300000, guid: b4f6af372cd07da4eb84c9c5b0c59398, type: 3}
+    loop: 0
+    minDistance: 1
+    maxDistance: 26.9
   deathParticle: {fileID: 478491665360367903, guid: bc2f8381c6dc5264aa41269742abfa76,
     type: 3}
   deathParticleDuration: 1

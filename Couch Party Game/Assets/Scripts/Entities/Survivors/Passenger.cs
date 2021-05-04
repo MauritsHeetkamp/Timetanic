@@ -27,7 +27,11 @@ public class Passenger : MovingEntity
         if (knockbackRoutine == null && thisRigid != null && globalKnockbackVelocity != Vector3.zero)
         {
             thisRigid.constraints = RigidbodyConstraints.FreezeRotation;
-
+            if (SoundManager.instance != null && gruntSFX.clip != null)
+            {
+                GameObject spawnedSFX = SoundManager.instance.Spawn3DAudio(gruntSFX, transform.position);
+                Destroy(spawnedSFX, gruntSFX.clip.length);
+            }
             Disable(true);
             thisRigid.AddForce(globalKnockbackVelocity);
             knockbackRoutine = StartCoroutine(CheckStopKnockback());
