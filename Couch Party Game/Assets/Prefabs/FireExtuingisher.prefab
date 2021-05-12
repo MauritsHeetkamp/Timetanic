@@ -5101,6 +5101,8 @@ MonoBehaviour:
   playerLayers:
     serializedVersion: 2
     m_Bits: 16384
+  grabbableImage: {fileID: 21300000, guid: dbc136d8529e3f44693dfd241336c118, type: 3}
+  grabbableName: Fire Extinguisher
   rigid: {fileID: 5102792967842815808}
   itemName: Fire Extuingisher
   itemLocalPosition: {x: 0.169, y: 0.849, z: 0.122}

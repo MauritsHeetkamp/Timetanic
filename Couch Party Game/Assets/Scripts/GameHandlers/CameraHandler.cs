@@ -27,6 +27,7 @@ public class CameraHandler : MonoBehaviour
 
     Vector3 targetLocation;
     public bool isSplit;
+    [SerializeField] bool splitOnStart = true;
     [SerializeField] float splitFadeDuration = 1; // Duration of the fade when swapping between all-in-one and split screen (fade in and out combined)
     public UnityAction<bool> onSplitStateChanged;
 
@@ -228,7 +229,7 @@ public class CameraHandler : MonoBehaviour
             singlePlayer = true;
             handleTheCameras = false;
         }
-        SetSplit(true, true);
+        SetSplit(splitOnStart, true);
     }
 
     // FixedUpdate is called once per Time.deltaTime

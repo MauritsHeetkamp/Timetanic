@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem instance;
+    public int currentResWidth, currentResHeigth;
     [SerializeField] AudioMixer audio;
     [SerializeField] string sfxName, backgroundMusicName, masterAudioName;
 
@@ -60,13 +61,23 @@ public class SaveSystem : MonoBehaviour
             int width = PlayerPrefs.GetInt("ResolutionWidth");
             int heigth = PlayerPrefs.GetInt("ResolutionHeight");
 
+
+
             foreach(Resolution resolution in Screen.resolutions)
             {
                 if(resolution.width == width && resolution.height == heigth)
                 {
+                    currentResWidth = width;
+                    currentResHeigth = heigth;
                     Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
                     break;
                 }
+            }
+
+            if(currentResWidth == 0 || currentResHeigth == 0)
+            {
+                currentResWidth = Screen.currentResolution.width;
+                currentResHeigth = Screen.currentResolution.height;
             }
         }
 

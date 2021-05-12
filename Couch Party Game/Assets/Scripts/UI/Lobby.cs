@@ -64,13 +64,6 @@ public class Lobby : Menu
         {
             PlayerManager.instance.connectedToLobbyPlayers.RemoveRange(maxPlayers, PlayerManager.instance.connectedToLobbyPlayers.Count - maxPlayers); // Remove players until it reaches max players again
         }
-        if(PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers) // Aren't all player slots filled?
-        {
-            while(PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers)
-            {
-                PlayerManager.instance.connectedToLobbyPlayers.Add(null); // Create an open player slot
-            }
-        }
     }
 
     // Sets minimal player amount
@@ -157,7 +150,7 @@ public class Lobby : Menu
             }
         }
 
-        for(int i = 0; i < PlayerManager.instance.connectedToLobbyPlayers.Count; i++) // Goes through all players in lobby
+        for(int i = PlayerManager.instance.connectedToLobbyPlayers.Count - 1; i >= 0; i--) // Goes through all players in lobby
         {
             if (PlayerManager.instance.connectedToLobbyPlayers[i] == null || !PlayerManager.instance.connectedToLobbyPlayers[i].isConnected) // Checks if slot is free or player has disconnected
             {
@@ -168,8 +161,21 @@ public class Lobby : Menu
                 }
                 else
                 {
-                    PlayerManager.instance.connectedToLobbyPlayers[i] = null; // Frees up player slot
+                    PlayerManager.instance.connectedToPCPlayers.RemoveAt(i);
                 }
+            }
+        }
+
+        for(int i = 0; i < maxPlayers - PlayerManager.instance.connectedToLobbyPlayers.Count; i++)
+        {
+            if (availablePlayers.Count > 0)
+            {
+                PlayerManager.instance.connectedToLobbyPlayers.Add(availablePlayers[0]); // Adds player to lobby
+                availablePlayers.RemoveAt(0);
+            }
+            else
+            {
+                break;
             }
         }
 
@@ -195,7 +201,7 @@ public class Lobby : Menu
     // Updates the ui with the provided data
     void UpdateUI()
     {
-        for (int i = 0; i < PlayerManager.instance.connectedToLobbyPlayers.Count; i++)
+        for (int i = 0; i < playerIcons.Length; i++)
         {
             UpdateSpecificUI(i);
         }
@@ -205,7 +211,7 @@ public class Lobby : Menu
 
     void UpdateSpecificUI(int targetIndex)
     {
-        PlayerData targetPlayer = PlayerManager.instance.connectedToLobbyPlayers[targetIndex];
+        PlayerData targetPlayer = PlayerManager.instance.connectedToLobbyPlayers.Count > targetIndex ? PlayerManager.instance.connectedToLobbyPlayers[targetIndex] : null;
 
         if(targetPlayer != null && PlayerManager.instance.connectedToLobbyPlayers[targetIndex].isConnected)
         {
@@ -227,8 +233,16 @@ public class Lobby : Menu
                 PlayerManager.instance.connectedToLobbyPlayers[i] = player; // Connects player to the free spot
                 SetPlayerCharacter(i);
                 UpdateSpecificUI(i);
-                break;
+                return;
             }
+        }
+
+        if(PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers)
+        {
+            PlayerManager.instance.connectedToLobbyPlayers.Add(player);
+            int playerIndex = PlayerManager.instance.connectedToLobbyPlayers.Count;
+            SetPlayerCharacter(playerIndex);
+            UpdateSpecificUI(playerIndex);
         }
     }
 
@@ -248,7 +262,6 @@ public class Lobby : Menu
         }
 
         PlayerManager.instance.connectedToLobbyPlayers.RemoveAt(playerIndex);
-        PlayerManager.instance.connectedToLobbyPlayers.Add(null);
 
         UpdateSpecificUI(playerIndex);
     }

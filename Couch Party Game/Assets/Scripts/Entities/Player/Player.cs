@@ -62,9 +62,9 @@ public class Player : MovingEntity
     public Splitscreen attachedSplitscreen; //Split screen owned by this player
 
     [Header("Interaction")]
-    [SerializeField] Transform interactionBox; //Box that checks if an interactable is inside
+    [SerializeField] Transform interactionZone; //Box that checks if an interactable is inside
     [SerializeField] LayerMask interactableLayers; 
-    Interactable nearestInteractable;
+    public Interactable nearestInteractable;
     [SerializeField] float interactDelay; //Delay before u can interact again
     [SerializeField] bool canInteract = true;
     public Interactable currentUsingInteractable; //The current interactable the player is using
@@ -562,12 +562,14 @@ public class Player : MovingEntity
     // Checks if the player is near something that they can interact with
     void CheckInteract()
     {
-        Collider[] hitColliders = Physics.OverlapBox(interactionBox.position, interactionBox.lossyScale / 2, interactionBox.rotation, interactableLayers); // Checks for interactables in range
+        Collider[] hitColliders = Physics.OverlapSphere(interactionZone.position, interactionZone.lossyScale.x / 2, interactableLayers); // Checks for interactables in range
 
         Interactable closestInteractable = null;
 
         if (hitColliders.Length > 0) // Are there any interactables nearby?
         {
+            List<GameObject> interactables = new List<GameObject>();
+
             float closestDistance = float.MaxValue;
 
             foreach (Collider col in hitColliders)
@@ -575,6 +577,7 @@ public class Player : MovingEntity
                 Interactable interactable = col.GetComponent<Interactable>();
                 if (interactable.CanInteract(this)) // Checks if the interactable can be used
                 {
+                    interactables.Add(col.gameObject);
                     float distance = Vector3.Distance(col.transform.position, transform.position);
                     if (distance < closestDistance || closestInteractable == null) // Checks if this interactable is closer then the current closest one
                     {
@@ -585,7 +588,18 @@ public class Player : MovingEntity
             }
         }
 
-        nearestInteractable = closestInteractable; // Sets the nearest interactable
+        if(nearestInteractable != closestInteractable)
+        {
+            if(nearestInteractable != null)
+            {
+                nearestInteractable.itemPopup.SetPopup(false);
+            }
+            if(closestInteractable != null)
+            {
+                closestInteractable.itemPopup.SetPopup(true);
+            }
+            nearestInteractable = closestInteractable; // Sets the nearest interactable
+        }
     }
 
     // Handles interaction

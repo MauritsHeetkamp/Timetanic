@@ -39,7 +39,7 @@ public class VoicelineHandler : MonoBehaviour
 
     public void InitVoicelineHandler()
     {
-        foreach(GameObject npc in npcHandler.allSpawnedNPCS)
+        foreach(GameObject npc in npcHandler.availableNPCs)
         {
             Passenger thisPassenger = npc.GetComponent<Passenger>();
 

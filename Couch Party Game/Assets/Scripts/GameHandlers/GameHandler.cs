@@ -32,7 +32,7 @@ public class GameHandler : MonoBehaviour
     [Header("Spawning")]
     [SerializeField] UIManager uiManager;
     [SerializeField] SceneSwapManager sceneSwapper;
-    [SerializeField] NPCSpawner npcSpawner;
+    public NPCSpawner npcSpawner;
     [SerializeField] PlayerSpawner playerSpawner;
     [SerializeField] MinigameHandler minigameSpawner;
     [SerializeField] VoicelineHandler voicelineHandler;
@@ -165,9 +165,17 @@ public class GameHandler : MonoBehaviour
             voicelineHandler.StartStopAnnouncer(false);
         }
 
+        npcSpawner.onKilledAllNpcs += ShowResults;
+        npcSpawner.KillAliveNPCS();
+    }
+
+    void ShowResults()
+    {
+        npcSpawner.onKilledAllNpcs -= ShowResults;
         resultsMenu.SetActive(true);
         resultsMenuScript.ShowScore(savedPassengers.currentScore, deadPassengers.currentScore, gameTime);
     }
+
 
     // Modifies the final score
     public void PassengerSaved()

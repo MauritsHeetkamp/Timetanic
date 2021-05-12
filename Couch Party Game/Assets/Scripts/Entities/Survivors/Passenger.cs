@@ -17,7 +17,7 @@ public class Passenger : MovingEntity
     {
         if(spawnHandler != null)
         {
-            spawnHandler.allSpawnedNPCS.Add(gameObject);
+            spawnHandler.availableNPCs.Add(gameObject);
         }
     }
 
@@ -72,7 +72,8 @@ public class Passenger : MovingEntity
         gameHandler.PassengerDied();
         if (spawnHandler != null)
         {
-            spawnHandler.allSpawnedNPCS.Remove(gameObject);
+            spawnHandler.availableNPCs.Remove(gameObject);
+            spawnHandler.CheckNPCCount();
         }
         base.OnDeath();
     }

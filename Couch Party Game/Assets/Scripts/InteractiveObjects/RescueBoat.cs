@@ -64,6 +64,8 @@ public class RescueBoat : MonoBehaviour
                 if (gameHandler != null)
                 {
                     gameHandler.PassengerSaved();
+                    gameHandler.npcSpawner.availableNPCs.Remove(entity.gameObject);
+                    gameHandler.npcSpawner.CheckNPCCount();
                 }
 
                 if (passenger != null)

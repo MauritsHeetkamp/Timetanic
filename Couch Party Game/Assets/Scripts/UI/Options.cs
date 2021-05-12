@@ -120,7 +120,8 @@ public class Options : MonoBehaviour
                     addedResolutions.Add(resolution);
                     data.Add(new DropdownData(resolution.width + " x " + resolution.height, () => SetResolution(resolution)));
 
-                    if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
+
+                    if (resolution.width == SaveSystem.instance.currentResWidth && resolution.height == SaveSystem.instance.currentResHeigth)
                     {
                         resolutionSettings.selected = data.Count - 1;
                     }
@@ -206,10 +207,12 @@ public class Options : MonoBehaviour
 
     public void SetResolution(Resolution resolution)
     {
-        Debug.Log("SETRES");
+        Debug.Log("SETRES TO " + resolution.width + "x" + resolution.height);
 
         PlayerPrefs.SetInt("ResolutionWidth", resolution.width);
         PlayerPrefs.SetInt("ResolutionHeight", resolution.height);
+        SaveSystem.instance.currentResWidth = resolution.width;
+        SaveSystem.instance.currentResHeigth = resolution.height;
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
 
         if(onResolutionChanged != null)

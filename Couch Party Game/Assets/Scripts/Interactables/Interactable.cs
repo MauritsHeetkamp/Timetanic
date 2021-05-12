@@ -12,8 +12,6 @@ public class Interactable : MonoBehaviour
     [SerializeField] string grabParam = "Grab";
 
     public Popup itemPopup;
-    [SerializeField] Transform popupZone;
-    [SerializeField] LayerMask playerLayers;
 
     // Checks if this item can be interacted with
     public virtual bool CanInteract(Player askingPlayer)
@@ -88,7 +86,7 @@ public class Interactable : MonoBehaviour
         currentInteractingPlayer.currentUsingInteractable = null;
     }
 
-    private void FixedUpdate()
+  /*private void FixedUpdate()
     {
         if(itemPopup != null)
         {
@@ -110,5 +108,5 @@ public class Interactable : MonoBehaviour
                 itemPopup.SetPopup(false);
             }
         }
-    }
+    }*/
 }

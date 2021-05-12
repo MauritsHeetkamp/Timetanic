@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class NPCSpawner : MonoBehaviour
 {
-    public List<GameObject> allSpawnedNPCS = new List<GameObject>();
+    public List<GameObject> availableNPCs = new List<GameObject>();
     [SerializeField] GameObject[] NPCPrefabs;
     public int minNPC, maxNPC;
 
@@ -14,7 +14,12 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField] bool spawnAroundLocation;
     [SerializeField] float spawnOffset = 1;
 
+    [SerializeField] float autoKillDelay = 0.1f;
+
     public UnityAction onCompletedSpawn, onRemovedNPCS;
+
+    Coroutine killAllNpcsActiveRoutine;
+    public UnityAction onKilledAllNpcs;
 
     // Update is called once per frame
     void Update()
@@ -27,17 +32,49 @@ public class NPCSpawner : MonoBehaviour
 
     }
 
+    public void CheckNPCCount()
+    {
+        if(availableNPCs.Count <= 0)
+        {
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().FinishGame();
+        }
+    }
+
     public void SpawnToMax()
     {
-        int amountToSpawn = maxNPC - allSpawnedNPCS.Count;
+        int amountToSpawn = maxNPC - availableNPCs.Count;
+    }
+
+    public void KillAliveNPCS()
+    {
+        if(killAllNpcsActiveRoutine == null)
+        {
+            StartCoroutine(KillAliveNPCSRoutine());
+        }
+    }
+
+    IEnumerator KillAliveNPCSRoutine()
+    {
+        for(int i = availableNPCs.Count - 1; i >= 0; i--)
+        {
+            availableNPCs[i].GetComponent<Entity>().ConfirmDeath();
+            yield return null;
+        }
+
+        killAllNpcsActiveRoutine = null;
+
+        if(onKilledAllNpcs != null)
+        {
+            onKilledAllNpcs.Invoke();
+        }
     }
 
     public IEnumerator RemoveAllNPC()
     {
-        for(int i = allSpawnedNPCS.Count - 1; i >= 0; i--)
+        for(int i = availableNPCs.Count - 1; i >= 0; i--)
         {
-            Destroy(allSpawnedNPCS[i]);
-            allSpawnedNPCS.RemoveAt(i);
+            Destroy(availableNPCs[i]);
+            availableNPCs.RemoveAt(i);
             yield return null;
         }
 
@@ -64,6 +101,8 @@ public class NPCSpawner : MonoBehaviour
 
     public IEnumerator SpawnNPCRoutine(int amount)
     {
+        amount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
+
         for(int i = 0; i < amount; i++)
         {
             if(availableSpawnLocations.Count == 0)
@@ -75,6 +114,7 @@ public class NPCSpawner : MonoBehaviour
             GameObject newNPC = Instantiate(NPCPrefabs[Random.Range(0, NPCPrefabs.Length)], selectedSpawn.position, selectedSpawn.rotation);
             newNPC.GetComponent<Passenger>().SetRandomIdleState();
             newNPC.transform.rotation = Quaternion.LookRotation(new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2)));
+            availableNPCs.Add(newNPC);
             availableSpawnLocations.Remove(selectedSpawn);
 
             yield return null;

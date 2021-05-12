@@ -17,7 +17,7 @@ public class UIDropdown : UIOption
     {
         if(debug != null)
         {
-            debug.text = Screen.resolutions.Length.ToString();
+            debug.text = Screen.currentResolution.width + "x" + Screen.currentResolution.height;
         }
     }
 

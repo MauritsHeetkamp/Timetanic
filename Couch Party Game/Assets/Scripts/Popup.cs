@@ -7,21 +7,24 @@ public class Popup : MonoBehaviour
     [SerializeField] Animator popupAnimator;
     [SerializeField] string itemPopupString = "Popup";
     public WorldspaceFollow worldspaceFollow;
-    [SerializeField] bool popupOpened;
+    [SerializeField] int popupOpened;
+    [SerializeField] bool forceOpen;
 
     private void Start()
     {
-        popupOpened = !popupOpened;
-        SetPopup(!popupOpened);
+        if (forceOpen)
+        {
+            SetPopup(true);
+        }
     }
 
     public void SetPopup(bool popup)
     {
         if (popup)
         {
-            if (!popupOpened)
+            popupOpened++;
+            if (popupOpened == 1)
             {
-                popupOpened = true;
                 if (worldspaceFollow != null)
                 {
                     worldspaceFollow.enabled = true;
@@ -31,9 +34,9 @@ public class Popup : MonoBehaviour
         }
         else
         {
-            if (popupOpened)
+            popupOpened--;
+            if (popupOpened <= 0)
             {
-                popupOpened = false;
                 if (worldspaceFollow != null)
                 {
                     worldspaceFollow.enabled = false;

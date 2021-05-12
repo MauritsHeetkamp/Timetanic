@@ -132,6 +132,7 @@ public class Minigame : MonoBehaviour
         if (trappedNPCS.Count == 0)
         {
             int spawnAmount = Random.Range(minSpawns, maxSpawns); // How many npc's should be spawned
+            spawnAmount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
             if (spawnAmount > spawnLocations.Length)
             {
                 spawnAmount = spawnLocations.Length;
@@ -139,12 +140,15 @@ public class Minigame : MonoBehaviour
 
             List<Transform> availableLocations = new List<Transform>(spawnLocations);
 
+            NPCSpawner npcSpawner = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().npcSpawner;
+
             for (int i = 0; i < spawnAmount; i++)
             {
                 int selectedSpawn = Random.Range(0, availableLocations.Count); // Selects spawn location
 
                 GameObject npc = Instantiate(npcObjects[Random.Range(0, npcObjects.Length)], availableLocations[selectedSpawn].position, availableLocations[selectedSpawn].rotation); // Spawns npc
                 npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
+                npcSpawner.availableNPCs.Add(npc);
 
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
                 availableLocations.RemoveAt(selectedSpawn);

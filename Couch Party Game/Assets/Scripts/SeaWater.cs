@@ -16,11 +16,11 @@ public class SeaWater : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject);
         if (!other.isTrigger)
         {
             if (other.GetComponent<Teleporter>() != null && other.GetComponent<Teleporter>().canTeleport)
             {
-
                 Teleporter thisTeleporter = other.GetComponent<Teleporter>();
                 thisTeleporter.canTeleport = false;
                 if (thisTeleporter.target.connectedTeleporter != null)

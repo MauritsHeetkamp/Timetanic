@@ -5,9 +5,10 @@ using UnityEngine.Events;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject[] allCharacters; // All controllable character prefabs
     [SerializeField] RoleSpawnLocation[] allRoleSpawnLocations; // All spawn locations (role based)
-    SpawnLocation[] allSpawnLocations;
+    [SerializeField] SpawnLocation[] allSpawnLocations;
+
+
     [SerializeField] SpawnLocation defaultSpawn; // Default spawn when no other location is available
     [SerializeField] bool onlyUniqueCharacters = true; // Can people play with the same character skin
 
@@ -19,27 +20,12 @@ public class PlayerSpawner : MonoBehaviour
 
     public UnityAction onCompletedSpawn;
 
-    private void Awake()
-    {
-        List<SpawnLocation> allSpawns = new List<SpawnLocation>();
-
-        foreach(RoleSpawnLocation roleLocation in allRoleSpawnLocations)
-        {
-            foreach(SpawnLocation spawnLocation in roleLocation.locations)
-            {
-                allSpawns.Add(spawnLocation);
-            }
-        }
-
-        allSpawnLocations = allSpawns.ToArray();
-    }
 
     // Gets the spawn data and spawns in the end
     public void GetSpawnData()
     {
-        if(allCharacters.Length > 0 && defaultSpawn != null) // Requires at least one character and a default spawn
+        if(defaultSpawn != null) // Requires at least one character and a default spawn
         {
-            List<GameObject> availableCharacters = new List<GameObject>(allCharacters);
             List<RoleSpawnLocation> availableSpawnLocations = new List<RoleSpawnLocation>(allRoleSpawnLocations);
 
             for (int i = 0; i < PlayerManager.instance.connectedToLobbyPlayers.Count; i++) // Goes through all players
@@ -51,12 +37,7 @@ public class PlayerSpawner : MonoBehaviour
                     continue;
                 }
 
-                GameObject selectedCharacter = availableCharacters[Random.Range(0, availableCharacters.Count)]; // Selects character
-
-                if (onlyUniqueCharacters && availableCharacters.Count > 1) // Should the character be removed from the available characters
-                {
-                    availableCharacters.Remove(selectedCharacter);
-                }
+                GameObject selectedCharacter = thisPlayerData.preferredPlayer.gameInstance; // Selects character
 
                 Player.Role characterRole = selectedCharacter.GetComponent<Player>().role;
 

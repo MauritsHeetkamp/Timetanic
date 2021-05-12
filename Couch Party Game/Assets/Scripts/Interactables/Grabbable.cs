@@ -6,6 +6,9 @@ using Custom.Audio;
 
 public class Grabbable : Interactable
 {
+    public Sprite grabbableImage;
+    public string grabbableName;
+
     public Rigidbody rigid;
     public string itemName;
     [SerializeField] Vector3 itemLocalPosition, itemLocalEulers; // Position and Rotation data
@@ -23,10 +26,6 @@ public class Grabbable : Interactable
     // Override on completed interaction
     public override void CompleteInteract()
     {
-        if(itemPopup != null)
-        {
-            itemPopup.SetPopup(false);
-        }
         currentInteractingPlayer.currentUsingInteractable = null;
         Attach();
         currentInteractingPlayer.FinishedInteract();
@@ -46,6 +45,8 @@ public class Grabbable : Interactable
         {
             currentInteractingPlayer.animator.SetBool(holdingParam, true);
         }
+
+        currentInteractingPlayer.attachedSplitscreen.SetItem(grabbableImage, grabbableName);
     }
 
     // Disattached grabbable from player
@@ -61,6 +62,7 @@ public class Grabbable : Interactable
         GetComponent<Collider>().enabled = true;
         currentInteractingPlayer.FinishedInteract(); // Lets player know it finished interacting
         InteractDelay(); // Starts interaction delay
+        currentInteractingPlayer.attachedSplitscreen.SetItem(null, string.Empty);
         currentInteractingPlayer = null;
     }
 

@@ -32,7 +32,7 @@ public class MobilePassenger : Passenger
     {
         if (spawnHandler != null)
         {
-            spawnHandler.allSpawnedNPCS.Add(gameObject);
+            spawnHandler.availableNPCs.Add(gameObject);
         }
 
         navmeshAgent.speed = movementSpeed;
@@ -80,10 +80,9 @@ public class MobilePassenger : Passenger
 
                 case AIState.RunningAround:
 
-                    /*navmeshAgent.isStopped = false;
+                    navmeshAgent.isStopped = false;
                     animator.SetBool(runString, true);
-                    currentBehaviourRoutine = StartCoroutine(RunAround());*/
-                    SetState(AIState.IdleScared);
+                    currentBehaviourRoutine = StartCoroutine(RunAround());
                     break;
 
                 case AIState.Following:
@@ -167,6 +166,7 @@ public class MobilePassenger : Passenger
             if(ownerPlayer != null)
             {
                 ownerPlayer.followingPassengers.Remove(this);
+                ownerPlayer.attachedSplitscreen.UpdateFollowingPlayerAmount();
                 ownerPlayer = null;
             }
 
@@ -185,6 +185,7 @@ public class MobilePassenger : Passenger
         base.OnDeath();
 
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().deadPassengers.ChangeScore(1);
+        StopFollowTarget();
         Destroy(gameObject);
     }
 
@@ -209,6 +210,7 @@ public class MobilePassenger : Passenger
             SetState(AIState.Following);
             ownerPlayer = target; // Sets its target
             ownerPlayer.followingPassengers.Add(this); // Lets the player know the npc is following him/her
+            ownerPlayer.attachedSplitscreen.UpdateFollowingPlayerAmount();
             followRoutine = StartCoroutine(FollowTarget());
 
             if(onFollowPlayer != null)
@@ -220,18 +222,26 @@ public class MobilePassenger : Passenger
     }
 
     // Make the npc stop following a player
-    public void StopFollowTarget()
+    public void StopFollowTarget(bool death = false)
     {
-        ownerPlayer.followingPassengers.Remove(this); // Lets the player know the npc stopped following him/her
-        ownerPlayer = null; // Removes its owner
-        navmeshAgent.SetDestination(transform.position);
-        if(followRoutine != null) // Checks if the npc has an active follow routine
+        if(ownerPlayer != null)
         {
-            StopCoroutine(followRoutine);
-            followRoutine = null;
-        }
+            ownerPlayer.followingPassengers.Remove(this); // Lets the player know the npc stopped following him/her
+            ownerPlayer.attachedSplitscreen.UpdateFollowingPlayerAmount();
+            ownerPlayer = null; // Removes its owner
 
-        SetRandomIdleState();
+            if (!death)
+            {
+                navmeshAgent.SetDestination(transform.position);
+                if (followRoutine != null) // Checks if the npc has an active follow routine
+                {
+                    StopCoroutine(followRoutine);
+                    followRoutine = null;
+                }
+
+                SetRandomIdleState();
+            }
+        }
     }
 
     // Keeps the npc updated on where to go
