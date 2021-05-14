@@ -64,7 +64,7 @@ public class GameHandler : MonoBehaviour
         npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
         playerSpawner.onCompletedSpawn += minigameSpawner.Initialize;
         minigameSpawner.onCompleteInit += OnInitFinished;
-        npcSpawner.SpawnNPC();
+        npcSpawner.StartSpawnNPC();
     }
 
     public void OnInitFinished()
@@ -187,11 +187,13 @@ public class GameHandler : MonoBehaviour
     public void PassengerSaved()
     {
         savedPassengers.ChangeScore(1);
+        npcSpawner.aliveNPCCounter.ChangeScore(-1);
     }
 
     public void PassengerDied()
     {
         deadPassengers.ChangeScore(1);
+        npcSpawner.aliveNPCCounter.ChangeScore(-1);
     }
 }
 

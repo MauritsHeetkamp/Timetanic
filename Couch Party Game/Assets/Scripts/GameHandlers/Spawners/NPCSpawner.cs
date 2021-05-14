@@ -20,6 +20,8 @@ public class NPCSpawner : MonoBehaviour
 
     public UnityAction onCompletedSpawn, onRemovedNPCS;
 
+    public Score aliveNPCCounter;
+
     Coroutine killAllNpcsActiveRoutine;
     public UnityAction onKilledAllNpcs;
 
@@ -45,6 +47,22 @@ public class NPCSpawner : MonoBehaviour
     public void SpawnToMax()
     {
         int amountToSpawn = maxNPC - availableNPCs.Count;
+    }
+
+    public GameObject SpawnNPC(Vector3 location)
+    {
+        if(NPCPrefabs.Length > 0)
+        {
+            GameObject selectedPrefab = NPCPrefabs[Random.Range(0, NPCPrefabs.Length)];
+            GameObject spawnedNPC = Instantiate(selectedPrefab, location, Quaternion.identity);
+            spawnedNPC.GetComponent<Passenger>().SetRandomIdleState();
+            spawnedNPC.transform.rotation = Quaternion.LookRotation(new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2)));
+            availableNPCs.Add(spawnedNPC);
+            aliveNPCCounter.ChangeScore(1);
+            return spawnedNPC;
+        }
+
+        return null;
     }
 
     public void KillAliveNPCS()
@@ -88,16 +106,16 @@ public class NPCSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnNPC()
+    public void StartSpawnNPC()
     {
         Debug.Log("FSDFSDF");
-        onRemovedNPCS += ActualSpawnNPC;
+        onRemovedNPCS += ActualStartSpawnNPC;
         StartCoroutine(RemoveAllNPC());
     }
 
-    public void ActualSpawnNPC()
+    public void ActualStartSpawnNPC()
     {
-        onRemovedNPCS -= ActualSpawnNPC;
+        onRemovedNPCS -= ActualStartSpawnNPC;
         StartCoroutine(SpawnNPCRoutine(Random.Range(minNPC, maxNPC + 1)));
     }
 
@@ -116,10 +134,7 @@ public class NPCSpawner : MonoBehaviour
             }
 
             Transform selectedSpawn = availableSpawnLocations[Random.Range(0, availableSpawnLocations.Count)];
-            GameObject newNPC = Instantiate(NPCPrefabs[Random.Range(0, NPCPrefabs.Length)], selectedSpawn.position, selectedSpawn.rotation);
-            newNPC.GetComponent<Passenger>().SetRandomIdleState();
-            newNPC.transform.rotation = Quaternion.LookRotation(new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2)));
-            availableNPCs.Add(newNPC);
+            SpawnNPC(selectedSpawn.position);
             availableSpawnLocations.Remove(selectedSpawn);
 
             yield return null;

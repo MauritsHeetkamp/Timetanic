@@ -150,9 +150,8 @@ public class Minigame : MonoBehaviour
             {
                 int selectedSpawn = Random.Range(0, availableLocations.Count); // Selects spawn location
 
-                GameObject npc = Instantiate(npcObjects[Random.Range(0, npcObjects.Length)], availableLocations[selectedSpawn].position, availableLocations[selectedSpawn].rotation); // Spawns npc
+                GameObject npc = npcSpawner.SpawnNPC(availableLocations[selectedSpawn].position);
                 npc.GetComponent<SphereCollider>().enabled = false; // Makes sure npc doesn't follow players
-                npcSpawner.availableNPCs.Add(npc);
 
                 trappedNPCS.Add(npc); // Adds npc to the trapped npc list
                 availableLocations.RemoveAt(selectedSpawn);

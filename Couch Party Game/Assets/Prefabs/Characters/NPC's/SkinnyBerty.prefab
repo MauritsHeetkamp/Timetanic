@@ -851,10 +851,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1ddaa88af2f1ad44494ecc4a00051b1c, type: 2}
-  - {fileID: 2100000, guid: e9134f3517625bd4ca5445ace135e2a2, type: 2}
-  - {fileID: 2100000, guid: 3352dfa98542aca42a7f76d0a929858b, type: 2}
-  - {fileID: 2100000, guid: 4ad9f7fdf3bdf7740aeb43acb92035c6, type: 2}
+  - {fileID: 2100000, guid: 088238bb6311b0244b84e97beb5be7a7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2646,8 +2643,10 @@ MonoBehaviour:
     pitch: 1
     clip: {fileID: 8300000, guid: b4f6af372cd07da4eb84c9c5b0c59398, type: 3}
     loop: 0
-    minDistance: 1
-    maxDistance: 26.9
+    range: 0
+    targets:
+      serializedVersion: 2
+      m_Bits: 0
   deathParticle: {fileID: 478491665360367903, guid: bc2f8381c6dc5264aa41269742abfa76,
     type: 3}
   deathParticleDuration: 1
