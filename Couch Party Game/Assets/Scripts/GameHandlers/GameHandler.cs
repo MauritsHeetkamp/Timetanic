@@ -10,6 +10,7 @@ public class GameHandler : MonoBehaviour
 {
 
     [Header("CountdownTimer")]
+    [SerializeField] bool timeBasedOnPlayerAmount = true;
     bool almostFinished; // Is the time almost over?
     [SerializeField] CountdownTimer gameTime; // the timer
     [SerializeField] TimeDuration almostFinishedTime; // Timestamp when the time is almost over
@@ -41,10 +42,15 @@ public class GameHandler : MonoBehaviour
     {
         float timerSeconds = gameTime.duration.GetSeconds();
 
+        if (timeBasedOnPlayerAmount)
+        {
+            gameTime.duration.SetSeconds(timerSeconds / PlayerManager.instance.connectedToLobbyPlayers.Count);
+        }
+
         if(shipAnimator != null && timerSeconds > 0)
         {
-            //playbackSpeed = 1 / timerSeconds;
-            //shipAnimator.speed = playbackSpeed;
+            playbackSpeed = timerSeconds / sinkAnim.length;
+            shipAnimator.speed = playbackSpeed;
         }
 
         StartGame();
@@ -326,6 +332,12 @@ namespace Custom.Time
             totalSeconds += seconds;
 
             return totalSeconds;
+        }
+
+        public void SetSeconds(float _seconds)
+        {
+            minutes = Mathf.FloorToInt(_seconds / 60);
+            seconds = _seconds % 60;
         }
     }
 }

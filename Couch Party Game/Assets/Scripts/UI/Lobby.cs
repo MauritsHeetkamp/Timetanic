@@ -86,6 +86,7 @@ public class Lobby : Menu
 
     void SetPlayerCharacter(int playerIndex)
     {
+        Debug.Log(playerIndex);
         LobbyPlayerData icon = playerIcons[playerIndex];
 
         PlayerData player = PlayerManager.instance.connectedToLobbyPlayers[playerIndex];
@@ -240,7 +241,7 @@ public class Lobby : Menu
         if(PlayerManager.instance.connectedToLobbyPlayers.Count < maxPlayers)
         {
             PlayerManager.instance.connectedToLobbyPlayers.Add(player);
-            int playerIndex = PlayerManager.instance.connectedToLobbyPlayers.Count;
+            int playerIndex = PlayerManager.instance.connectedToLobbyPlayers.Count - 1;
             SetPlayerCharacter(playerIndex);
             UpdateSpecificUI(playerIndex);
         }

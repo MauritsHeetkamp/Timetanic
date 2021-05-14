@@ -131,16 +131,20 @@ public class Minigame : MonoBehaviour
 
         if (trappedNPCS.Count == 0)
         {
+            NPCSpawner npcSpawner = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().npcSpawner;
+
             int spawnAmount = Random.Range(minSpawns, maxSpawns); // How many npc's should be spawned
-            spawnAmount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
+
+            if (npcSpawner.spawnBasedOnPlayerAmount)
+            {
+                spawnAmount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
+            }
             if (spawnAmount > spawnLocations.Length)
             {
                 spawnAmount = spawnLocations.Length;
             }
 
             List<Transform> availableLocations = new List<Transform>(spawnLocations);
-
-            NPCSpawner npcSpawner = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().npcSpawner;
 
             for (int i = 0; i < spawnAmount; i++)
             {

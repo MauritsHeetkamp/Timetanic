@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class NPCSpawner : MonoBehaviour
 {
+    public bool spawnBasedOnPlayerAmount;
+
     public List<GameObject> availableNPCs = new List<GameObject>();
     [SerializeField] GameObject[] NPCPrefabs;
     public int minNPC, maxNPC;
@@ -101,7 +103,10 @@ public class NPCSpawner : MonoBehaviour
 
     public IEnumerator SpawnNPCRoutine(int amount)
     {
-        amount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
+        if (spawnBasedOnPlayerAmount)
+        {
+            amount *= PlayerManager.instance.connectedToLobbyPlayers.Count;
+        }
 
         for(int i = 0; i < amount; i++)
         {
