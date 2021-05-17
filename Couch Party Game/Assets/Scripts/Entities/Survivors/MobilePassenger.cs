@@ -30,10 +30,6 @@ public class MobilePassenger : Passenger
     // Start is called before the first frame update
     void Start()
     {
-        if (spawnHandler != null)
-        {
-            spawnHandler.availableNPCs.Add(gameObject);
-        }
 
         navmeshAgent.speed = movementSpeed;
 
@@ -184,7 +180,6 @@ public class MobilePassenger : Passenger
     {
         base.OnDeath();
 
-        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameHandler>().deadPassengers.ChangeScore(1);
         StopFollowTarget();
         Destroy(gameObject);
     }

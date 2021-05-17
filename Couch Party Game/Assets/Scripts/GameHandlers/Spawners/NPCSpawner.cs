@@ -55,7 +55,11 @@ public class NPCSpawner : MonoBehaviour
         {
             GameObject selectedPrefab = NPCPrefabs[Random.Range(0, NPCPrefabs.Length)];
             GameObject spawnedNPC = Instantiate(selectedPrefab, location, Quaternion.identity);
-            spawnedNPC.GetComponent<Passenger>().SetRandomIdleState();
+
+            Passenger passenger = spawnedNPC.GetComponent<Passenger>();
+
+            passenger.SetRandomIdleState();
+            passenger.spawnHandler = this;
             spawnedNPC.transform.rotation = Quaternion.LookRotation(new Vector3(Random.Range(-1, 2), 0, Random.Range(-1, 2)));
             availableNPCs.Add(spawnedNPC);
             aliveNPCCounter.ChangeScore(1);

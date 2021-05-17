@@ -15,10 +15,7 @@ public class Passenger : MovingEntity
 
     private void Start()
     {
-        if(spawnHandler != null)
-        {
-            spawnHandler.availableNPCs.Add(gameObject);
-        }
+
     }
 
     public override void Knockback(Vector3 globalKnockbackVelocity)
