@@ -24,6 +24,7 @@ public class CameraHandler : MonoBehaviour
     [SerializeField] GameObject splitscreen; // Split screen prefab
     [SerializeField] Transform splitscreenImageHolder; // Transform that holds all the splitscreens
     [SerializeField] List<Splitscreen> splitscreens = new List<Splitscreen>();
+    [SerializeField] Vector3 targetCanvasReferenceResolution = new Vector2(1920, 1080);
 
     Vector3 targetLocation;
     public bool isSplit;
@@ -51,12 +52,12 @@ public class CameraHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        options.onResolutionChanged += RescaleSplitscreens;
+        //options.onResolutionChanged += RescaleSplitscreens;
     }
 
     private void OnDisable()
     {
-        options.onResolutionChanged -= RescaleSplitscreens;
+        //options.onResolutionChanged -= RescaleSplitscreens;
     }
 
     public void ForceSplit(bool split)
@@ -196,8 +197,8 @@ public class CameraHandler : MonoBehaviour
             }
         }
 
-        float splitscreenSizeX = Screen.width / powerOf; // Calculates the x size of one splitscreen
-        float splitscreenSizeY = playerAmount > 2 ? Screen.height / powerOf : Screen.height; // Calculates the y size of one splitscreen
+        float splitscreenSizeX = targetCanvasReferenceResolution.x / powerOf; // Calculates the x size of one splitscreen
+        float splitscreenSizeY = playerAmount > 2 ? targetCanvasReferenceResolution.y / powerOf : targetCanvasReferenceResolution.y; // Calculates the y size of one splitscreen
 
 
         GridLayoutGroup layout = splitscreenImageHolder.GetComponent<GridLayoutGroup>(); // Gets the grid layout element
