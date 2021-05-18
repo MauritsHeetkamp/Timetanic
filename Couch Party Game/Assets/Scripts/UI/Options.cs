@@ -176,6 +176,8 @@ public class Options : MonoBehaviour
             data.Add(new DropdownData("Off", () => SetFullscreen(false)));
             data.Add(new DropdownData("On", () => SetFullscreen(true)));
 
+            fullscreenSettings.selected = Screen.fullScreen ? 1 : 0;
+
             fullscreenSettings.Initialize(data.ToArray());
         }
     }
@@ -202,7 +204,14 @@ public class Options : MonoBehaviour
             resolution.refreshRate = refreshRate;
         }
 
-        Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, Screen.fullScreen, refreshRate);
+        Vector2 targetResolution = new Vector2(Screen.currentResolution.width, Screen.currentResolution.height);
+
+        if(PlayerPrefs.HasKey("ResolutionWidth") && PlayerPrefs.HasKey("ResolutionHeight"))
+        {
+            targetResolution = new Vector2(PlayerPrefs.GetInt("ResolutionWidth"), PlayerPrefs.GetInt("ResolutionHeight"));
+        }
+
+        Screen.SetResolution((int)targetResolution.x, (int)targetResolution.y, Screen.fullScreen, refreshRate);
     }
 
     public void SetResolution(Resolution resolution)

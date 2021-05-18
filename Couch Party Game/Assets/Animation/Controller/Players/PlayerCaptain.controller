@@ -1020,12 +1020,12 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Priority animations
     m_StateMachine: {fileID: 4296587778623427103}
-    m_Mask: {fileID: 31900000, guid: c9aa30ed7f82c1d47a42c29e1c02bf22, type: 2}
+    m_Mask: {fileID: 31900000, guid: 6cb0524d84ed8c84e9c47d6a880d7058, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0.5
+    m_DefaultWeight: 1
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}

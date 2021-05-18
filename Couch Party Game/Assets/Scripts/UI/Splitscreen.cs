@@ -71,9 +71,19 @@ public class Splitscreen : MonoBehaviour
         passengerCountText.text = owner.followingPassengers.Count.ToString() + "/" + owner.maxFollowingPassengers.ToString();
     }
 
+    public void SetItemInstant(Sprite newImage, string itemName)
+    {
+        if (itemImage.sprite != newImage || itemName != itemText.text)
+        {
+            string selectedItemName = newImage != null ? itemName : noItemText;
+            itemText.text = selectedItemName;
+            itemImage.sprite = newImage;
+        }
+    }
+
     public void SetItem(Sprite newImage, string itemName)
     {
-        if(itemImage.sprite != newImage)
+        if(itemImage.sprite != newImage || itemName != itemText.text)
         {
             string selectedItemName = newImage != null ? itemName : noItemText;
 

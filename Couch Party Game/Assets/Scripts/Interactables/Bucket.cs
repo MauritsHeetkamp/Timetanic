@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Bucket : Extuingisher
 {
+    [SerializeField] string unfilledName, filledName;
+    [SerializeField] Sprite unfilledSprite, filledSprite;
+
     [SerializeField] Vector3 collsionCheckLocationOffset;
     [SerializeField] float waterCollisionCheckRange;
     [SerializeField] Transform bucketFiller;
@@ -20,6 +23,21 @@ public class Bucket : Extuingisher
 
     [SerializeField] float filledAmount;
     [SerializeField] float capacity;
+
+    private void Start()
+    {
+        if(filledAmount <= 0)
+        {
+            grabbableName = unfilledName;
+            grabbableImage = unfilledSprite;
+        }
+        else
+        {
+            grabbableName = filledName;
+            grabbableImage = filledSprite;
+        }
+    }
+
     public override bool CheckUse()
     {
         if (canUse)
@@ -94,6 +112,10 @@ public class Bucket : Extuingisher
 
             if (amountToRemove != 0)
             {
+                if(filledAmount == 0 && !string.IsNullOrEmpty(filledName) && filledSprite != null)
+                {
+                    ChangeGrabbableData(filledName, filledSprite);
+                }
                 filledAmount += amountToRemove;
                 removeableWater.ChangeWaterAmount(-amountToRemove);
             }
@@ -156,6 +178,12 @@ public class Bucket : Extuingisher
     IEnumerator EmptyBucket()
     {
         Debug.Log("EMPTYING");
+
+        if (!string.IsNullOrEmpty(unfilledName) && unfilledSprite != null)
+        {
+            ChangeGrabbableData(unfilledName, unfilledSprite);
+        }
+
         Vector3 targetScale = Vector3.zero;
         Vector3 targetLocation = Vector3.zero;
         currentInteractingPlayer.animator.SetTrigger(emptyAnim);
@@ -213,6 +241,7 @@ public class Bucket : Extuingisher
             bucketFiller.localScale = Vector3.MoveTowards(bucketFiller.localScale, targetScale, fillSpeed);
         }
         filledAmount = 0;
+
         canUse = true;
     }
 

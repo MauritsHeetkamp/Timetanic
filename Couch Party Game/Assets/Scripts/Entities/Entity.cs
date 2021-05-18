@@ -22,6 +22,7 @@ public class Entity : Damagable
     public float deathParticleDuration = 1;
 
     [SerializeField] Transform center;
+    public Transform leftHand, rightHand;
 
     // Toggles movement
     public virtual void ToggleMovement()
@@ -123,5 +124,10 @@ public class Entity : Damagable
     public virtual void OnStoppedKnockback()
     {
         Disable(false);
+    }
+
+    public enum BodyPart
+    {
+        player, leftHand, rightHand
     }
 }

@@ -24925,7 +24925,7 @@ MonoBehaviour:
   qualitySettings: {fileID: 1030722550}
   resolutionSettings: {fileID: 2140639107}
   refreshRateSettings: {fileID: 1397108278}
-  refreshRates: 
+  refreshRates: 160000001e0000003c00000078000000c8000000
   defaultRefreshRate: 60
   fullscreenSettings: {fileID: 937748813}
 --- !u!1 &623292848
@@ -71242,9 +71242,10 @@ MonoBehaviour:
     resultGrade: {fileID: -8720503527412919979, guid: c0391c7a2f871144d9a875e0926ae2d8,
       type: 3}
     spriteSize: {x: 147.8, y: 163.6}
-    passed: 1
+    passed: 0
   scorePerPassenger: 1
   remainingTimeMultiplier: 1
+  scoreDecimalAmount: 2
   timeLeftText: {fileID: 1625533778}
   passengersSavedText: {fileID: 1076827497}
   passengersDiedText: {fileID: 372414666}

@@ -5,11 +5,23 @@ using UnityEngine.Audio;
 
 public class SaveSystem : MonoBehaviour
 {
+    public static bool resetPlayerprefs = false;
+
     public static SaveSystem instance;
     public int currentResWidth, currentResHeigth;
     [SerializeField] AudioMixer audio;
     [SerializeField] string sfxName, backgroundMusicName, masterAudioName;
 
+    [SerializeField] bool defaultFullscreen = true;
+
+    private void Awake()
+    {
+        if (resetPlayerprefs)
+        {
+            resetPlayerprefs = false;
+            PlayerPrefs.DeleteAll();
+        }
+    }
 
     private void Start()
     {
@@ -96,6 +108,10 @@ public class SaveSystem : MonoBehaviour
         if (PlayerPrefs.HasKey("Fullscreen"))
         {
             Screen.fullScreen = PlayerPrefs.GetInt("Fullscreen") == 0 ? false : true;
+        }
+        else
+        {
+            Screen.fullScreen = defaultFullscreen;
         }
     }
 

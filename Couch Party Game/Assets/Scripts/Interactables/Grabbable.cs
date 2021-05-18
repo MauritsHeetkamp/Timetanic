@@ -10,7 +10,7 @@ public class Grabbable : Interactable
     public string grabbableName;
 
     public Rigidbody rigid;
-    public string itemName;
+    [SerializeField] Entity.BodyPart partToAttachTo;
     [SerializeField] Vector3 itemLocalPosition, itemLocalEulers; // Position and Rotation data
     [SerializeField] Transform leftHandle, rightHandle; // Handles for Inverse Kinematics (IK) rigs
     public string holdingParam;
@@ -31,13 +31,47 @@ public class Grabbable : Interactable
         currentInteractingPlayer.FinishedInteract();
     }
 
+    public void ChangeGrabbableData(Sprite newImage)
+    {
+        grabbableImage = newImage;
+        currentInteractingPlayer.attachedSplitscreen.SetItem(grabbableImage, grabbableName);
+    }
+
+    public void ChangeGrabbableData(string newName)
+    {
+        grabbableName = newName;
+        currentInteractingPlayer.attachedSplitscreen.SetItem(grabbableImage, grabbableName);
+    }
+
+    public void ChangeGrabbableData(string newName, Sprite newImage)
+    {
+        grabbableImage = newImage;
+        grabbableName = newName;
+        currentInteractingPlayer.attachedSplitscreen.SetItem(grabbableImage, grabbableName);
+    }
+
     // Attaches grabbable to player
     public virtual void Attach()
     {
         rigid.isKinematic = true; // Disables physics
         GetComponent<Collider>().enabled = false;
         currentInteractingPlayer.currentHoldingItem = this; // Lets player know its holding an item
-        transform.parent = currentInteractingPlayer.transform;
+
+        switch (partToAttachTo)
+        {
+            case Entity.BodyPart.player:
+                transform.parent = currentInteractingPlayer.transform;
+                break;
+
+            case Entity.BodyPart.leftHand:
+                transform.parent = currentInteractingPlayer.leftHand;
+                break;
+
+            case Entity.BodyPart.rightHand:
+                transform.parent = currentInteractingPlayer.rightHand;
+                break;
+        }
+
         transform.localPosition = itemLocalPosition;
         transform.localEulerAngles = itemLocalEulers;
 

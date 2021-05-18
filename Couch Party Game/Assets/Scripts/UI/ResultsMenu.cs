@@ -39,6 +39,7 @@ public class ResultsMenu : MonoBehaviour
 
 
     [Header("UI Elements")]
+    [SerializeField] int scoreDecimalAmount;
     [SerializeField] TextMeshProUGUI timeLeftText;
     [SerializeField] TextMeshProUGUI passengersSavedText;
     [SerializeField] TextMeshProUGUI passengersDiedText;
@@ -216,7 +217,7 @@ public class ResultsMenu : MonoBehaviour
         passengersDiedText.text = passengersDied.ToString();
 
         totalScore = scoreFromTime + scoreFromPassengers - scoreRemovalFromPassengers;
-        totalScoreText.text = totalScore.ToString();
+        totalScoreText.text = totalScore.ToString("F" + scoreDecimalAmount.ToString());
 
         float savedPercentage = 0;
         int totalPassengers = passengersDied + passengersSaved;
@@ -345,7 +346,7 @@ public class ResultsMenu : MonoBehaviour
                 if (scoreFromTime != 0)
                 {
                     totalScore += scoreFromTime / remainingSeconds; ;
-                    totalScoreText.text = totalScore.ToString("F0");
+                    totalScoreText.text = totalScore.ToString("F" + scoreDecimalAmount.ToString());
                 }
             }
 
@@ -365,7 +366,7 @@ public class ResultsMenu : MonoBehaviour
         timeLeftText.text = timer.remainingMinutes + ":" + secondsText;
 
         totalScore = scoreFromTime;
-        totalScoreText.text = scoreFromTime.ToString();
+        totalScoreText.text = scoreFromTime.ToString("F" + scoreDecimalAmount.ToString());
 
         onCompletedStep -= CalculateAlivePassengers;
         onCompletedStep += CalculateDeadPassengers;
@@ -403,7 +404,7 @@ public class ResultsMenu : MonoBehaviour
             passengersSavedText.text = passengersSavedAmount.ToString();
 
             totalScore += scoreFromPassengers / countAmount;
-            totalScoreText.text = totalScore.ToString("F0");
+            totalScoreText.text = totalScore.ToString("F" + scoreDecimalAmount.ToString());
         }
 
         yield return new WaitForSeconds(delayBetweenCounts);
@@ -418,7 +419,7 @@ public class ResultsMenu : MonoBehaviour
     {
         passengersSavedText.text = passengersSaved.ToString();
         totalScore = scoreFromTime + scoreFromPassengers;
-        totalScoreText.text = totalScore.ToString();
+        totalScoreText.text = totalScore.ToString("F" + scoreDecimalAmount.ToString());
 
         onCompletedStep -= CalculateDeadPassengers;
         onCompletedStep += ShowResult;
@@ -456,7 +457,7 @@ public class ResultsMenu : MonoBehaviour
             passengersDiedText.text = passengersDiedAmount.ToString();
 
             totalScore -= scoreRemovalFromPassengers / countAmount;
-            totalScoreText.text = totalScore.ToString("F0");
+            totalScoreText.text = totalScore.ToString("F" + scoreDecimalAmount.ToString());
         }
 
         yield return new WaitForSeconds(delayBetweenCounts);

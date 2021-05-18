@@ -652,6 +652,8 @@ MonoBehaviour:
     type: 3}
   deathParticleDuration: 1
   center: {fileID: 20554726411175966}
+  leftHand: {fileID: 1459783292149897602}
+  rightHand: {fileID: 397344011633502523}
   movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player
@@ -704,6 +706,7 @@ MonoBehaviour:
   interactableLayers:
     serializedVersion: 2
     m_Bits: 512
+  nearestInteractable: {fileID: 0}
   interactDelay: 0
   canInteract: 1
   currentUsingInteractable: {fileID: 0}
@@ -932,6 +935,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65a83fe879dd9004b81daae4d64d3c45, type: 3}
+--- !u!4 &397344011633502523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5750386841838306690, guid: 65a83fe879dd9004b81daae4d64d3c45,
+    type: 3}
+  m_PrefabInstance: {fileID: 5354459004234984633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1459783292149897602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6777052346317043003, guid: 65a83fe879dd9004b81daae4d64d3c45,
+    type: 3}
+  m_PrefabInstance: {fileID: 5354459004234984633}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3687657966344593885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8747096008431406436, guid: 65a83fe879dd9004b81daae4d64d3c45,

@@ -2320,7 +2320,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577693671804365907}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: cf184a57a479abd4ea8692a308ec48ac, type: 3}
   m_Controller: {fileID: 9100000, guid: d5ec8649e266bf24aa6dd3d161d8d442, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -2365,6 +2365,8 @@ MonoBehaviour:
     type: 3}
   deathParticleDuration: 1
   center: {fileID: 3662011785507972339}
+  leftHand: {fileID: 2143231750862783401}
+  rightHand: {fileID: 2818175317178797556}
   movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player
