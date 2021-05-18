@@ -8,6 +8,7 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] RoleSpawnLocation[] allRoleSpawnLocations; // All spawn locations (role based)
     [SerializeField] SpawnLocation[] allSpawnLocations;
 
+    [SerializeField] LayerMask keyboardCullingMask, consoleCullingMask;
 
     [SerializeField] SpawnLocation defaultSpawn; // Default spawn when no other location is available
     [SerializeField] bool onlyUniqueCharacters = true; // Can people play with the same character skin
@@ -119,6 +120,15 @@ public class PlayerSpawner : MonoBehaviour
         Player newCharacter = Instantiate(character, location.location.position, location.location.rotation).GetComponent<Player>(); // Spawns player and stores player script
         newCharacter.owner = data;
         newCharacter.playerSpawner = this;
+
+        if(data.inputType == PlayerData.InputType.Keyboard)
+        {
+            newCharacter.actualCameraTransform.GetComponent<Camera>().cullingMask = keyboardCullingMask;
+        }
+        else
+        {
+            newCharacter.actualCameraTransform.GetComponent<Camera>().cullingMask = consoleCullingMask;
+        }
 
         if(location.wantedCameraDirection != null)
         {

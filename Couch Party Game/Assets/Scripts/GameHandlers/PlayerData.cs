@@ -10,6 +10,7 @@ public class PlayerData : MonoBehaviour
     bool canInteract = true;
     public PlayerCharacterData preferredPlayer;
 
+    public InputType inputType;
 
     public bool isConnected = true;
     public PlayerInput playerInput; // Connected input scheme
@@ -54,6 +55,15 @@ public class PlayerData : MonoBehaviour
     private void Start()
     {
         canInteract = true;
+
+        if (playerInput.devices[0].displayName.Contains("Keyboard") || playerInput.devices[0].displayName.Contains("keyboard"))
+        {
+            inputType = InputType.Keyboard;
+        }
+        else
+        {
+            inputType = InputType.Controller;
+        }
     }
 
     public void AnyButtonPressed(InputAction.CallbackContext context)
@@ -217,5 +227,10 @@ public class PlayerData : MonoBehaviour
         {
             onMenuEnd.Invoke(context, this);
         }
+    }
+
+    public enum InputType
+    {
+        Keyboard, Controller
     }
 }

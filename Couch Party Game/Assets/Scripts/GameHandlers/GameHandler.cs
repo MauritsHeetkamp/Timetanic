@@ -5,9 +5,12 @@ using Custom.Time;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GameHandler : MonoBehaviour
 {
+    [SerializeField] IngameFadeManager fadeManager;
+    FadePanel currentFadePanel;
 
     [Header("CountdownTimer")]
     [SerializeField] bool timeBasedOnPlayerAmount = true;
@@ -38,7 +41,11 @@ public class GameHandler : MonoBehaviour
     [SerializeField] MinigameHandler minigameSpawner;
     [SerializeField] VoicelineHandler voicelineHandler;
 
-    private void Awake()
+    [Header("Cutscenes")]
+    [SerializeField] CutsceneHandler cutsceneHandler;
+    [SerializeField] VideoClip initCutscene;
+
+    private void Start()
     {
         float timerSeconds = gameTime.duration.GetSeconds();
 
@@ -49,16 +56,60 @@ public class GameHandler : MonoBehaviour
 
         if(shipAnimator != null && timerSeconds > 0)
         {
-            playbackSpeed = timerSeconds / sinkAnim.length;
+            float playbackSpeed = sinkAnim.length / timerSeconds;
+            playbackSpeed /= PlayerManager.instance.connectedToLobbyPlayers.Count;
+
             shipAnimator.speed = playbackSpeed;
         }
 
-        StartGame();
+        StartCutscene();
+    }
+
+    public void StartCutscene()
+    {
+        if(cutsceneHandler != null && initCutscene != null)
+        {
+            Cutscene newCutscene = cutsceneHandler.StartNewCutscene(initCutscene);
+
+            if (fadeManager == null)
+            {
+                IngameFadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>(); // Finds fade handler
+            }
+
+        if (sceneSwapper.fader != null)
+        {
+            sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
+        }
+
+            newCutscene.onCompletedCutscene += PrepareStartGame;
+            newCutscene.onCompletedCutscene += () => Destroy(newCutscene.gameObject);
+        }
+        else
+        {
+            StartGame();
+        }
+    }
+
+    public void PrepareStartGame()
+    {
+        Debug.Log("PREP1");
+        if(fadeManager != null)
+        {
+            Debug.Log("PREP2");
+            currentFadePanel = fadeManager.FadeIn(0, false);
+            currentFadePanel.onFadedIn += StartGame;
+        }
     }
 
     // Starts the game
     public void StartGame()
-    {      
+    {
+        Debug.Log("STARTED");
+
+        if(currentFadePanel != null)
+        {
+            currentFadePanel.onFadedIn -= StartGame;
+        }
         StartStopCountdown(true, true); // Starts and resets timer
 
         npcSpawner.onCompletedSpawn += playerSpawner.GetSpawnData;
@@ -72,16 +123,21 @@ public class GameHandler : MonoBehaviour
         npcSpawner.onCompletedSpawn -= playerSpawner.GetSpawnData;
         playerSpawner.onCompletedSpawn -= minigameSpawner.Initialize;
         minigameSpawner.onCompleteInit -= OnInitFinished;
-        if (sceneSwapper.fader != null)
-        {
-            sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
-        }
         uiManager.canvasGroup.alpha = 1;
 
         if(voicelineHandler != null)
         {
             voicelineHandler.InitVoicelineHandler();
             voicelineHandler.StartStopAnnouncer(true);
+        }
+
+        if(fadeManager != null && currentFadePanel != null)
+        {
+            fadeManager.FadeOut(currentFadePanel);
+        }
+        else
+        {
+            sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
         }
     }
 

@@ -95,12 +95,12 @@ public class FadeManager : MonoBehaviour
         modifyAmount /= duration; // Calculates fade amount per second
         modifyAmount *= 2; // Makes fade duration for both sides
 
-        yield return null;
+        yield return new WaitForEndOfFrame();
         while (target.fadePanel.color.a < 1)
         {
-            newColor.a += modifyAmount * Time.deltaTime;
+            newColor.a += modifyAmount * Time.unscaledDeltaTime;
             target.fadePanel.color = newColor;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         if (target.onFadedIn != null)
@@ -120,9 +120,9 @@ public class FadeManager : MonoBehaviour
 
         while (target.fadePanel.color.a > 0)
         {
-            newColor.a += modifyAmount * Time.deltaTime;
+            newColor.a += modifyAmount * Time.unscaledDeltaTime;
             target.fadePanel.color = newColor;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         if (target.onFadedOut != null)
@@ -156,12 +156,12 @@ public class FadeManager : MonoBehaviour
         modifyAmount /= duration; // Calculates fade amount per second
         modifyAmount /= 2; // Makes fade duration for both sides
 
-        yield return null;
+        yield return new WaitForEndOfFrame();
         while (target.fadePanel.color.a > 0)
         {
-            newColor.a += modifyAmount * Time.deltaTime;
+            newColor.a += modifyAmount * Time.unscaledDeltaTime;
             target.fadePanel.color = newColor;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         if (target.onFadedOut != null)
@@ -197,12 +197,12 @@ public class FadeManager : MonoBehaviour
         modifyAmount /= duration; // Calculates fade amount per second
         modifyAmount /= 2; // Makes fade duration for both sides
 
-        yield return null;
+        yield return new WaitForEndOfFrame();
         while (target.fadePanel.color.a < 1)
         {
-            newColor.a += modifyAmount * Time.deltaTime;
+            newColor.a += modifyAmount * Time.unscaledDeltaTime;
             target.fadePanel.color = newColor;
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         if (target.onFadedIn != null)

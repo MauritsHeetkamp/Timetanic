@@ -64,25 +64,53 @@ public class MobilePassenger : Passenger
             switch (state)
             {
                 case AIState.Idle:
-                    navmeshAgent.isStopped = true;
+                    try
+                    {
+                        navmeshAgent.isStopped = true;
+                    }
+                    catch
+                    {
+
+                    }
                     animator.SetBool(runString, false);
                     break;
 
                 case AIState.IdleScared:
-                    navmeshAgent.isStopped = true;
+                    try
+                    {
+                        navmeshAgent.isStopped = true;
+                    }
+                    catch
+                    {
+
+                    }
                     animator.SetBool(runString, false);
                     currentBehaviourRoutine = StartCoroutine(ScaredBehaviourRoutine());
                     break;
 
                 case AIState.RunningAround:
 
-                    navmeshAgent.isStopped = false;
+                    try
+                    {
+                        navmeshAgent.isStopped = false;
+                    }
+                    catch
+                    {
+
+                    }
                     animator.SetBool(runString, true);
                     currentBehaviourRoutine = StartCoroutine(RunAround());
                     break;
 
                 case AIState.Following:
-                    navmeshAgent.isStopped = false;
+                    try
+                    {
+                        navmeshAgent.isStopped = false;
+                    }
+                    catch
+                    {
+
+                    }
                     animator.SetBool(runString, true);
                     break;
             }
@@ -96,13 +124,20 @@ public class MobilePassenger : Passenger
         Vector3 targetLocation = new Vector3(origin.x + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin), origin.y, origin.z + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin));
         Vector3 lastLocation = targetLocation;
 
+        bool forceNewLocation = false;
+
         while (true)
         {
             debucLoc = targetLocation;
-            if(Vector3.Distance(transform.position, targetLocation) <= distanceBeforeNewPoint)
+            if(Vector3.Distance(transform.position, targetLocation) <= distanceBeforeNewPoint || forceNewLocation)
             {
                 lastLocation = targetLocation;
                 targetLocation = new Vector3(origin.x + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin), origin.y, origin.z + Random.Range(-runAroundDistanceFromOrigin, runAroundDistanceFromOrigin));
+
+                if (forceNewLocation)
+                {
+                    forceNewLocation = false;
+                }
 
                 while (minimalDistanceFromLastPoint != 0 && Vector3.Distance(lastLocation, targetLocation) < minimalDistanceFromLastPoint)
                 {
@@ -111,7 +146,10 @@ public class MobilePassenger : Passenger
                 }
             }
 
-            navmeshAgent.SetDestination(targetLocation);
+            if (!navmeshAgent.SetDestination(targetLocation))
+            {
+                forceNewLocation = true;
+            }
 
             yield return new WaitForSeconds(delayBeforeNextCheck);
         }

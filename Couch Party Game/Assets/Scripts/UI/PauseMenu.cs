@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PauseMenu : MonoBehaviour
                 {
                     data.onMenuStart += masterUI.OpenMenu;
                     data.onMenuEnd += masterUI.CloseMenu;
+                    data.onMenuStart += Pause;
+                    data.onMenuEnd += Resume;
                 }
             }
         }
@@ -36,9 +39,21 @@ public class PauseMenu : MonoBehaviour
                 {
                     data.onMenuStart -= masterUI.OpenMenu;
                     data.onMenuEnd -= masterUI.CloseMenu;
+                    data.onMenuStart -= Pause;
+                    data.onMenuEnd -= Resume;
                 }
             }
         }
+    }
+
+    public void Pause(InputAction.CallbackContext context, PlayerData owner)
+    {
+        Time.timeScale = 0;
+    }
+
+    public void Resume(InputAction.CallbackContext context, PlayerData owner)
+    {
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
