@@ -7,12 +7,20 @@ public class SeaWater : MonoBehaviour
     [SerializeField] LayerMask effectableLayers;
     [SerializeField] Vector3 offset;
 
+    [SerializeField] float sfxDelay = 0.2f;
+    [SerializeField] bool canPlaySFX;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    IEnumerator SFXCooldown()
+    {
+        yield return new WaitForSecondsRealtime(sfxDelay);
+        canPlaySFX = true;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -35,8 +43,27 @@ public class SeaWater : MonoBehaviour
                 Entity thisEntity = other.GetComponent<Entity>();
 
                 Passenger passenger = other.GetComponent<Passenger>();
+                Player player = other.GetComponent<Player>();
 
-                if(passenger != null)
+                if (SoundManager.instance != null && thisEntity.drownSFX.clip != null)
+                {
+                    if (canPlaySFX)
+                    {
+                        canPlaySFX = false;
+                        StartCoroutine(SFXCooldown());
+
+                        if(player != null)
+                        {
+                            Destroy(SoundManager.instance.SpawnAudio(thisEntity.drownSFX.clip, thisEntity.drownSFX.loop, thisEntity.drownSFX.pitch, thisEntity.drownSFX.volume), thisEntity.drownSFX.clip.length);
+                        }
+                        else
+                        {
+                            Destroy(SoundManager.instance.Spawn3DAudio(thisEntity.drownSFX, thisEntity.transform.position), thisEntity.drownSFX.clip.length);
+                        }
+                    }
+                }
+
+                if (passenger != null)
                 {
                     if(passenger.currentState != Passenger.AIState.Rescued)
                     {

@@ -2367,6 +2367,15 @@ MonoBehaviour:
   center: {fileID: 3662011785507972339}
   leftHand: {fileID: 2143231750862783401}
   rightHand: {fileID: 2818175317178797556}
+  drownSFX:
+    volume: 1
+    pitch: 1
+    clip: {fileID: 8300000, guid: 97283173b96cf8340abd4453b7b4845b, type: 3}
+    loop: 0
+    range: 15
+    targets:
+      serializedVersion: 2
+      m_Bits: 16384
   movementSpeed: 5
   owner: {fileID: 0}
   characterControlScheme: Player

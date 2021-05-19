@@ -24,6 +24,8 @@ public class Entity : Damagable
     [SerializeField] Transform center;
     public Transform leftHand, rightHand;
 
+    public ThreeDAudioPrefab drownSFX;
+
     // Toggles movement
     public virtual void ToggleMovement()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Custom.Audio;
 
 public class RescueBoat : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class RescueBoat : MonoBehaviour
 
     [SerializeField] GameObject poofParticle;
     [SerializeField] float particleDuration = 1;
+    [SerializeField] AudioPrefab collectSound;
+    [SerializeField] float collectDelay = 0.2f;
+    bool canPlaySFX = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +24,12 @@ public class RescueBoat : MonoBehaviour
     void Update()
     {
         
+    }
+
+    IEnumerator SFXCooldown()
+    {
+        yield return new WaitForSecondsRealtime(collectDelay);
+        canPlaySFX = true;
     }
 
     public void SeatTarget(Collider col)
@@ -37,6 +48,17 @@ public class RescueBoat : MonoBehaviour
                 if (passenger != null && passenger.ownerPlayer == null || entity != null && entity.disables > 0)
                 {
                     return;
+                }
+
+                if(SoundManager.instance != null)
+                {
+                    if (canPlaySFX && collectSound.clip != null)
+                    {
+                        canPlaySFX = false;
+                        GameObject newSFX = SoundManager.instance.SpawnAudio(collectSound.clip, collectSound.loop, collectSound.pitch, collectSound.volume);
+                        Destroy(newSFX, collectSound.clip.length);
+                        StartCoroutine(SFXCooldown());
+                    }
                 }
 
                 GameObject newSeatPoof = Instantiate(poofParticle, seat.seatLocation.position, Quaternion.identity);

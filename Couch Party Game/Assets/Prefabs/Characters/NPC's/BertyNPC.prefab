@@ -2574,7 +2574,7 @@ GameObject:
   - component: {fileID: 310151305050374320}
   - component: {fileID: 3879468390142750831}
   m_Layer: 13
-  m_Name: SkinnyBerty
+  m_Name: BertyNPC
   m_TagString: Passenger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2651,6 +2651,17 @@ MonoBehaviour:
     type: 3}
   deathParticleDuration: 1
   center: {fileID: 1933479251146376140}
+  leftHand: {fileID: 0}
+  rightHand: {fileID: 0}
+  drownSFX:
+    volume: 1
+    pitch: 1
+    clip: {fileID: 8300000, guid: 97283173b96cf8340abd4453b7b4845b, type: 3}
+    loop: 0
+    range: 15
+    targets:
+      serializedVersion: 2
+      m_Bits: 16384
   movementSpeed: 5
   spawnHandler: {fileID: 0}
   ownerPlayer: {fileID: 0}

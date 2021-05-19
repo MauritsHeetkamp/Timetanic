@@ -352,6 +352,11 @@ MonoBehaviour:
   poofParticle: {fileID: 478491665360367903, guid: bc2f8381c6dc5264aa41269742abfa76,
     type: 3}
   particleDuration: 1
+  collectSound:
+    volume: 1
+    pitch: 1
+    clip: {fileID: 8300000, guid: ef9cd0c7fd365494083147b373a9b42d, type: 3}
+    loop: 0
 --- !u!1 &4742824129744901313
 GameObject:
   m_ObjectHideFlags: 0
