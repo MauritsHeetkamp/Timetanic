@@ -5,6 +5,7 @@ using Custom.Time;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Custom.Audio;
 using UnityEngine.Video;
 
 public class GameHandler : MonoBehaviour
@@ -44,6 +45,11 @@ public class GameHandler : MonoBehaviour
     [Header("Cutscenes")]
     [SerializeField] CutsceneHandler cutsceneHandler;
     [SerializeField] VideoClip initCutscene;
+    [SerializeField] AudioPrefab cutsceneAudio;
+
+    [Header("StartOfGame")]
+    public NotificationHandler notificationHandler;
+    [SerializeField] NotificationHandler.NotificationData startOfGameNotification;
 
     private void Start()
     {
@@ -69,6 +75,11 @@ public class GameHandler : MonoBehaviour
     {
         if(cutsceneHandler != null && initCutscene != null)
         {
+            if(SoundManager.instance != null && cutsceneAudio.clip != null)
+            {
+                SoundManager.instance.SetBackgroundMusic(cutsceneAudio, false);
+            }
+
             Cutscene newCutscene = cutsceneHandler.StartNewCutscene(initCutscene);
 
             if (fadeManager == null)
@@ -76,11 +87,11 @@ public class GameHandler : MonoBehaviour
                 IngameFadeManager fadeManager = GameObject.FindGameObjectWithTag("GlobalFader").GetComponent<IngameFadeManager>(); // Finds fade handler
             }
 
-        if (sceneSwapper.fader != null)
-        {
+            if (sceneSwapper.fader != null)
+            {
             sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
-        }
-
+            }
+    
             newCutscene.onCompletedCutscene += PrepareStartGame;
             newCutscene.onCompletedCutscene += () => Destroy(newCutscene.gameObject);
         }
@@ -92,6 +103,10 @@ public class GameHandler : MonoBehaviour
 
     public void PrepareStartGame()
     {
+        if(SoundManager.instance != null)
+        {
+            SoundManager.instance.ShuffleBackgroundAudio(false);
+        }
         Debug.Log("PREP1");
         if(fadeManager != null)
         {
@@ -138,6 +153,11 @@ public class GameHandler : MonoBehaviour
         else
         {
             sceneSwapper.fadeManager.FadeOut(sceneSwapper.fader);
+        }
+
+        if(notificationHandler != null)
+        {
+            notificationHandler.ActivateNotification(startOfGameNotification);
         }
     }
 

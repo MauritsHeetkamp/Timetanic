@@ -14,6 +14,8 @@
 		_DepthBaseMultiplier("Depth Base Multiplier", float) = 0
 		_DepthColor("Depth Color", float) = 0
 		_Smoothness("Smoothness", Range(0, 1)) = 0
+
+		_LightingAmount("Force Diffuse Amount", Range(0, 1)) = 0
     }
     SubShader
     {
@@ -63,6 +65,7 @@
 				float _DepthBaseMultiplier;
 				float _DepthColor;
 				float _Smoothness;
+				float _LightingAmount;
 				
 
 				float WorleyNoise(float4 worldPos)
@@ -92,6 +95,10 @@
 				float GetDiffuse(float3 worldNormalDir)
 				{
 					float diffuseAmount = max(0, dot(_WorldSpaceLightPos0, worldNormalDir));
+					if (_LightingAmount > 0) 
+					{
+						diffuseAmount = _LightingAmount;
+					}
 					return diffuseAmount;
 				}
 

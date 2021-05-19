@@ -16,8 +16,8 @@ public class SoundManager : MonoBehaviour
     public List<AudioPrefab> playlist = new List<AudioPrefab>(); // Audio playlist
     Coroutine swapBackgroundRoutine; // Coroutine that swaps background music
     Coroutine currentMusicRoutine; // Coroutine that tracks the current background music and its duration
+    Coroutine endBackgroundRoutine;
     float currentDurationPassed;
-
 
     void Awake()
     {
@@ -79,7 +79,48 @@ public class SoundManager : MonoBehaviour
         {
             StopCoroutine(swapBackgroundRoutine); // Stops current swap music coroutine
         }
+        if(endBackgroundRoutine != null)
+        {
+            StopCoroutine(endBackgroundRoutine);
+            endBackgroundRoutine = null;
+        }
         swapBackgroundRoutine = StartCoroutine(SwapBackgroundMusic(audioPrefab.clip, audioPrefab.volume, audioPrefab.pitch, audioPrefab.loop, instant)); // Starts new swap music coroutine
+    }
+
+    public void EndBackgroundMusic(bool instant = false)
+    {
+        if (backgroundMusic.isPlaying)
+        {
+            if (instant)
+            {
+                backgroundMusic.Stop();
+
+                if(endBackgroundRoutine != null)
+                {
+                    StopCoroutine(endBackgroundRoutine);
+                    endBackgroundRoutine = null;
+                }
+            }
+            else
+            {
+                if (endBackgroundRoutine == null)
+                {
+                    endBackgroundRoutine = StartCoroutine(EndBackgroundMusicRoutine());
+                }
+            }
+        }
+    }
+
+    IEnumerator EndBackgroundMusicRoutine()
+    {
+        while(backgroundMusic.volume > 0)
+        {
+            Debug.Log("ENDING");
+            backgroundMusic.volume += -backgroundMusicFadeSpeed * Time.unscaledDeltaTime;
+            yield return new WaitForSeconds(Time.unscaledDeltaTime);
+        }
+        backgroundMusic.Stop();
+        endBackgroundRoutine = null;
     }
 
     // Swaps background music
@@ -87,11 +128,12 @@ public class SoundManager : MonoBehaviour
     {
         if (!instant && backgroundMusicFadeSpeed > 0 && backgroundMusic.volume > 0) // Should the transition be smooth?
         {
+
             float changeAmount = -backgroundMusicFadeSpeed;
 
             while (backgroundMusic.volume > 0)
             {
-                backgroundMusic.volume += changeAmount * Time.deltaTime;
+                backgroundMusic.volume += changeAmount * Time.unscaledDeltaTime;
                 yield return null;
             }
         }
@@ -120,7 +162,7 @@ public class SoundManager : MonoBehaviour
             currentMusicRoutine = StartCoroutine(MusicDurationCounter(false)); // Starts new music tracking coroutine
         }
 
-        if(volume > 0) // Should the new clip be played at all?
+        if (volume > 0) // Should the new clip be played at all?
         {
             backgroundMusic.Play();
             if (!instant && backgroundMusicFadeSpeed > 0) // Should the music fade in smoothly?
@@ -129,7 +171,7 @@ public class SoundManager : MonoBehaviour
 
                 while (backgroundMusic.volume < volume)
                 {
-                    backgroundMusic.volume += changeAmount * Time.deltaTime;
+                    backgroundMusic.volume += changeAmount * Time.unscaledDeltaTime;
                     yield return null;
                 }
             }
@@ -154,7 +196,7 @@ public class SoundManager : MonoBehaviour
         while(currentDurationPassed < backgroundMusic.clip.length) // Is clip not completed yet?
         {
             yield return null;
-            currentDurationPassed += Time.deltaTime * backgroundMusic.pitch;
+            currentDurationPassed += Time.unscaledDeltaTime * backgroundMusic.pitch;
         }
 
         currentMusicRoutine = null;
