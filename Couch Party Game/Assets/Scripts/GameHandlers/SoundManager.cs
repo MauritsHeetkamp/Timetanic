@@ -56,6 +56,7 @@ public class SoundManager : MonoBehaviour
             {
                 if(selectedIndex == lastAudioUsed)
                 {
+                    Debug.LogError("FAILED");
                     continue;
                 }
             }
@@ -91,6 +92,24 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public IEnumerator FadeAudioSource(AudioSource target, float volume, float duration = -1)
+    {
+        if(duration <= 0)
+        {
+            duration = backgroundMusicFadeSpeed;
+        }
+
+        float fadeAmount = (volume - target.volume) / duration;
+
+        bool negative = volume - target.volume < 0 ? true : false;
+
+        while(negative && target.volume > volume || !negative && target.volume < volume)
+        {
+            target.volume += fadeAmount * Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
     public void EndBackgroundMusic(bool instant = false)
     {
         if (backgroundMusic.isPlaying)
@@ -104,6 +123,8 @@ public class SoundManager : MonoBehaviour
                     StopCoroutine(endBackgroundRoutine);
                     endBackgroundRoutine = null;
                 }
+
+                backgroundMusic.clip = null;
             }
             else
             {
@@ -117,13 +138,21 @@ public class SoundManager : MonoBehaviour
 
     IEnumerator EndBackgroundMusicRoutine()
     {
+        if(currentMusicRoutine != null)
+        {
+            StopCoroutine(currentMusicRoutine);
+            currentMusicRoutine = null;
+        }
+
         while(backgroundMusic.volume > 0)
         {
             Debug.Log("ENDING");
             backgroundMusic.volume += -backgroundMusicFadeSpeed * Time.unscaledDeltaTime;
             yield return new WaitForSeconds(Time.unscaledDeltaTime);
         }
+
         backgroundMusic.Stop();
+        backgroundMusic.clip = null;
         endBackgroundRoutine = null;
     }
 

@@ -50525,12 +50525,13 @@ MonoBehaviour:
   minigameSpawner: {fileID: 905036904}
   voicelineHandler: {fileID: 272725349}
   cutsceneHandler: {fileID: 1047895557}
-  initCutscene: {fileID: 32900000, guid: 6213045b8b64edc4191e53b1b32e4d10, type: 3}
-  cutsceneAudio:
-    volume: 1
-    pitch: 1
-    clip: {fileID: 8300000, guid: 53b5460ad46776746b54a819085303ad, type: 3}
-    loop: 0
+  cutsceneData:
+    video: {fileID: 32900000, guid: 6213045b8b64edc4191e53b1b32e4d10, type: 3}
+    audio:
+      volume: 1
+      pitch: 1
+      clip: {fileID: 8300000, guid: 53b5460ad46776746b54a819085303ad, type: 3}
+      loop: 0
   notificationHandler: {fileID: 2011400330}
   startOfGameNotification:
     notificationText: GET THE PASSENGERS TO THE RESCUE BOATS

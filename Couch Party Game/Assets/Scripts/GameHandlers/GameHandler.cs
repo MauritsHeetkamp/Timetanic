@@ -44,8 +44,7 @@ public class GameHandler : MonoBehaviour
 
     [Header("Cutscenes")]
     [SerializeField] CutsceneHandler cutsceneHandler;
-    [SerializeField] VideoClip initCutscene;
-    [SerializeField] AudioPrefab cutsceneAudio;
+    [SerializeField] Cutscene.CutsceneData cutsceneData;
 
     [Header("StartOfGame")]
     public NotificationHandler notificationHandler;
@@ -79,14 +78,15 @@ public class GameHandler : MonoBehaviour
 
     public void StartCutscene()
     {
-        if(cutsceneHandler != null && initCutscene != null)
+        if(cutsceneHandler != null && cutsceneData.video != null)
         {
-            if(SoundManager.instance != null && cutsceneAudio.clip != null)
+            if(SoundManager.instance != null && cutsceneData.audio.clip != null)
             {
-                SoundManager.instance.SetBackgroundMusic(cutsceneAudio, false);
+                SoundManager.instance.EndBackgroundMusic();
+                //SoundManager.instance.SetBackgroundMusic(cutsceneData.audio, false);
             }
 
-            Cutscene newCutscene = cutsceneHandler.StartNewCutscene(initCutscene);
+            Cutscene newCutscene = cutsceneHandler.StartNewCutscene(cutsceneData);
 
             if (fadeManager == null)
             {

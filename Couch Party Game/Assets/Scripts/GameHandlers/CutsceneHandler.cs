@@ -8,11 +8,11 @@ public class CutsceneHandler : MonoBehaviour
     [SerializeField] GameObject cutscenePrefab;
     [SerializeField] Transform cutsceneParent;
 
-    public Cutscene StartNewCutscene(VideoClip video)
+    public Cutscene StartNewCutscene(Cutscene.CutsceneData data)
     {
         GameObject cutsceneObject = Instantiate(cutscenePrefab, cutsceneParent);
         Cutscene cutsceneComponent = cutsceneObject.GetComponent<Cutscene>();
-        cutsceneComponent.PlayCutscene(video);
+        cutsceneComponent.PlayCutscene(data);
 
         return cutsceneComponent;
     }
