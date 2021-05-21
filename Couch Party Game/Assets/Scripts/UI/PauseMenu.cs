@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] MenuMasterObject masterUI;
+    public UnityAction onPaused, onUnpaused;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,11 +51,19 @@ public class PauseMenu : MonoBehaviour
     public void Pause(InputAction.CallbackContext context, PlayerData owner)
     {
         Time.timeScale = 0;
+        if(onPaused != null)
+        {
+            onPaused.Invoke();
+        }
     }
 
     public void Resume(InputAction.CallbackContext context, PlayerData owner)
     {
         Time.timeScale = 1;
+        if(onUnpaused != null)
+        {
+            onUnpaused.Invoke();
+        }
     }
 
     // Update is called once per frame

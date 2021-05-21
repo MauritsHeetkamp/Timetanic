@@ -2137,13 +2137,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90945313}
-  m_LocalRotation: {x: -0, y: -0, z: 0.1386701, w: 0.9903386}
-  m_LocalPosition: {x: -109.7, y: 9.6, z: 62.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -109.7, y: -15.93, z: 62.5}
   m_LocalScale: {x: 94.35511, y: 0.99999714, z: 69.24094}
   m_Children: []
   m_Father: {fileID: 1578911582}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15.942}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &90945315
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2221,7 +2221,7 @@ MonoBehaviour:
     m_Bits: 221184
   offset: {x: 0, y: 0, z: 0}
   sfxDelay: 0.2
-  canPlaySFX: 0
+  canPlaySFX: 1
 --- !u!54 &90945319
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9451,6 +9451,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   endDragHandler: {fileID: 0}
   sensitivity: 1
   attachedSlider: {fileID: 1798155540}
@@ -15958,6 +15960,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6050211957336847010, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
         type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050211957336847010, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -16128,6 +16135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6447138628199633347, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
         type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6447138628199633347, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -16270,6 +16282,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6739626882770658399, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6739626882770658399, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
         type: 3}
@@ -16980,6 +16997,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8248651852982833119, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8248651852982833119, guid: 71eca44bb1bc4f443b7eb6b20c9c5a15,
         type: 3}
@@ -18014,6 +18036,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   button: {fileID: 438783855}
 --- !u!114 &438783855
 MonoBehaviour:
@@ -19063,7 +19087,7 @@ GameObject:
   - component: {fileID: 479994202}
   - component: {fileID: 479994201}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: CutsceneCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21229,6 +21253,8 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   autoInteract: 0
   thisButton: {fileID: 541043666}
   buttonText: {fileID: 843522431}
@@ -26181,7 +26207,7 @@ MonoBehaviour:
     m_Bits: 221184
   offset: {x: 0, y: -0.5, z: 0}
   sfxDelay: 0.2
-  canPlaySFX: 0
+  canPlaySFX: 1
 --- !u!54 &643107220
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -28547,6 +28573,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   button: {fileID: 742054597}
 --- !u!114 &742054597
 MonoBehaviour:
@@ -30757,7 +30785,7 @@ GameObject:
   - component: {fileID: 779374852}
   m_Layer: 5
   m_Name: Pause Menu Holder
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30774,8 +30802,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 28002717}
-  m_Father: {fileID: 834828416}
-  m_RootOrder: 3
+  m_Father: {fileID: 1965344682}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -32130,7 +32158,6 @@ RectTransform:
   - {fileID: 1420112547}
   - {fileID: 1332753256}
   - {fileID: 381392202}
-  - {fileID: 779374851}
   - {fileID: 1738507236}
   - {fileID: 1933344417}
   - {fileID: 2129861226}
@@ -36024,6 +36051,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   dropdownData: []
   selected: 0
   selectedText: {fileID: 773425615}
@@ -38331,6 +38360,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   dropdownData: []
   selected: 0
   selectedText: {fileID: 1574188802}
@@ -40324,7 +40355,7 @@ MonoBehaviour:
     m_Bits: 221184
   offset: {x: 0, y: -0.5, z: 0}
   sfxDelay: 0.2
-  canPlaySFX: 0
+  canPlaySFX: 1
 --- !u!54 &1074050076
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -43042,6 +43073,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   endDragHandler: {fileID: 0}
   sensitivity: 1
   attachedSlider: {fileID: 16833829}
@@ -49808,6 +49841,8 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 0}
   autoInteract: 1
   thisButton: {fileID: 1336906390}
   buttonText: {fileID: 890323149}
@@ -49990,7 +50025,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6004007
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -50500,6 +50535,7 @@ MonoBehaviour:
   startOfGameNotification:
     notificationText: GET THE PASSENGERS TO THE RESCUE BOATS
     notificationDuration: 2.5
+  characterControlScheme: Player
 --- !u!4 &1366242598
 Transform:
   m_ObjectHideFlags: 0
@@ -51107,6 +51143,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 0}
+  selectAudio: {fileID: 0}
   selectedButton: 0
   buttons:
   - {fileID: 1603284621}
@@ -51537,6 +51575,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   dropdownData: []
   selected: 0
   selectedText: {fileID: 975998280}
@@ -59477,6 +59517,8 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 0}
   autoInteract: 1
   thisButton: {fileID: 1603284616}
   buttonText: {fileID: 971133559}
@@ -60180,6 +60222,12 @@ MonoBehaviour:
   spawnOffset: 1
   autoKillDelay: 0.1
   aliveNPCCounter: {fileID: 1463115502}
+  crowdScreamSFX:
+    volume: 0.25
+    pitch: 1
+    clip: {fileID: 8300000, guid: 196f1aa5b77f44e4bb36bd3b975a1597, type: 3}
+    loop: 1
+  crowdScreamObject: {fileID: 0}
 --- !u!4 &1622462770
 Transform:
   m_ObjectHideFlags: 0
@@ -64462,7 +64510,7 @@ RectTransform:
   - {fileID: 462827227}
   - {fileID: 849810302}
   m_Father: {fileID: 834828416}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -71475,7 +71523,7 @@ RectTransform:
   m_Children:
   - {fileID: 727330427}
   m_Father: {fileID: 834828416}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -72907,6 +72955,105 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1963961663}
   m_CullTransparentMesh: 0
+--- !u!1 &1965344678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1965344682}
+  - component: {fileID: 1965344681}
+  - component: {fileID: 1965344680}
+  - component: {fileID: 1965344679}
+  m_Layer: 5
+  m_Name: PauseCanvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1965344679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965344678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &1965344680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965344678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+--- !u!223 &1965344681
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965344678}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 0
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!224 &1965344682
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965344678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 779374851}
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1968852484
 GameObject:
   m_ObjectHideFlags: 0
@@ -73322,6 +73469,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   button: {fileID: 1981035399}
 --- !u!114 &1981035399
 MonoBehaviour:
@@ -73880,6 +74029,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   endDragHandler: {fileID: 0}
   sensitivity: 1
   attachedSlider: {fileID: 858503279}
@@ -74502,7 +74653,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 834828416}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -77023,6 +77174,8 @@ MonoBehaviour:
   reset:
     m_PersistentCalls:
       m_Calls: []
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 0}
   autoInteract: 1
   thisButton: {fileID: 2089794725}
   buttonText: {fileID: 224394410}
@@ -77415,6 +77568,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   button: {fileID: 2111503694}
 --- !u!114 &2111503694
 MonoBehaviour:
@@ -78405,7 +78560,7 @@ RectTransform:
   - {fileID: 497016274}
   - {fileID: 1463115501}
   m_Father: {fileID: 834828416}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -78955,6 +79110,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   interactable: 1
+  hoverAudio: {fileID: 11400000, guid: e5b2cc23ca02e4b4d9d9b914feda5cd8, type: 2}
+  selectAudio: {fileID: 11400000, guid: 6a873424767edc14caf41d8a120c4344, type: 2}
   dropdownData: []
   selected: 0
   selectedText: {fileID: 910290557}

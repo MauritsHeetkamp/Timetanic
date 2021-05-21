@@ -531,7 +531,7 @@ MonoBehaviour:
   leftHand: {fileID: 1459783292149897602}
   rightHand: {fileID: 397344011633502523}
   drownSFX:
-    volume: 1
+    volume: 0.65
     pitch: 1
     clip: {fileID: 8300000, guid: 97283173b96cf8340abd4453b7b4845b, type: 3}
     loop: 0

@@ -9,6 +9,7 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     public UIController ownerController;
     public UnityEvent onHover, onLeaveHover;
     public bool interactable = true;
+    public AudioPrefabSO hoverAudio, selectAudio;
 
     public virtual void SetInteractable(bool _interactable)
     {
@@ -27,8 +28,16 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     }
      
     // What happens when button is hovered over
-    public virtual void OnHover()
+    public virtual void OnHover(bool wasInit)
     {
+        if (!wasInit)
+        {
+            if(SoundManager.instance != null && hoverAudio != null)
+            {
+                SoundManager.instance.SpawnAudio(hoverAudio);
+            }
+        }
+
         if(onHover != null)
         {
             onHover.Invoke();
@@ -47,7 +56,7 @@ public class UIOption : MonoBehaviour, IPointerEnterHandler
     //Do this when the cursor enters the rect area of this selectable UI object.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ownerController.SetSelected(this);
+        ownerController.SetSelected(this, false);
     }
 
     public virtual void Interact()

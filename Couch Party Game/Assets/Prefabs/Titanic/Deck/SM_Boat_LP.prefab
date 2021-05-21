@@ -355,8 +355,9 @@ MonoBehaviour:
   collectSound:
     volume: 1
     pitch: 1
-    clip: {fileID: 8300000, guid: ef9cd0c7fd365494083147b373a9b42d, type: 3}
+    clip: {fileID: 8300000, guid: 3c08cfc7c4e907349b29f82b57015382, type: 3}
     loop: 0
+  collectDelay: 0.2
 --- !u!1 &4742824129744901313
 GameObject:
   m_ObjectHideFlags: 0

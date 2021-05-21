@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Custom.Audio;
 
 public class NPCSpawner : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class NPCSpawner : MonoBehaviour
 
     Coroutine killAllNpcsActiveRoutine;
     public UnityAction onKilledAllNpcs;
+
+    public AudioPrefab crowdScreamSFX;
+    public GameObject crowdScreamObject;
 
     // Update is called once per frame
     void Update()
@@ -142,6 +146,11 @@ public class NPCSpawner : MonoBehaviour
             availableSpawnLocations.Remove(selectedSpawn);
 
             yield return null;
+        }
+
+        if(SoundManager.instance != null && crowdScreamSFX.clip != null && crowdScreamObject == null)
+        {
+            crowdScreamObject = SoundManager.instance.SpawnAudio(crowdScreamSFX.clip, crowdScreamSFX.loop, crowdScreamSFX.pitch, crowdScreamSFX.volume);
         }
 
         if(onCompletedSpawn != null)

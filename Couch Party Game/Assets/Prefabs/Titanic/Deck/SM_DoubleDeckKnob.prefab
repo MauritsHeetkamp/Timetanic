@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8225124441069330989}
   - component: {fileID: 7431756192342635510}
   - component: {fileID: 3031804738814223315}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: SM_DoubleDeckKnob
   m_TagString: Untagged
   m_Icon: {fileID: 0}

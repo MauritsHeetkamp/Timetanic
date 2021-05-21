@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Custom.Types;
+using Custom.Audio;
 
 public class UIDropdown : UIOption
 {
@@ -61,6 +62,10 @@ public class UIDropdown : UIOption
 
             DropdownData selectedData = dropdownData[selected];
             selectedText.text = selectedData.name;
+            if (selectAudio.audio.clip != null && SoundManager.instance != null)
+            {
+                Destroy(SoundManager.instance.SpawnAudio(selectAudio), selectAudio.audio.clip.length);
+            }
             if (selectedData.onSelected != null)
             {
                 selectedData.onSelected.Invoke();

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1334382782021767742}
   - component: {fileID: 1237572078569089347}
   - component: {fileID: 1460866692309389910}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: ReserveBoat
   m_TagString: Untagged
   m_Icon: {fileID: 0}

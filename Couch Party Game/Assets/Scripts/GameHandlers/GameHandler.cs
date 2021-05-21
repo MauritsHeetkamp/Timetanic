@@ -50,9 +50,15 @@ public class GameHandler : MonoBehaviour
     [Header("StartOfGame")]
     public NotificationHandler notificationHandler;
     [SerializeField] NotificationHandler.NotificationData startOfGameNotification;
+    [SerializeField] string characterControlScheme = "Player";
 
     private void Start()
     {
+        foreach(PlayerData owner in PlayerManager.instance.connectedToLobbyPlayers)
+        {
+            owner.SwapInputScheme(characterControlScheme); // Sets the control scheme to player controls
+        }
+
         float timerSeconds = gameTime.duration.GetSeconds();
 
         if (timeBasedOnPlayerAmount)

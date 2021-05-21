@@ -9,19 +9,40 @@ public class UISubOption : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Animator animator;
     public bool canInteract = true;
     public UnityEvent onHover, onHoverController, onLeaveHover, onLeaveHoverController, reset;
+    public AudioPrefabSO hoverAudio, selectAudio;
 
     //Do this when the cursor enters the rect area of this selectable UI object.
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(onHover != null && canInteract)
+        if(canInteract)
         {
-            onHover.Invoke();
+            OnHover(false);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (onLeaveHover != null && canInteract)
+        if (canInteract)
+        {
+            OnLeaveHover();
+        }
+    }
+
+    public void OnHover(bool init)
+    {
+        if (onHover != null)
+        {
+            onHover.Invoke();
+        }
+        if (!init && SoundManager.instance != null && hoverAudio.audio.clip != null)
+        {
+            Destroy(SoundManager.instance.SpawnAudio(hoverAudio), hoverAudio.audio.clip.length);
+        }
+    }
+
+    public void OnLeaveHover()
+    {
+        if (onLeaveHover != null)
         {
             onLeaveHover.Invoke();
         }
@@ -34,6 +55,12 @@ public class UISubOption : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public virtual void Interact()
     {
-
+        if (canInteract)
+        {
+            if (selectAudio != null && SoundManager.instance != null)
+            {
+                Destroy(SoundManager.instance.SpawnAudio(selectAudio), selectAudio.audio.clip.length);
+            }
+        }
     }
 }

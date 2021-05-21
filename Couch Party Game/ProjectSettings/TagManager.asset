@@ -9,6 +9,7 @@ TagManager:
   - GlobalFader
   - Water
   - GameManager
+  - PauseMenu
   layers:
   - Default
   - TransparentFX
@@ -31,8 +32,8 @@ TagManager:
   - SeaWater
   - Keyboard
   - Console
-  - 
-  - 
+  - IgnoreLighting
+  - Props
   - 
   - 
   - 

@@ -16,7 +16,7 @@ public class UIToggleArray : UIOption
 
         if(selected < toggles.Length && selected >= 0)
         {
-            toggles[selected].OnHover();
+            toggles[selected].OnHover(true);
         }
         SetInteractable(interactable);
     }
@@ -90,8 +90,9 @@ public class UIToggleArray : UIOption
         MoveSelected(amount);
     }
 
-    public override void OnHover()
+    public override void OnHover(bool wasInit)
     {
+
     }
 
 

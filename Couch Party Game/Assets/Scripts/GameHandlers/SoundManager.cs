@@ -84,7 +84,11 @@ public class SoundManager : MonoBehaviour
             StopCoroutine(endBackgroundRoutine);
             endBackgroundRoutine = null;
         }
-        swapBackgroundRoutine = StartCoroutine(SwapBackgroundMusic(audioPrefab.clip, audioPrefab.volume, audioPrefab.pitch, audioPrefab.loop, instant)); // Starts new swap music coroutine
+
+        if(backgroundMusic.clip != audioPrefab.clip)
+        {
+            swapBackgroundRoutine = StartCoroutine(SwapBackgroundMusic(audioPrefab.clip, audioPrefab.volume, audioPrefab.pitch, audioPrefab.loop, instant)); // Starts new swap music coroutine
+        }
     }
 
     public void EndBackgroundMusic(bool instant = false)
@@ -213,8 +217,10 @@ public class SoundManager : MonoBehaviour
 
     public GameObject Spawn3DAudio(ThreeDAudioPrefab audioSettings, Vector3 target)
     {
+        Debug.Log("CHECKING");
         if(Physics.OverlapSphere(target, audioSettings.range, audioSettings.targets, QueryTriggerInteraction.Ignore).Length > 0)
         {
+            Debug.Log("TRUE");
             GameObject newAudio = Instantiate(audioPrefab);
             newAudio.transform.position = target;
             AudioSource audioSource = newAudio.GetComponent<AudioSource>();
@@ -239,6 +245,19 @@ public class SoundManager : MonoBehaviour
         AudioSource audioSource = newAudio.GetComponent<AudioSource>();
         audioSource.clip = clip;
         audioSource.loop = loop;
+        audioSource.Play();
+
+        return newAudio;
+    }
+
+    public GameObject SpawnAudio(AudioPrefabSO audio)
+    {
+        GameObject newAudio = Instantiate(audioPrefab);
+        AudioSource audioSource = newAudio.GetComponent<AudioSource>();
+        audioSource.clip = audio.audio.clip;
+        audioSource.loop = audio.audio.loop;
+        audioSource.volume = audio.audio.volume;
+        audioSource.pitch = audio.audio.pitch;
         audioSource.Play();
 
         return newAudio;

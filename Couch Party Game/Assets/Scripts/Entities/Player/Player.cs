@@ -8,7 +8,6 @@ public class Player : MovingEntity
 {
     [Header("General")]
     public PlayerData owner;
-    [SerializeField] string characterControlScheme = "Player";
     public Role role; //The role of the player, this is used for where the player needs to be spawned
     public int maxFollowingPassengers;
     public List<MobilePassenger> followingPassengers = new List<MobilePassenger>();
@@ -216,7 +215,6 @@ public class Player : MovingEntity
     private void Start()
     {
         OnEnable();
-        owner.SwapInputScheme(characterControlScheme); // Sets the control scheme to player controls
 
         zDistance = zDistance == 0 ? playerCameraHolder.localPosition.z : zDistance; //Sets the zDistance to the prefabs location if the distance is 0
         yDistance = yDistance == 0 ? playerCameraHolder.localPosition.y : yDistance; //Sets the yDistance to the prefabs location if the distance is 0

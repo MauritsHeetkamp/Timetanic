@@ -8,7 +8,7 @@ public class SeaWater : MonoBehaviour
     [SerializeField] Vector3 offset;
 
     [SerializeField] float sfxDelay = 0.2f;
-    [SerializeField] bool canPlaySFX;
+    [SerializeField] bool canPlaySFX = true;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +58,7 @@ public class SeaWater : MonoBehaviour
                         }
                         else
                         {
+                            Debug.Log("SPAWNED 3D AUDIO");
                             Destroy(SoundManager.instance.Spawn3DAudio(thisEntity.drownSFX, thisEntity.transform.position), thisEntity.drownSFX.clip.length);
                         }
                     }

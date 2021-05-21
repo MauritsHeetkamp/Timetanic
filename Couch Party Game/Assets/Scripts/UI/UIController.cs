@@ -104,7 +104,7 @@ public class UIController : MonoBehaviour
         {
             option.ownerController = this; // Initializes option
         }
-        SetSelected(0); // Selects the first option
+        SetSelected(0, true); // Selects the first option
     }
 
     // Selects the current option
@@ -138,7 +138,7 @@ public class UIController : MonoBehaviour
                         targetOption = allOptions.Length - 1; // Brings the target option to the limit when it went below 0
                     }
 
-                    SetSelected(targetOption); // Selects the new option
+                    SetSelected(targetOption, false); // Selects the new option
                 }
             }
         }
@@ -184,7 +184,7 @@ public class UIController : MonoBehaviour
     }
 
     // Sets the selected option
-    public void SetSelected(int index)
+    public void SetSelected(int index, bool init)
     {
         if(currentSelectedOption != index) // Isnt this already the selected option?
         {
@@ -200,13 +200,13 @@ public class UIController : MonoBehaviour
                 currentSelectedOption = index; // Sets the new current selected option
                 option = allOptions[currentSelectedOption];
 
-                option.OnHover(); // Tells the new selected option that it has been selected
+                option.OnHover(init); // Tells the new selected option that it has been selected
             }
         }
     }
 
     // Sets the selected option
-    public void SetSelected(UIOption optionToSelect)
+    public void SetSelected(UIOption optionToSelect, bool init)
     {
         if(allOptions[currentSelectedOption] != optionToSelect) // Isnt this already the selected option?
         {
@@ -226,7 +226,7 @@ public class UIController : MonoBehaviour
                     currentSelectedOption = i; // Sets the new current selected option
                     option = allOptions[currentSelectedOption];
 
-                    option.OnHover(); // Tells the new selected option that it has been selected
+                    option.OnHover(init); // Tells the new selected option that it has been selected
                     break;
                 }
             }

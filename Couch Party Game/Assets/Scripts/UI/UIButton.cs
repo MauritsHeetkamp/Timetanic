@@ -17,6 +17,10 @@ public class UIButton : UIOption
     {
         if (interactable)
         {
+            if(selectAudio.audio.clip != null && SoundManager.instance != null)
+            {
+                Destroy(SoundManager.instance.SpawnAudio(selectAudio), selectAudio.audio.clip.length);
+            }
             button.onClick.Invoke();
         }
     }

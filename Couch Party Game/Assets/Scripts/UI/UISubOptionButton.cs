@@ -14,6 +14,10 @@ public class UISubOptionButton : UISubOption
     {
         base.Interact();
         Debug.Log("ITTEERR");
+        if (selectAudio != null && SoundManager.instance != null)
+        {
+            Destroy(SoundManager.instance.SpawnAudio(selectAudio), selectAudio.audio.clip.length);
+        }
         thisButton.onClick.Invoke();
     }
 

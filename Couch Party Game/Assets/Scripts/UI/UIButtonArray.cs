@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Custom.Types;
+using Custom.Audio;
 
 public class UIButtonArray : UIOption
 {
@@ -46,7 +47,7 @@ public class UIButtonArray : UIOption
     void Initialize()
     {
         SetInteractable(interactable);
-        SetSelected(selectedButton);
+        SetSelected(selectedButton, true);
     }
 
     public override void Interact()
@@ -57,7 +58,7 @@ public class UIButtonArray : UIOption
         }
     }
 
-    public void SetSelected(int index)
+    public void SetSelected(int index, bool init)
     {
         if(index >= 0 && index < buttons.Length && buttons.Length > 0)
         {
@@ -81,10 +82,7 @@ public class UIButtonArray : UIOption
             selectedButton = index;
             selected = buttons[selectedButton];
 
-            if (selected.onHover != null)
-            {
-                selected.onHover.Invoke();
-            }
+            selected.OnHover(init);
 
             if(selected.onHoverController != null)
             {
@@ -155,7 +153,7 @@ public class UIButtonArray : UIOption
                 }
             }
 
-            SetSelected(newSelectedIndex);
+            SetSelected(newSelectedIndex, false);
             base.OnMovedHorizontal(amount);
         }
     }
