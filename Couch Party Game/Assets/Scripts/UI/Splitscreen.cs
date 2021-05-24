@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Splitscreen : MonoBehaviour
 {
+    [SerializeField] Transform uiHolder;
+
     public Player owner;
     public RawImage splitscreenRenderImage;
     [SerializeField] GameObject taskUI;
@@ -37,11 +39,18 @@ public class Splitscreen : MonoBehaviour
 
     private void Start()
     {
-        if (owner != null && !initialized)
+        if (owner != null)
         {
-            UpdateFollowingPlayerAmount();
-            initialized = true;
-            owner.owner.onTaskMenu += ToggleTaskUI;
+            if (!initialized)
+            {
+                UpdateFollowingPlayerAmount();
+                initialized = true;
+                owner.owner.onTaskMenu += ToggleTaskUI;
+            }
+        }
+        else
+        {
+            taskUI.SetActive(false);
         }
     }
 

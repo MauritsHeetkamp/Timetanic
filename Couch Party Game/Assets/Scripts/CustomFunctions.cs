@@ -11,4 +11,18 @@ public class CustomFunctions : MonoBehaviour
             Time.timeScale = timescale;
         }
     }
+
+    public void SetCursorVisibility(bool visible)
+    {
+        if (visible)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
 }

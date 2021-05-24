@@ -51,6 +51,8 @@ public class PauseMenu : MonoBehaviour
     public void Pause(InputAction.CallbackContext context, PlayerData owner)
     {
         Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         if(onPaused != null)
         {
             onPaused.Invoke();
@@ -60,7 +62,9 @@ public class PauseMenu : MonoBehaviour
     public void Resume(InputAction.CallbackContext context, PlayerData owner)
     {
         Time.timeScale = 1;
-        if(onUnpaused != null)
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        if (onUnpaused != null)
         {
             onUnpaused.Invoke();
         }
