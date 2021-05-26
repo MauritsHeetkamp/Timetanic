@@ -57,7 +57,7 @@ MonoBehaviour:
   collider: {fileID: 6735683619833304257}
   offset: {x: 0, y: -0.46, z: 0}
   destroySFX:
-    volume: 0.34
+    volume: 0.12
     pitch: 1
     clip: {fileID: 8300000, guid: 581c1f3af8f0a5742b00e1494ac3364d, type: 3}
     loop: 0
@@ -98,7 +98,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 36e2d32cb8ed8b24c8a67d6645a7f0f0, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.637
   m_Pitch: 1
   Loop: 0
   Mute: 0
