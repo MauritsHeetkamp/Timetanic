@@ -541,7 +541,7 @@ MonoBehaviour:
       m_Bits: 16384
   movementSpeed: 5
   owner: {fileID: 0}
-  role: 1
+  role: 0
   maxFollowingPassengers: 7
   followingPassengers: []
   movementParam: Movement

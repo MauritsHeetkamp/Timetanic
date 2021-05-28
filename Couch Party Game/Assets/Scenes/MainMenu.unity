@@ -10790,7 +10790,7 @@ MonoBehaviour:
     previewingObject: {fileID: 0}
   maxPlayers: 4
   minPlayers: 2
-  startButton: {fileID: 0}
+  startButton: {fileID: 1472277974}
   controller: {fileID: 1744970731}
 --- !u!1 &1352612643
 GameObject:

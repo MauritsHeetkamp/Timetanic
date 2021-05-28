@@ -224,13 +224,16 @@ public class MobilePassenger : Passenger
 
     private void OnTriggerStay(Collider other)
     {
-        if(disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
+        if (!dead)
         {
-            Player player = other.GetComponent<Player>();
-
-            if(player != null && player.followingPassengers.Count < player.maxFollowingPassengers)
+            if (disables <= 0 && followOnTrigger && other.tag == "Player" && ownerPlayer == null) // Checks if it should follow the target
             {
-                FollowTarget(other.GetComponent<Player>());
+                Player player = other.GetComponent<Player>();
+
+                if (player != null && player.followingPassengers.Count < player.maxFollowingPassengers)
+                {
+                    FollowTarget(other.GetComponent<Player>());
+                }
             }
         }
     }
@@ -238,7 +241,7 @@ public class MobilePassenger : Passenger
     // Make the npc follow a player
     public void FollowTarget(Player target)
     {
-        if(disables <= 0)
+        if(disables <= 0  && !dead)
         {
             SetState(AIState.Following);
             ownerPlayer = target; // Sets its target

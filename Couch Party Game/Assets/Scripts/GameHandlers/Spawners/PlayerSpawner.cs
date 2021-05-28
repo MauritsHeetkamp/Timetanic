@@ -99,6 +99,11 @@ public class PlayerSpawner : MonoBehaviour
 
         SpawnLocation selectedSpawn = safeSpawns[Random.Range(0, safeSpawns.Count)];
 
+        for(int i = target.followingPassengers.Count - 1; i >= 0; i--)
+        {
+            target.followingPassengers[i].StopFollowTarget();
+        }
+
         //Relocation
 
         target.transform.position = selectedSpawn.location.position;

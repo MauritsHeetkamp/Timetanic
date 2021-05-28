@@ -34,11 +34,28 @@ public class Teleporter : MonoBehaviour
                 Destroy(SoundManager.instance.SpawnAudio(teleportSFX, false), teleportSFX.length);
             }
 
-            foreach(MobilePassenger passenger in player.followingPassengers) // Goes through all the passengers that are following this player
+            for(int i = player.followingPassengers.Count - 1; i>= 0; i--)
             {
-                passenger.navmeshAgent.Warp(target.targetPosition.position); // Teleports the npc to the target location
-                passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
+                MobilePassenger passenger = player.followingPassengers[i];
+                if (passenger != null)
+                {
+                    passenger.navmeshAgent.Warp(target.targetPosition.position); // Teleports the npc to the target location
+                    passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
+                }
+                else
+                {
+                    player.followingPassengers.RemoveAt(i);
+                }
             }
+
+            /*foreach(MobilePassenger passenger in player.followingPassengers) // Goes through all the passengers that are following this player
+            {
+                if(passenger != null)
+                {
+                    passenger.navmeshAgent.Warp(target.targetPosition.position); // Teleports the npc to the target location
+                    passenger.transform.Translate(Vector3.one); // Makes sure that the navmesh agents aren't stacked up in eachother
+                }
+            }*/
 
             if(cameraRelocator != null)
             {

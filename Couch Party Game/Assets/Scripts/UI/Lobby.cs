@@ -207,7 +207,7 @@ public class Lobby : Menu
             UpdateSpecificUI(i);
         }
 
-        //startButton.SetInteractable(connectedAmount >= minPlayers ? true : false); // can the game start? enables button on result
+        startButton.SetInteractable(PlayerManager.instance.connectedToLobbyPlayers.Count >= minPlayers ? true : false); // can the game start? enables button on result
     }
 
     void UpdateSpecificUI(int targetIndex)
@@ -245,6 +245,8 @@ public class Lobby : Menu
             SetPlayerCharacter(playerIndex);
             UpdateSpecificUI(playerIndex);
         }
+
+        startButton.SetInteractable(PlayerManager.instance.connectedToLobbyPlayers.Count >= minPlayers ? true : false); // can the game start? enables button on result
     }
 
     public void RemovePlayer(PlayerData data)
@@ -265,6 +267,7 @@ public class Lobby : Menu
         PlayerManager.instance.connectedToLobbyPlayers.RemoveAt(playerIndex);
 
         UpdateSpecificUI(playerIndex);
+        startButton.SetInteractable(PlayerManager.instance.connectedToLobbyPlayers.Count >= minPlayers ? true : false); // can the game start? enables button on result
     }
 
     // New player connected
