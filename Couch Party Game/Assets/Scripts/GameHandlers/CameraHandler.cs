@@ -197,6 +197,9 @@ public class CameraHandler : MonoBehaviour
             }
         }
 
+        int xScreenAmount = powerOf;
+        int yScreenAmount = playerAmount > 2 ? powerOf : 1;
+
         float splitscreenSizeX = targetCanvasReferenceResolution.x / powerOf; // Calculates the x size of one splitscreen
         float splitscreenSizeY = playerAmount > 2 ? targetCanvasReferenceResolution.y / powerOf : targetCanvasReferenceResolution.y; // Calculates the y size of one splitscreen
 
@@ -221,6 +224,11 @@ public class CameraHandler : MonoBehaviour
                 newSplitscreen.GetComponentInChildren<Splitscreen>().splitscreenRenderImage.color = Color.white; // Makes sure the splitscreen isn't black
                 newSplitscreen.GetComponentInChildren<Splitscreen>().splitscreenRenderImage.texture = texture; // Assigns the rendertexture to the splitscreen
                 newSplitscreen.GetComponentInChildren<Splitscreen>().owner = playerHandler.localPlayers[i];
+                newSplitscreen.GetComponentInChildren<Splitscreen>().SetReferenceScale(xScreenAmount > yScreenAmount ? xScreenAmount : yScreenAmount);
+            }
+            else
+            {
+                newSplitscreen.GetComponentInChildren<Splitscreen>().uiHolder.gameObject.SetActive(false);
             }
         }
 

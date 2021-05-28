@@ -7,13 +7,14 @@ using UnityEngine.InputSystem;
 
 public class Splitscreen : MonoBehaviour
 {
-    [SerializeField] Transform uiHolder;
+    public Transform uiHolder;
 
     public Player owner;
     public RawImage splitscreenRenderImage;
     [SerializeField] GameObject taskUI;
     public FadeManager fadeManager;
     public Transform taskHolder;
+    [SerializeField] RectTransform itemHolderTransform;
     bool initialized;
 
     [SerializeField] string noItemText = "None";
@@ -34,6 +35,16 @@ public class Splitscreen : MonoBehaviour
         {
             initialized = true;
             owner.owner.onTaskMenu += ToggleTaskUI;
+        }
+    }
+
+    public void SetReferenceScale(int maxScreenOnSide)
+    {
+        if(maxScreenOnSide > 1)
+        {
+            taskUI.transform.localScale = Vector3.one / maxScreenOnSide;
+            itemHolderTransform.localPosition += new Vector3(itemHolderTransform.sizeDelta.x / 2 / maxScreenOnSide, -itemHolderTransform.sizeDelta.y / 2 / maxScreenOnSide, 0);
+            itemHolderTransform.localScale /= maxScreenOnSide;
         }
     }
 
