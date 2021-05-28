@@ -3327,7 +3327,7 @@ MonoBehaviour:
         m_MethodName: ChangeBackgroundMusic
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: ca327acdf3e164449a29a27b0162731d,
+          m_ObjectArgument: {fileID: 11400000, guid: 2fc920834b4d8f64c9551eb50c0079d0,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: AudioPrefabSO, Assembly-CSharp
           m_IntArgument: 0
@@ -8460,6 +8460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1022240704}
   - component: {fileID: 1022240703}
+  - component: {fileID: 1022240705}
   m_Layer: 0
   m_Name: CustomFunctions
   m_TagString: Untagged
@@ -8493,6 +8494,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1022240705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022240702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 636caa601bedfc845a05e13668321be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1025261699
 GameObject:
   m_ObjectHideFlags: 0

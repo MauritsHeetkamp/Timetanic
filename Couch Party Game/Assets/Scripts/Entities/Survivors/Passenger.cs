@@ -67,6 +67,7 @@ public class Passenger : MovingEntity
     {
         GameHandler gameHandler = GameObject.FindGameObjectWithTag("GameManager").GetComponentInChildren<GameHandler>();
         gameHandler.PassengerDied();
+
         if (spawnHandler != null)
         {
             spawnHandler.availableNPCs.Remove(gameObject);

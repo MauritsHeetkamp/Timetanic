@@ -2378,9 +2378,8 @@ MonoBehaviour:
       m_Bits: 16384
   movementSpeed: 5
   owner: {fileID: 0}
-  characterControlScheme: Player
   role: 1
-  maxFollowingPassengers: 3
+  maxFollowingPassengers: 7
   followingPassengers: []
   movementParam: Movement
   jumpParam: Jump

@@ -218,7 +218,7 @@ public class MobilePassenger : Passenger
     {
         base.OnDeath();
 
-        StopFollowTarget();
+        StopFollowTarget(true);
         Destroy(gameObject);
     }
 

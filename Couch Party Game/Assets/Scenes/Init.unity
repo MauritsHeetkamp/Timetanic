@@ -147,7 +147,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: f0b4562ae0bca9e4598e24d1d24b99d4, type: 3}
+      objectReference: {fileID: 8300000, guid: 248b41f662b3d3043a311d7ce16eb511, type: 3}
     - target: {fileID: 1021714494084748081, guid: 2542de37c3424b64c8780eb4ac0a2eee,
         type: 3}
       propertyPath: defaultBackgroundMusic.Array.data[0].loop

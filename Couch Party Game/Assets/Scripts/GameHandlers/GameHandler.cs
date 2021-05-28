@@ -50,6 +50,7 @@ public class GameHandler : MonoBehaviour
     public NotificationHandler notificationHandler;
     [SerializeField] NotificationHandler.NotificationData startOfGameNotification;
     [SerializeField] string characterControlScheme = "Player";
+    [SerializeField] AudioPrefab gameMusic;
 
     private void Start()
     {
@@ -111,7 +112,8 @@ public class GameHandler : MonoBehaviour
     {
         if(SoundManager.instance != null)
         {
-            SoundManager.instance.ShuffleBackgroundAudio(false);
+            SoundManager.instance.SetBackgroundMusic(gameMusic, true);
+            //SoundManager.instance.ShuffleBackgroundAudio(false);
         }
         Debug.Log("PREP1");
         if(fadeManager != null)
