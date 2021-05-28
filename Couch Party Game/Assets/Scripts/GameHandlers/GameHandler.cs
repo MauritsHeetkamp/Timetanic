@@ -69,7 +69,10 @@ public class GameHandler : MonoBehaviour
         if(shipAnimator != null && timerSeconds > 0)
         {
             float playbackSpeed = sinkAnim.length / timerSeconds;
-            playbackSpeed /= PlayerManager.instance.connectedToLobbyPlayers.Count;
+            if(PlayerManager.instance.connectedToLobbyPlayers.Count > 1)
+            {
+                playbackSpeed *= PlayerManager.instance.connectedToLobbyPlayers.Count * 0.6f;
+            }
 
             shipAnimator.speed = playbackSpeed;
         }
@@ -166,6 +169,11 @@ public class GameHandler : MonoBehaviour
         if(notificationHandler != null)
         {
             notificationHandler.ActivateNotification(startOfGameNotification);
+        }
+
+        if(shipAnimator != null && sinkAnim != null)
+        {
+            shipAnimator.SetBool("Sink", true);
         }
     }
 

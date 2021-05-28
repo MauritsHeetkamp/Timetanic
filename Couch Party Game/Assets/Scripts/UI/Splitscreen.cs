@@ -72,7 +72,10 @@ public class Splitscreen : MonoBehaviour
         {
             taskUI.SetActive(false);
         }
-        owner.owner.onTaskMenu -= ToggleTaskUI;
+        if (owner != null && owner.owner != null)
+        {
+            owner.owner.onTaskMenu -= ToggleTaskUI;
+        }
     }
 
 
