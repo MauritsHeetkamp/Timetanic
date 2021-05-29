@@ -7616,7 +7616,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Display:'
+  m_text: 'Fullscreen:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 39afcb3b7f490f2449279a527104914b, type: 2}
   m_sharedMaterial: {fileID: -7772011256342413243, guid: 39afcb3b7f490f2449279a527104914b,
