@@ -8453,6 +8453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_DeckChair (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 7576644094501645716, guid: 28785eef618ab5e4ca319ff20b80378f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8225079084967480385, guid: 28785eef618ab5e4ca319ff20b80378f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -11757,6 +11762,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_DeckChair (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7576644094501645716, guid: 28785eef618ab5e4ca319ff20b80378f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8225079084967480385, guid: 28785eef618ab5e4ca319ff20b80378f,
         type: 3}

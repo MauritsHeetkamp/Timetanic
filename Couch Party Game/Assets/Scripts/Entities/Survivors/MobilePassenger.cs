@@ -211,6 +211,7 @@ public class MobilePassenger : Passenger
         else
         {
             navmeshAgent.enabled = true;
+            SetRandomIdleState();
         }
     }
 

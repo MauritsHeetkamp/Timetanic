@@ -2637,7 +2637,7 @@ MonoBehaviour:
   animator: {fileID: 1252322285913596734}
   electrifiedParticles: {fileID: 0}
   shockAnimation: 
-  maxStopKnockVelocity: {x: 0.01, y: 0.01, z: 0.01}
+  maxStopKnockVelocity: {x: 0.001, y: 0.001, z: 0.001}
   gruntSFX:
     volume: 0.3
     pitch: 1
