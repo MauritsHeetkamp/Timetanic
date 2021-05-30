@@ -109,7 +109,7 @@ public class Grabbable : Interactable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(canSFX && Physics.Raycast(transform.position + raycastOffset, Vector3.down, dropCheckRange, hittableLayers))
+        /*if(canSFX && Physics.Raycast(transform.position + raycastOffset, Vector3.down, dropCheckRange, hittableLayers))
         {
             if(SoundManager.instance != null && dropSFX.clip != null)
             {
@@ -118,7 +118,7 @@ public class Grabbable : Interactable
                 GameObject audioObject = SoundManager.instance.Spawn3DAudio(dropSFX, transform.position);
                 Destroy(audioObject, dropSFX.clip.length);
             }
-        }
+        }*/
     }
 
     IEnumerator SFXCooldown()

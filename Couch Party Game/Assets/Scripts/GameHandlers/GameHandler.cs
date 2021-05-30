@@ -27,7 +27,7 @@ public class GameHandler : MonoBehaviour
 
     [SerializeField] Animator shipAnimator;
     [SerializeField] AnimationClip sinkAnim;
-    float playbackSpeed = 1;
+    //float playbackSpeed = 1;
 
     [Header("Score")]
     [SerializeField] GameObject resultsMenu;
@@ -68,13 +68,13 @@ public class GameHandler : MonoBehaviour
 
         if(shipAnimator != null && timerSeconds > 0)
         {
-            float playbackSpeed = sinkAnim.length / timerSeconds;
+            float playbackSpeed = sinkAnim.length / 600;//timerSeconds;
             if(PlayerManager.instance.connectedToLobbyPlayers.Count > 1)
             {
                 playbackSpeed *= PlayerManager.instance.connectedToLobbyPlayers.Count * 0.6f;
             }
 
-            shipAnimator.speed = playbackSpeed;
+            shipAnimator.speed = shipAnimator.speed * playbackSpeed;
         }
 
         StartCutscene();
